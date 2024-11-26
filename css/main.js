@@ -3,7 +3,7 @@ export const css = () => {
 @import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
 
-.mal {
+.-mal {
   display: flex;
   flex-direction: column;
   gap: 7px 3px;
@@ -15,12 +15,12 @@ export const css = () => {
 
   margin-top: 10px;
 
-  >.header {
+  >.-header {
     display: flex;
     flex-direction: row;
     gap: 5px 0;
 
-    >.title {
+    >.-title {
       padding: 0 10px 0 0;
       margin: -6px 0 0 0;
       width: max-content;
@@ -30,17 +30,17 @@ export const css = () => {
       color: rgb(53 53 53);
     }
 
-    >.info {
+    >.-info {
       display: flex;
       flex-direction: row;
       gap: 10px 5px;
 
-      >.list {
+      >.-list {
         display: flex;
         flex-direction: row;
         gap: 0 5px;
 
-        >.item {
+        >.-item {
           display: flex;
           flex-direction: row;
           gap: 10px 5px;
@@ -52,23 +52,23 @@ export const css = () => {
           background-color: rgb(209 216 225);
         }
 
-        .link {
+        .-link {
           text-decoration: none;
         }
       }
     }
   }
 
-  .itemTitle {
+  .-itemTitle {
     font-family: "Parkinsans", sans-serif;
     font-family: "Faculty Glyphic", sans-serif;
   }
 
-  .footer {
+  .-footer {
     display: flex;
     gap: 0 7px;
 
-    .status.episodes {
+    .-status.-episodes {
       display: flex;
       align-items: center;
       gap: 0 5px;
@@ -77,7 +77,7 @@ export const css = () => {
       border: 1px solid rgb(123 122 122);
       border-radius: 14px;
 
-      .numbers {
+      .-numbers {
         display: flex;
         padding: 0 10px 0 5px;
         margin: auto;
@@ -85,7 +85,7 @@ export const css = () => {
                 border-radius: 15px;
                 background-color: rgb(0 0 0);
       
-        .num {
+        .-num {
           display: flex;
           appearance: none;
           margin: auto;
@@ -101,7 +101,7 @@ export const css = () => {
             display: none;
           }
         }
-        .max {
+        .-max {
           display: flex;
           gap: 0 2px;
           color: rgb(255 255 255);
@@ -113,7 +113,7 @@ export const css = () => {
         }
       }
 
-      .btn.plus {
+      .-btn.-plus {
         display: flex;
         align-items: center;
         padding: 2px;
@@ -125,12 +125,12 @@ export const css = () => {
     }
     }
 
-    .status.rating {
+    .-status.-rating {
       display: flex;
       gap: 0 5px;
       padding: 0 0 0 0;
 
-      .num {
+      .-num {
         display: flex;
         appearance: none;
         margin: auto;
@@ -148,7 +148,7 @@ export const css = () => {
       }
   }
 
-    .btn.ok {
+    .-btn.-ok {
       border: 1px solid rgb(0 0 0);
       border-radius: 2px;
   }
