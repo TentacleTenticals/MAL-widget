@@ -68,6 +68,12 @@ export const css = () => {
     display: flex;
     gap: 0 7px;
 
+    .-status.-st {
+      margin: 0;
+      height: unset;
+      line-height: 0;
+    }
+
     .-status.-episodes {
       display: flex;
       align-items: center;
@@ -88,8 +94,11 @@ export const css = () => {
         .-num {
           display: flex;
           appearance: none;
+          padding: 0;
           margin: auto;
           min-width: 15px;
+          height: unset;
+          line-height: 0;
           color: rgb(255 255 255);
           text-align: center;
           outline: none;
@@ -133,8 +142,11 @@ export const css = () => {
       .-num {
         display: flex;
         appearance: none;
+        padding: 0;
         margin: auto;
         min-width: 15px;
+        height: unset;
+        line-height: 0;
         color: rgb(255 255 255);
         text-align: center;
         outline: none;
