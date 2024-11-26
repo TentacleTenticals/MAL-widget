@@ -204,6 +204,7 @@ export const El = {
       rtn: true
     });
     const main=document.createElement('select');
+    if(o.cName) main.className = o.cName;
     if(o.id) main.id=o.id;
     if(o.name) main.name=o.name;
     if(o.onchange) main.onchange=o.onchange;
