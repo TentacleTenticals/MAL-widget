@@ -69,6 +69,7 @@ export const css = () => {
     gap: 0 7px;
 
     .-status.-st {
+      padding: 2px;
       margin: 0;
       height: unset;
       line-height: 0;
@@ -96,7 +97,7 @@ export const css = () => {
           appearance: none;
           padding: 0;
           margin: auto;
-          min-width: 15px;
+          min-width: 20px;
           height: unset;
           font-size: 12px;
           line-height: 0;
