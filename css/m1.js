@@ -98,6 +98,7 @@ export const css = () => {
           margin: auto;
           min-width: 15px;
           height: unset;
+          font-size: 12px;
           line-height: 0;
           color: rgb(255 255 255);
           text-align: center;
@@ -113,6 +114,8 @@ export const css = () => {
         .-max {
           display: flex;
           gap: 0 2px;
+          margin: auto;
+          font-size: 12px;
           color: rgb(255 255 255);
 
           &::before {
