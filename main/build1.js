@@ -166,7 +166,7 @@ export function build(El, body, Mal, data, s, me){
       El.Div({//m 2
         path: m,
         cName: '-footer',
-        func: (s) => {
+        func: (f) => {
           const handler = {
             set(target, key, value, receiver) {
               if (value !== target[key]) {
@@ -193,7 +193,7 @@ export function build(El, body, Mal, data, s, me){
           }
   
           El.Select({//s 0
-            path: s,
+            path: f,
             cName: '-status -st',
             options: [
               ['-', undefined],
@@ -213,7 +213,7 @@ export function build(El, body, Mal, data, s, me){
             }
           });
           El.Div({//s 1
-            path: s,
+            path: f,
             cName: '-status -episodes',
             func: (n) => {
               El.Div({
@@ -292,7 +292,7 @@ export function build(El, body, Mal, data, s, me){
           });
   
           El.Button({//n 3
-            path: s,
+            path: f,
             cName: '-btn -save',
             text: 'Save',
             onclick: () => {
