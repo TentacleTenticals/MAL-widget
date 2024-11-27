@@ -1,6 +1,6 @@
-export function build(El, Mal, data, s, me){
+export function build(El, body, Mal, data, s, me){
   El.Div({
-    path: document.body,
+    path: body,
     insert: 'beforeend',
     cName: '-mal',
     func: (m) => {
