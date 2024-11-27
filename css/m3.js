@@ -2,6 +2,8 @@ export const css = () => {
   return `@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amarante&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 
 .-mal {
   display: flex;
@@ -15,32 +17,32 @@ export const css = () => {
 
   margin-top: 10px;
 
-  >.-header {
+  > .-header {
     display: flex;
     flex-direction: row;
     gap: 5px 0;
 
-    >.-title {
+    > .-title {
       padding: 0 10px 0 0;
       margin: -6px 0 0 0;
       width: max-content;
       font-weight: 600;
       font-size: 18px;
-      font-family: "Oswald", sans-serif;
+      font-family: 'Oswald', sans-serif;
       color: rgb(53 53 53);
     }
 
-    >.-info {
+    > .-info {
       display: flex;
       flex-direction: row;
       gap: 10px 5px;
 
-      >.-list {
+      > .-list {
         display: flex;
         flex-direction: row;
         gap: 0 5px;
 
-        >.-item {
+        > .-item {
           display: flex;
           flex-direction: row;
           gap: 10px 5px;
@@ -50,6 +52,29 @@ export const css = () => {
           border: 1px solid rgb(123 122 122);
           border-radius: 13px;
           background-color: rgb(209 216 225);
+
+          &.-rating {
+            font-family: "Amarante", serif;
+            /* font-family: "Play", sans-serif; */
+          }
+
+          &.-id {
+            font-family: "Amarante", serif;
+          }
+
+          &.-broadcast {
+            &.currently_airing {
+              background-color: rgb(243 206 233);
+            }
+            &.finished_airing {
+              display: none;
+            }
+          }
+        }
+
+        .-s-item {
+          display: flex;
+          gap: 0 5px;
         }
 
         .-link {
@@ -60,8 +85,8 @@ export const css = () => {
   }
 
   .-itemTitle {
-    font-family: "Parkinsans", sans-serif;
-    font-family: "Faculty Glyphic", sans-serif;
+    font-family: 'Parkinsans', sans-serif;
+    font-family: 'Faculty Glyphic', sans-serif;
   }
 
   .-footer {
@@ -73,6 +98,7 @@ export const css = () => {
       margin: 0;
       height: unset;
       line-height: 0;
+      outline: none;
     }
 
     .-status.-episodes {
@@ -88,10 +114,11 @@ export const css = () => {
         display: flex;
         padding: 0 10px 0 5px;
         margin: auto;
-                color: rgb(255 255 255);
-                border-radius: 15px;
-                background-color: rgb(0 0 0);
-      
+        color: rgb(255 255 255);
+        border-radius: 15px;
+        background-color: rgb(0 0 0);
+        font-family: "Amarante", serif;
+
         .-num {
           display: flex;
           appearance: none;
@@ -99,7 +126,8 @@ export const css = () => {
           margin: auto;
           min-width: 20px;
           height: unset;
-          font-size: 12px;
+          font-family: "Amarante", serif;
+          font-size: 14px;
           line-height: 0;
           color: rgb(255 255 255);
           text-align: center;
@@ -107,7 +135,7 @@ export const css = () => {
           border: unset;
           border-radius: 2px;
           background-color: unset;
-    
+
           &::-webkit-inner-spin-button {
             display: none;
           }
@@ -116,7 +144,7 @@ export const css = () => {
           display: flex;
           gap: 0 2px;
           margin: auto;
-          font-size: 12px;
+          font-size: 14px;
           color: rgb(255 255 255);
 
           &::before {
@@ -135,13 +163,14 @@ export const css = () => {
         line-height: 0;
         border: 1px solid rgb(0 0 0);
         border-radius: 50%;
-    }
+      }
     }
 
     .-status.-rating {
       display: flex;
       gap: 0 5px;
       padding: 0 0 0 0;
+      font-family: "Amarante", serif;
 
       .-num {
         display: flex;
@@ -150,6 +179,8 @@ export const css = () => {
         margin: auto;
         min-width: 15px;
         height: unset;
+        font-family: "Amarante", serif;
+        font-size: 14px;
         line-height: 0;
         color: rgb(255 255 255);
         text-align: center;
@@ -157,17 +188,20 @@ export const css = () => {
         border: unset;
         border-radius: 2px;
         background-color: rgb(0 0 0);
-  
+
         &::-webkit-inner-spin-button {
           display: none;
         }
       }
-  }
+    }
 
-    .-btn.-ok {
+    .-btn.-save {
+      font-family: "Play", sans-serif;
+      font-weight: 600;
       border: 1px solid rgb(0 0 0);
       border-radius: 2px;
+    }
   }
-  }
-}`
+}
+`
 }
