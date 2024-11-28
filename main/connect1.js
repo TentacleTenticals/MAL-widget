@@ -19,12 +19,14 @@ export function connect(Mal, s, title){
                 value: s.main.id,
                 type: 'anime',
                 query: {
-                  fields: ['id', 'title', 'rank', 'rating', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes']
+                  fields: ['id', 'title', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes']
                 }
               }).then(
                 l => {
                   console.log('LIST', l);
+                  console.log('S', l.my_list_status?.score||0)
                   s.main.rating = l.mean;
+                  s.main.rank = l.rank;
                   s.main.status = l.status;
                   s.main.weekDay = l.broadcast.day_of_the_week;
                   s.main.weekTime = l.broadcast.start_time;
