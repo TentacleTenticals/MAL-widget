@@ -1,8 +1,8 @@
-export function build(El, body, Mal, data, s, me){
+export function build(El, body, Mal, data, s, theme){
   El.Div({
     path: body,
-    insert: 'beforeend',
-    cName: '-mal',
+    insert: 'beforestart',
+    cName: `-mal ${theme}`,
     func: (m) => {
       const el = {
         header: {},
@@ -53,6 +53,8 @@ export function build(El, body, Mal, data, s, me){
               case 'weekTime': el.header.weekTime.textContent = 'в '+v;
               break;
               case 'rating': el.header.rating.textContent = v;
+              break;
+              case 'rank': el.header.rank.textContent = '# '+v;
               break;
               case 'id': el.header.id.textContent = v;
               break;
@@ -124,6 +126,18 @@ export function build(El, body, Mal, data, s, me){
                       }
                     }
                   });
+
+                  item({//i 0
+                    path: i,
+                    cName: '-item -rank',
+                    text: 'Rank',
+                    c: {
+                      cName: '-value',
+                      func: (e) => {
+                        el.header.rank = e;
+                      }
+                    }
+                  });
       
                   item({//i 1
                     path: i,
@@ -166,7 +180,7 @@ export function build(El, body, Mal, data, s, me){
       El.Div({//m 2
         path: m,
         cName: '-footer',
-        func: (f) => {
+        func: (footer) => {
           const handler = {
             set(target, key, value, receiver) {
               if (value !== target[key]) {
@@ -193,15 +207,15 @@ export function build(El, body, Mal, data, s, me){
           }
   
           El.Select({//s 0
-            path: f,
+            path: footer,
             cName: '-status -st',
             options: [
               ['-', undefined],
-              ['watching', 'watching'],
-              ['completed', 'completed'],
-              ['on hold', 'on_hold'],
-              ['dropped', 'dropped'],
-              ['plan to watch', 'plan_to_watch']
+              ['смотрю', 'watching'],
+              ['просмотрено', 'completed'],
+              ['приостановлено', 'on_hold'],
+              ['брошено', 'dropped'],
+              ['планирую посмотреть', 'plan_to_watch']
             ],
             // value: d.status,
             onchange: (e) => {
@@ -213,12 +227,13 @@ export function build(El, body, Mal, data, s, me){
             }
           });
           El.Div({//s 1
-            path: f,
+            path: footer,
             cName: '-status -episodes',
             func: (n) => {
               El.Div({
                 path: n,
                 cName: '-numbers',
+                text: 'Eps',
                 func: (num) => {
                   El.Input({//n 0
                     path: num,
@@ -230,13 +245,13 @@ export function build(El, body, Mal, data, s, me){
                     onblur: (e) => {
                       if(s.me.eps === e.target.value) return;
                       s.me.eps = e.target.value;
-                      e.target.style.width = `${e.target.value.length*7}px`;
+                      e.target.style.width = `${e.target.value.length*8}px`;
                     },
                     oninput: (e) => {
-                      e.target.style.width = `${e.target.value.length*7}px`;
+                      e.target.style.width = `${e.target.value.length*8}px`;
                     },
                     func: (e) => {
-                      e.style.width = `${s.me.eps.length*7}px`;
+                      e.style.width = `${s.me.eps.length*8}px`;
                       el.footer.eps = e;
                     }
                   });
@@ -248,15 +263,15 @@ export function build(El, body, Mal, data, s, me){
                       el.footer.epsNum = e;
                     }
                   });
-                }
-              });
-  
-              El.Button({//n 2
-                path: n,
-                cName: '-btn -plus',
-                text: '+',
-                onclick: () => {
-                  s.me.eps++;
+
+                  El.Button({//n 2
+                    path: num,
+                    cName: '-btn -plus',
+                    text: '+',
+                    onclick: () => {
+                      s.me.eps++;
+                    }
+                  });
                 }
               });
   
@@ -276,13 +291,13 @@ export function build(El, body, Mal, data, s, me){
                     onblur: (e) => {
                       if(s.me.rating === e.target.value) return;
                       s.me.rating = e.target.value;
-                      e.target.style.width = `${e.target.value.length*7}px`;
+                      e.target.style.width = `${e.target.value.length*8}px`;
                     },
                     oninput: (e) => {
-                      e.target.style.width = `${e.target.value.length*7}px`;
+                      e.target.style.width = `${e.target.value.length*8}px`;
                     },
                     func: (e) => {
-                      e.style.width = `${s.me.rating.length*7}px`;
+                      e.style.width = `${s.me.rating.length*8}px`;
                       el.footer.rating = e;
                     }
                   });
@@ -292,7 +307,7 @@ export function build(El, body, Mal, data, s, me){
           });
   
           El.Button({//n 3
-            path: f,
+            path: footer,
             cName: '-btn -save',
             text: 'Save',
             onclick: () => {
@@ -302,8 +317,7 @@ export function build(El, body, Mal, data, s, me){
                 type: 'anime',
                 data: {
                   status: s.me.status,
-                  // score: 10,
-                  // num_episodes_watched: 24,
+                  score: s.me.rating,
                   num_watched_episodes: s.me.eps
                 }
               }).then(
