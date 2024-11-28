@@ -1,7 +1,7 @@
 export function build(El, body, Mal, data, s, theme){
   El.Div({
     path: body,
-    insert: 'beforeStart',
+    insert: 'beforeBegin',
     cName: `-mal ${theme}`,
     func: (m) => {
       const el = {
