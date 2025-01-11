@@ -3,7 +3,8 @@ export function connect(Mal, s, title){
     query: {
       q: title.slice(0, 64),
       // offset: 1,
-      limit: 10
+      limit: 20,
+      nsfw: true
     }
   }).then(
     res => {
