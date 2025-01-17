@@ -1,4 +1,19 @@
 export function connect(Mal, s, title){
+  const filter = /(?<a>[.,:;]+)|(?![\w]+)(?<b>-)(?![\w]+)|(?<c>-)/gm;
+  const fixer = (text) => text.replace(filter, (_, a, b, c) => {
+    if(a){
+      // console.log('A', a);
+      return '';
+    }else
+    if(b){
+      // console.log('B', b);
+      return b;
+    }else
+    if(c){
+      // console.log('C', c);
+      return ' ';
+    }
+  }).toLowerCase();
   Mal.search({
     query: {
       q: title.slice(0, 64),
@@ -11,7 +26,7 @@ export function connect(Mal, s, title){
       console.log('[MAL API]', res);
       res.data.forEach(r => {
         console.log(r.node.id);
-        if(r.node.title === title){
+        if(fixer(r.node.title) === title){
           console.log('GOT one!!!', {id: r.node.id, title:r.node.title});
           s.main.id = r.node.id;
           s.main.title = r.node.title;
