@@ -1,6 +1,6 @@
 export const Mal = {
   url: 'https://api.myanimelist.net/v2',
-  dataConverter: async (o) => {
+  dataConverter: (o) => {
     if(!o.data) return;
     if(o.method === 'get') return;
     if(o.headers['Content-Type']) return;
@@ -100,7 +100,7 @@ export const Mal = {
       o.url = this.vpn;
       o.method = 'POST';
 
-      console.log('QQQ', `https://api.myanimelist.net/v2/anime?${o.query && this.s(o.query).toString()||''}`)
+      console.log('QQQ', o);
 
       // o.query = {
       //   q: 'Jujitsu',
