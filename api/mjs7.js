@@ -3,7 +3,7 @@ export const Mal = {
   dataConverter: (o) => {
     if(!o.data) return;
     if(o.method === 'get') return;
-    if(o.headers['Content-Type']) return;
+    if(!o.headers['Content-Type']) return;
     switch(o.headers['Content-Type']){
       case 'application/json': return JSON.stringify(o.data);
       case 'application/text': return JSON.stringify(o.data);
