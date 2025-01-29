@@ -139,6 +139,8 @@ export const Mal = {
         Type: 'application/x-www-form-urlencoded'
       }
 
+      console.log('UPD', o);
+
       const q = {
         status: 'completed',
         score: '10',
