@@ -72,45 +72,15 @@ export const Mal = {
 
       return this.fetch(o);
     },
-    test: function(o){
-      o.url = this.vpn;
-      o.method = 'POST';
-
-      o.headers = {
-        'Authorization': 'Bearer '+this.token,
-        Url: 'https://api.myanimelist.net/v2/users/@me?fields=id,name,anime_statistics',
-        Method: 'get'
-      }
-      // o.data = {
-      //   url: 'https://api.myanimelist.net/v2/users/@me/animelist?',
-      //   method: 'get'
-      // }
-
-      // o.headers = {
-      //   Head: toString({
-      //     'Authorization': 'Bearer '+this.token
-      //   }),
-      //   Info: toString({
-      //     url: 'https://api.myanimelist.net/v2/users/@me/animelist?'
-      //   })}
-
-        return this.fetch(o);
-    },
     search: function(o){
       o.url = this.vpn;
       o.method = 'GET';
 
-      console.log('QQQ', o);
-
-      // o.query = {
-      //   q: 'Jujitsu',
-      //   limit: 4
-      // }
+      // console.log('QQQ', o);
 
       o.headers = {
         'Authorization': 'Bearer '+this.token,
-        Url: `https://api.myanimelist.net/v2/anime?${o.query && this.s(o.query)||''}`,
-        Method: 'get'
+        Url: `https://api.myanimelist.net/v2/anime?${o.query && this.s(o.query)||''}`
       }
       return this.fetch(o);
     },
@@ -121,8 +91,7 @@ export const Mal = {
       o.headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+this.token,
-        Url: `${this.url}/${o.type}/${o.value||''}?${o.query && this.s(o.query)||''}`,
-        Method: 'get'
+        Url: `${this.url}/${o.type}/${o.value||''}?${o.query && this.s(o.query)||''}`
       }
 
       return this.fetch(o);
@@ -134,17 +103,7 @@ export const Mal = {
       o.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Bearer '+this.token,
-        Url: `${this.url}/${o.type}/${o.value||''}/my_list_status?${o.query && this.s(o.query)||''}`,
-        Method: 'PUT',
-        Type: 'application/x-www-form-urlencoded'
-      }
-
-      console.log('UPD', o);
-
-      const q = {
-        status: 'completed',
-        score: '10',
-        num_watched_episodes: '24'
+        Url: `${this.url}/${o.type}/${o.value||''}/my_list_status?${o.query && this.s(o.query)||''}`
       }
 
       return this.fetch(o);
