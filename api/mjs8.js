@@ -31,7 +31,7 @@ export const Mal = {
   },
     fetch: function(o){
         return fetch(this.vpn, {
-            method: o.method||'get',
+            method: o.method,
             headers: {
                 // 'Content-Type': 'application/json',
                 ...o.headers
@@ -98,7 +98,7 @@ export const Mal = {
     },
     search: function(o){
       o.url = this.vpn;
-      o.method = 'POST';
+      o.method = 'GET';
 
       console.log('QQQ', o);
 
@@ -116,7 +116,7 @@ export const Mal = {
     },
     getList: function(o){
       o.url = this.vpn;
-      o.method = 'POST';
+      o.method = 'GET';
 
       o.headers = {
         'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ export const Mal = {
     },
     updateList: function(o){
       o.url = this.vpn;
-      o.method = 'POST';
+      o.method = 'PUT';
 
       o.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
