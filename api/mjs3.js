@@ -1,5 +1,17 @@
 export const Mal = {
   url: 'https://api.myanimelist.net/v2',
+  dataConverter: async (o) => {
+    if(!o.data) return;
+    if(o.method === 'get') return;
+    if(o.headers['Content-Type']) return;
+    switch(o.headers['Content-Type']){
+      case 'application/json': return JSON.stringify(o.data);
+      case 'application/text': return JSON.stringify(o.data);
+      case 'text/html': return o.data;
+      case 'application/x-www-form-urlencoded': return new URLSearchParams(o.data);
+      default: return o.data;
+    }
+  },
   wD: function(day, e){
     const days = {
     monday: ['понедельник', ['', 'ам']],
@@ -24,7 +36,7 @@ export const Mal = {
                 // 'Content-Type': 'application/json',
                 ...o.headers
             },
-            ...(o.data) && {body: JSON.stringify(o.data)}
+            ...(o.data) && {body: this.dataConverter(o.data)}
         }).then(r => r.json().then(
             res => {
                 console.log('[Fetch]', res);
@@ -120,7 +132,7 @@ export const Mal = {
       o.method = 'POST';
 
       o.headers = {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Bearer '+this.token,
         Url: `${this.url}/${o.type}/${o.value||''}/my_list_status?${o.query && this.s(o.query)||''}`,
         Method: 'PUT',
