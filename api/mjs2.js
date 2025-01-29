@@ -21,7 +21,7 @@ export const Mal = {
         return fetch(this.vpn, {
             method: o.method||'get',
             headers: {
-                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/json',
                 ...o.headers
             },
             ...(o.data) && {body: JSON.stringify(o.data)}
@@ -107,6 +107,7 @@ export const Mal = {
       o.method = 'POST';
 
       o.headers = {
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer '+this.token,
         Url: `${this.url}/${o.type}/${o.value||''}?${o.query && this.s(o.query)||''}`,
         Method: 'get'
@@ -119,6 +120,7 @@ export const Mal = {
       o.method = 'POST';
 
       o.headers = {
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer '+this.token,
         Url: `${this.url}/${o.type}/${o.value||''}/my_list_status?${o.query && this.s(o.query)||''}`,
         Method: 'PUT',
