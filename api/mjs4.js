@@ -36,7 +36,7 @@ export const Mal = {
                 // 'Content-Type': 'application/json',
                 ...o.headers
             },
-            ...(o.data) && {body: this.dataConverter(o.data)}
+            ...(o.data) && {body: this.dataConverter(o)}
         }).then(r => r.json().then(
             res => {
                 console.log('[Fetch]', res);
