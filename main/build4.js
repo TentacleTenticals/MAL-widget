@@ -2,7 +2,7 @@ export function build(El, body, Mal, data, s, theme){
   El.Div({
     path: body,
     insert: 'beforeBegin',
-    cName: `-mal ${theme}`,
+    class: `-mal ${theme}`,
     func: (m) => {
       const el = {
         header: {},
@@ -11,12 +11,12 @@ export function build(El, body, Mal, data, s, theme){
       function item(o){
         El.Div({
           path: o.path,
-          cName: o.cName,
+          class: o.class,
           text: o.text,
           func: (r) => {
             El.Div({
               path: r,
-              cName: o.c.cName,
+              class: o.c.class,
               text: o.c.text,
               func: o.c.func
             });
@@ -26,7 +26,7 @@ export function build(El, body, Mal, data, s, theme){
   
       El.Div({
         path: m,
-        cName: '-header',
+        class: '-header',
         func: (h) => {// m 0
           const handler = {
             set(target, key, value, receiver) {
@@ -67,36 +67,36 @@ export function build(El, body, Mal, data, s, theme){
   
           El.Div({//h 0
             path: h,
-            cName: '-title',
+            class: '-title',
             text: 'MAL'
           });
   
           El.Div({//h 1
             path: h,
-            cName: '-info',
+            class: '-info',
             func: (info) => {
               El.Div({//info 0
                 path: info,
-                cName: '-list',
+                class: '-list',
                 // text: 'Info',
                 func: (i) => {
                   El.Div({
                     path: i,
-                    cName: '-item -broadcast',
+                    class: '-item -broadcast',
                     func: (b) => {
                       el.header.broadcast = b;
                       El.Div({
                         path: b,
-                        cName: '-title',
+                        class: '-title',
                         text: 'Выходит по'
                       });
                       El.Div({
                         path: b,
-                        cName: '-s-item',
+                        class: '-s-item',
                         func: (i) => {
                           El.Div({
                             path: i,
-                            cName: '-value -day',
+                            class: '-value -day',
                             text: '-',
                             func: (e) => {
                               el.header.weekDay = e;
@@ -105,7 +105,7 @@ export function build(El, body, Mal, data, s, theme){
                           El.Div({
                             path: i,
                             text: '-',
-                            cName: '-value -time',
+                            class: '-value -time',
                             func: (e) => {
                               el.header.weekTime = e;
                             }
@@ -117,10 +117,10 @@ export function build(El, body, Mal, data, s, theme){
   
                   item({//i 0
                     path: i,
-                    cName: '-item -rating',
+                    class: '-item -rating',
                     text: 'Rating',
                     c: {
-                      cName: '-value',
+                      class: '-value',
                       func: (e) => {
                         el.header.rating = e;
                       }
@@ -129,10 +129,10 @@ export function build(El, body, Mal, data, s, theme){
 
                   item({//i 0
                     path: i,
-                    cName: '-item -rank',
+                    class: '-item -rank',
                     text: 'Rank',
                     c: {
-                      cName: '-value',
+                      class: '-value',
                       func: (e) => {
                         el.header.rank = e;
                       }
@@ -141,10 +141,10 @@ export function build(El, body, Mal, data, s, theme){
       
                   item({//i 1
                     path: i,
-                    cName: '-item -id',
+                    class: '-item -id',
                     text: 'MAL ID',
                     c: {
-                      cName: '-value',
+                      class: '-value',
                       func: (e) => {
                         el.header.id = e;
                       }
@@ -153,7 +153,7 @@ export function build(El, body, Mal, data, s, theme){
   
                   El.A({
                     path: i,
-                    cName: '-link',
+                    class: '-link',
                     text: '🔗',
                     url: s.main.url,
                     target: '__blank',
@@ -170,7 +170,7 @@ export function build(El, body, Mal, data, s, theme){
   
       El.Div({//m 1
         path: m,
-        cName: '-itemTitle',
+        class: '-itemTitle',
         text: '-',
         func: (e) => {
           el.title = e;
@@ -179,7 +179,7 @@ export function build(El, body, Mal, data, s, theme){
   
       El.Div({//m 2
         path: m,
-        cName: '-footer',
+        class: '-footer',
         func: (footer) => {
           const handler = {
             set(target, key, value, receiver) {
@@ -208,7 +208,7 @@ export function build(El, body, Mal, data, s, theme){
   
           El.Select({//s 0
             path: footer,
-            cName: '-status -st',
+            class: '-status -st',
             options: [
               ['-', undefined],
               ['смотрю', 'watching'],
@@ -228,16 +228,16 @@ export function build(El, body, Mal, data, s, theme){
           });
           El.Div({//s 1
             path: footer,
-            cName: '-status -episodes',
+            class: '-status -episodes',
             func: (n) => {
               El.Div({
                 path: n,
-                cName: '-numbers',
+                class: '-numbers',
                 text: 'Eps',
                 func: (num) => {
                   El.Input({//n 0
                     path: num,
-                    cName: '-num',
+                    class: '-num',
                     type: 'number',
                     min: 0,
                     max: el.footer.epsNum,
@@ -257,7 +257,7 @@ export function build(El, body, Mal, data, s, theme){
                   });
                   El.Div({
                     path: num,
-                    cName: '-max',
+                    class: '-max',
                     // text: d.epNum,
                     func: (e) => {
                       el.footer.epsNum = e;
@@ -266,7 +266,7 @@ export function build(El, body, Mal, data, s, theme){
 
                   El.Button({//n 2
                     path: num,
-                    cName: '-btn -plus',
+                    class: '-btn -plus',
                     text: '+',
                     onclick: () => {
                       s.me.eps++;
@@ -277,12 +277,12 @@ export function build(El, body, Mal, data, s, theme){
   
               El.Div({//n 0
                 path: n,
-                cName: '-status -rating',
+                class: '-status -rating',
                 text: 'My rating',
                 func: (num) => {
                   El.Input({//n 0
                     path: num,
-                    cName: '-num',
+                    class: '-num',
                     // editable: true,
                     type: 'number',
                     min: 0,
@@ -308,7 +308,7 @@ export function build(El, body, Mal, data, s, theme){
   
           El.Button({//n 3
             path: footer,
-            cName: '-btn -save',
+            class: '-btn -save',
             text: 'Save',
             onclick: () => {
               document.activeElement.blur();
