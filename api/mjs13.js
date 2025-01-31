@@ -65,7 +65,7 @@ export const Mal = {
 
     o.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Url: `${o.tokenUrl}?${o.query && this.s(o.query)||''}`
+      Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
     return this.fetch(o);
@@ -77,7 +77,7 @@ export const Mal = {
     o.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Bearer '+this.token,
-      Url: `${o.tokenUrl}?${o.query && this.s(o.query)||''}`
+      Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
     return this.fetch(o);
