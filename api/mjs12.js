@@ -1,5 +1,6 @@
 export const Mal = {
   url: 'https://api.myanimelist.net/v2',
+  tokenUrl: 'https://myanimelist.net/v1/oauth2/token',
   authUrl: 'https://myanimelist.net/v1/oauth2/authorize',
   dataConverter: (o) => {
     if(!o.data) return;
@@ -64,7 +65,7 @@ export const Mal = {
 
     o.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Url: `${o.authUrl}?${o.query && this.s(o.query)||''}`
+      Url: `${o.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
     return this.fetch(o);
@@ -76,7 +77,7 @@ export const Mal = {
     o.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Bearer '+this.token,
-      Url: `${o.authUrl}?${o.query && this.s(o.query)||''}`
+      Url: `${o.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
     return this.fetch(o);
