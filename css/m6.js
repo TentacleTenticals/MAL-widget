@@ -16,17 +16,10 @@ export const css = () => {
 }
 
 .inline {
-  /* display: flex; */
 
   div, a {
     display: inline;
   }
-  /* white-space: break-spaces; */
-
-  /* &::before {
-    content: '*';
-    padding: 0 5px 0 0;
-  } */
 }
 
 .startModal {
