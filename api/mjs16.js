@@ -111,7 +111,7 @@ export const Mal = {
 
     o.headers = {
       'Authorization': 'Bearer '+this.token,
-      Url: `${this.url}/${o.type||''}/${o.value||''}?${o.query && this.s(o.query)||''}`
+      Url: `${this.url}/${o.type||''}?${o.query && this.s(o.query)||''}`
     }
     console.log('S', o);
     return this.fetch(o);
