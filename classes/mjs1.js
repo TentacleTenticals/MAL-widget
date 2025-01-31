@@ -1,7 +1,7 @@
 export const El = {
   Div: function(o){
     const main=document.createElement('div');
-    if(o.cName) main.className = o.cName;
+    if(o.class) main.className = o.class;
     if(o.id) main.id = o.id;
     if(o.text) main.textContent = o.text;
     if(o.title) main.title = o.title;
@@ -45,7 +45,7 @@ export const El = {
         rtn: []
       });
     }
-    if(o.cName) main.className = o.cName;
+    if(o.class) main.className = o.class;
     if(o.title) main.title=o.title;
     if(o.id) main.id = o.id;
     if(o.text) main.textContent = o.text;
@@ -59,6 +59,8 @@ export const El = {
       cName: 'label',
       text: o.label
     });
+
+    if(o.func) o.func(main);
 
     if(o.rtn) {
       if(!rtn.length > 0 && !container) return main;
@@ -112,7 +114,7 @@ export const El = {
   },
   Audio: function(o){
     const main=document.createElement('audio');
-    if(o.cName) main.className=o.cName;
+    if(o.class) main.className=o.class;
     if(o.url) main.src=o.url;
     o.preload ? main.preload=o.preload : main.preload='none';
     if(o.autoplay) main.autoplay=o.autoplay;
@@ -122,7 +124,7 @@ export const El = {
   },
   A: function(o){
     const main=document.createElement('a');
-    if(o.cName) main.className=o.cName;
+    if(o.class) main.className=o.class;
     if(o.id) main.id=o.id;
     if(o.text) main.textContent=o.text;
     if(o.url) main.href=o.url;
@@ -143,7 +145,7 @@ export const El = {
       rtn: true
     });
     const main=document.createElement('input');
-    if(o.cName) main.className=o.cName;
+    if(o.class) main.className=o.class;
     if(o.text) main.textContent=o.text;
     if(o.name) main.name=o.name;
     if(o.type) main.type=o.type;
@@ -195,13 +197,13 @@ export const El = {
   Select: function(o){
     if(o.label) this.l=this.Label({
       path: o.path,
-      cName: o.lName,
+      class: o.lName,
       text: o.label,
       attr: o.lAttr,
       rtn: true
     });
     const main=document.createElement('select');
-    if(o.cName) main.className = o.cName;
+    if(o.class) main.className = o.class;
     if(o.id) main.id=o.id;
     if(o.name) main.name=o.name;
     if(o.onchange) main.onchange=o.onchange;
@@ -273,6 +275,57 @@ export const El = {
     }
   },
 
+  Lt: function(o){
+    const main=document.createElement('ul');
+    if(o.class) main.className=o.class;
+    if(o.items) o.items.forEach(e => {
+      this.iLt({
+        path: main,
+        text: e.text,
+        link: e.link,
+        class: e.class,
+        items: e.items
+      });
+    })
+
+    o.path.appendChild(main);
+  },
+
+  iLt: function(o){
+    const main=document.createElement('li');
+    if(o.class) main.className=o.class;
+    if(o.text) main.textContent=o.text;
+    if(o.link) El.A({
+      path: main,
+      ...o.link
+    })
+    if(o.items) o.items.forEach(e => {
+      switch(e.type){
+        case 'div': this.Div({
+          path: main,
+          text: e.text
+        });
+        break;
+        case 'link': this.A({
+          path: main,
+          text: e.text,
+          url: e.url
+        });
+        break;
+        case 'list': this.Lt({
+          path: main,
+          class: e.class,
+          items: e.items
+        });
+        break;
+      }
+    });
+
+    // if(o.items) console.log('q', o.items);
+
+    o.path.appendChild(main);
+  },
+
   Datalist: function({path, values, id}){
     const main=document.createElement('datalist');
     main.id=id;
@@ -291,7 +344,7 @@ export const El = {
   Tarea: function(c){
     const main=document.createElement('textarea');
     if(c.name) main.name=c.name;
-    if(c.cName) main.className=c.cName;
+    if(c.class) main.className=c.class;
     if(c.id) main.id=c.id;
     if(c.placeholder) main.placeholder=c.placeholder;
     if(c.rows) main.rows=c.rows;
@@ -304,7 +357,7 @@ export const El = {
   Dialog: function(c){
     const main=document.createElement('dialog');
     if(c.name) main.name=c.name;
-    if(c.cName) main.className=c.cName;
+    if(c.class) main.className=c.class;
     if(c.id) main.id=c.id;
     if(c.text) main.textContent=c.text;
     if(c.onclose) main.onclose=c.onclose;
@@ -461,23 +514,23 @@ export const El = {
     if(focus) main.children[0].focus();
   },
   
-  Label: function({path, cName, text, title, attr, onclick, body, rtn}){
+  Label: function(o){
     const main=document.createElement('label');
-    if(cName) main.className=cName;
-    if(title) main.title=title;
-    if(text) main.textContent=text;
-    if(attr) main.setAttribute(attr[0], attr[1]);
-    if(onclick) main.onclick=onclick;
-    path.appendChild(main);
+    if(o.class) main.className=o.class;
+    if(o.title) main.title=o.title;
+    if(o.text) main.textContent=o.text;
+    if(o.attr) main.setAttribute(o.attr[0], o.attr[1]);
+    if(o.onclick) main.onclick=o.onclick;
+    o.path.appendChild(main);
 
     // console.log('ATTR', attr);
 
-    if(body) body(main);
+    if(o.body) o.body(main);
 
-    if(rtn){
-      if(!rtn.length > 0) return main;
+    if(o.rtn){
+      if(!o.rtn.length > 0) return main;
       const obj={};
-      rtn.forEach(e => {
+      o.rtn.forEach(e => {
         if(e) obj[e] = this[e];
       })
       return obj;
@@ -661,26 +714,26 @@ export const El = {
       return this.obj;
     }
   },
-  Form: function({path, cName, id, name, action, method, style, func, rtn}){
+  Form: function(o){
     this.main=document.createElement('form');
-    if(cName) this.main.className=cName;
-    if(style) this.main.style=style;
-    if(id) this.main.id=id;
-    this.main.name=name;
-    if(action) this.main.action=action;
-    method ? this.main.method=method : this.main.method='dialog';
-    path.appendChild(this.main);
+    if(o.class) this.main.className=o.class;
+    if(o.style) this.main.style=o.style;
+    if(o.id) this.main.id=o.id;
+    if(o.name) this.main.name=o.name;
+    if(o.action) this.main.action=o.action;
+    o.method ? this.main.method=o.method : this.main.method='dialog';
+    o.path.appendChild(this.main);
 
-    if(rtn){
-      if(!rtn.length > 0) return this.main;
+    if(o.rtn){
+      if(!o.rtn.length > 0) return this.main;
       this.obj={};
-      rtn.forEach(e => {
+      o.rtn.forEach(e => {
         this.obj[e] = this[e];
       })
       return this.obj;
     };
 
-    if(func) func(this.main);
+    if(o.func) func(this.main);
   },
 
   auto: function(cnt, cnts, name, cfg){
