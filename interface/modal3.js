@@ -94,8 +94,8 @@ export function tokenModal(El, Mal, o){
                 }).then(
                   async res => {
                     console.log('[MAL Widget] Получены токены', res);
-                    await o.gm.setValue('token', res.token);
-                    await o.gm.setValue('refresh_token', res.token);
+                    await o.gm.setValue('token', res.access_token);
+                    await o.gm.setValue('refresh_token', res.refresh_token);
                     await o.gm.setValue('date', Date.parse(new Date));
                   },
                   err => {
