@@ -15,6 +15,7 @@ export function connect(Mal, s, title){
     }
   }).toLowerCase();
   Mal.search({
+    type: 'anime',
     query: {
       q: title.slice(0, 64),
       // offset: 1,
