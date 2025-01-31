@@ -1,5 +1,5 @@
 export function tokenModal(El, Mal, o){
-  El.Div({
+  El.Dialog({
     path: document.body,
     class: 'modal',
     show: true,
