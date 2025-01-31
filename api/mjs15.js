@@ -113,6 +113,7 @@ export const Mal = {
       'Authorization': 'Bearer '+this.token,
       Url: `${this.url}/${o.type||''}/${o.value||''}?${o.query && this.s(o.query)||''}`
     }
+    console.log('S', o);
     return this.fetch(o);
   },
   getList: function(o){
