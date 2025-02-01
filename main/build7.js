@@ -192,7 +192,7 @@ export function build(El, Mal, o){
               return false;
             }
           };
-          s.me = new Proxy(o.data.me, handler);
+          o.s.me = new Proxy(o.data.me, handler);
   
           function upd(key, value){
             switch(key){
