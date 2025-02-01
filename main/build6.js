@@ -1,24 +1,24 @@
-export function build(El, body, Mal, data, s, theme){
+export function build(El, Mal, o){
   El.Div({
-    path: body,
+    path: o.path,
     insert: 'beforeBegin',
-    class: `-mal ${theme}`,
+    class: `-mal ${o.theme}`,
     func: (m) => {
       const el = {
         header: {},
         footer: {}
       };
-      function item(o){
+      function item(i){
         El.Div({
-          path: o.path,
-          class: o.class,
-          text: o.text,
+          path: i.path,
+          class: i.class,
+          text: i.text,
           func: (r) => {
             El.Div({
               path: r,
-              class: o.c.class,
-              text: o.c.text,
-              func: o.c.func
+              class: i.c.class,
+              text: i.c.text,
+              func: i.c.func
             });
           }
         });
@@ -31,7 +31,7 @@ export function build(El, body, Mal, data, s, theme){
           const handler = {
             set(target, key, value, receiver) {
               if (value !== target[key]) {
-                console.log(`Setting ${key} to ${value}`);
+                // console.log(`Setting ${key} to ${value}`);
                 target[key] = value;
                 upd(key, value);
                 return true;
@@ -39,7 +39,7 @@ export function build(El, body, Mal, data, s, theme){
               return false;
             }
           };
-          s.main = new Proxy(data.main, handler);
+          o.s.main = new Proxy(o.data.main, handler);
           // const el = {};
       
           function upd(key, v){
@@ -155,7 +155,7 @@ export function build(El, body, Mal, data, s, theme){
                     path: i,
                     class: '-link',
                     text: '🔗',
-                    url: s.main.url,
+                    url: o.s.main.url,
                     target: '__blank',
                     func: (e) => {
                       el.header.url = e;
@@ -184,7 +184,7 @@ export function build(El, body, Mal, data, s, theme){
           const handler = {
             set(target, key, value, receiver) {
               if (value !== target[key]) {
-                console.log(`Setting ${key} to ${value}`);
+                // console.log(`Setting ${key} to ${value}`);
                 target[key] = value;
                 upd(key, value);
                 return true;
@@ -192,7 +192,7 @@ export function build(El, body, Mal, data, s, theme){
               return false;
             }
           };
-          s.me = new Proxy(data.me, handler);
+          s.me = new Proxy(o.data.me, handler);
   
           function upd(key, value){
             switch(key){
@@ -219,7 +219,7 @@ export function build(El, body, Mal, data, s, theme){
             ],
             // value: d.status,
             onchange: (e) => {
-              s.me.status = e.target.value;
+              o.s.me.status = e.target.value;
             },
             func: (e) => {
               el.footer.status = e;
@@ -243,15 +243,15 @@ export function build(El, body, Mal, data, s, theme){
                     max: el.footer.epsNum,
                     pattern: '[0-9]{2}',
                     onblur: (e) => {
-                      if(s.me.eps === e.target.value) return;
-                      s.me.eps = e.target.value;
+                      if(o.s.me.eps === e.target.value) return;
+                      o.s.me.eps = e.target.value;
                       e.target.style.width = `${e.target.value.length*8}px`;
                     },
                     oninput: (e) => {
                       e.target.style.width = `${e.target.value.length*8}px`;
                     },
                     func: (e) => {
-                      e.style.width = `${s.me.eps.length*8}px`;
+                      e.style.width = `${o.s.me.eps.length*8}px`;
                       el.footer.eps = e;
                     }
                   });
@@ -269,7 +269,7 @@ export function build(El, body, Mal, data, s, theme){
                     class: '-btn -plus',
                     text: '+',
                     onclick: () => {
-                      s.me.eps++;
+                      o.s.me.eps++;
                     }
                   });
                 }
@@ -289,15 +289,15 @@ export function build(El, body, Mal, data, s, theme){
                     max: 10,
                     pattern: '[0-9]{2}',
                     onblur: (e) => {
-                      if(s.me.rating === e.target.value) return;
-                      s.me.rating = e.target.value;
+                      if(o.s.me.rating === e.target.value) return;
+                      o.s.me.rating = e.target.value;
                       e.target.style.width = `${e.target.value.length*8}px`;
                     },
                     oninput: (e) => {
                       e.target.style.width = `${e.target.value.length*8}px`;
                     },
                     func: (e) => {
-                      e.style.width = `${s.me.rating.length*8}px`;
+                      e.style.width = `${o.s.me.rating.length*8}px`;
                       el.footer.rating = e;
                     }
                   });
@@ -313,16 +313,16 @@ export function build(El, body, Mal, data, s, theme){
             onclick: () => {
               document.activeElement.blur();
               Mal.updateList({
-                value: s.main.id,
+                value: o.s.main.id,
                 type: 'anime',
                 data: {
-                  status: s.me.status,
-                  score: s.me.rating,
-                  num_watched_episodes: s.me.eps
+                  status: o.s.me.status,
+                  score: o.s.me.rating,
+                  num_watched_episodes: o.s.me.eps
                 }
               }).then(
                 l => {
-                  console.log('Upd', l);
+                  console.log('[MAL Widget] UPD', l);
                 }
               )
             }
