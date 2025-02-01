@@ -25,6 +25,7 @@ export const Mal = {
     return text;
   },
   wD: function(day, e){
+    if(!day) return;
     const days = {
     monday: ['понедельник', ['', 'ам']],
     tuesday: ['вторник', ['', 'ам']],
