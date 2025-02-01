@@ -45,8 +45,8 @@ export function connect(Mal, o){
                   o.s.main.rating = l.mean;
                   o.s.main.rank = l.rank;
                   o.s.main.status = l.status;
-                  o.s.main.weekDay = l.broadcast.day_of_the_week;
-                  o.s.main.weekTime = l.broadcast.start_time;
+                  o.s.main.weekDay = l.broadcast?.day_of_the_week;
+                  o.s.main.weekTime = l.broadcast?.start_time;
                   o.s.main.url = `https://myanimelist.net/anime/${r.node.id}`;
   
                   o.s.me.status = l.my_list_status?.status;
