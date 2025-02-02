@@ -64,6 +64,14 @@ export const Mal = {
     o.url = 'https://myanimelist.net/v1/oauth2/token';
     o.method = 'POST';
 
+    o.data = {
+      grant_type: 'authorization_code',
+      client_id: o.clientId,
+      client_secret: o.clientSecret,
+      redirect_uri: o.redirectUri,
+      ...o.data
+    }
+
     o.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
@@ -75,9 +83,18 @@ export const Mal = {
     o.url = 'https://myanimelist.net/v1/oauth2/token';
     o.method = 'POST';
 
+    o.data = {
+      grant_type: 'refresh_token',
+      client_id: o.clientId,
+      client_secret: o.clientSecret,
+      redirect_uri: o.redirectUri,
+      refresh_token: o.refToken,
+      ...o.data
+    };
+
     o.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer '+this.token,
+      'Authorization': 'Bearer '+o.token,
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
