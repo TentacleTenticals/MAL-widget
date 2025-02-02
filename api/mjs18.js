@@ -69,6 +69,7 @@ export const Mal = {
       client_id: o.clientId,
       client_secret: o.clientSecret,
       redirect_uri: o.redirectUri,
+      code_verifier: o.codeVer,
       ...o.data
     }
 
