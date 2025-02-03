@@ -103,7 +103,7 @@ export const Mal = {
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
-    console.log('Q', q);
+    console.log('Q', o);
 
     return this.fetch(o);
   },
