@@ -280,5 +280,16 @@ export const css = () => `
   .m-list {
     gap: 5px 0;
   }
+
+  .helper {
+    margin: 10px 0 0 0;
+    border: 1px solid rgb(0 0 0);
+    border-radius: 3px;
+    background-color: rgb(223 223 223);
+
+    .header {
+      padding: 5px 0 0 10px;
+    }
+  }
 }
 `
