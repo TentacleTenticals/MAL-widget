@@ -57,7 +57,7 @@ export const Mal = {
           throw new Error('[MAL Widget ERR]', {cause: JSON.stringify(r)});
         }).then(
           res => {
-            console.log('q', this.getType(res));
+            // console.log('q', this.getType(res));
             if(res.error) throw new Error('[MAL Widget]', {cause: JSON.stringify(res)});
             else
             // console.log('qq', r);
@@ -68,7 +68,7 @@ export const Mal = {
               console.log('[MAL] ERR', err);
               console.log('[MAL] R', r);
           }
-      ))
+      )
   },
   loginGen: function(o){
     const data = {
