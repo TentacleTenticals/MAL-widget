@@ -88,6 +88,7 @@ export function tokenModal(El, Mal, o){
 
                 new Promise((resolve, error) => {
                   Mal.getToken({
+                    url: o.url,
                     ...o.secrets,
                     codeVer: chall,
                     // code: o.secrets.code
