@@ -314,7 +314,7 @@ export function build(El, Mal, o){
               document.activeElement.blur();
               Mal.updateList({
                 value: o.s.main.id,
-                type: 'anime',
+                type: o.type,
                 data: {
                   status: o.s.me.status,
                   score: o.s.me.rating,
