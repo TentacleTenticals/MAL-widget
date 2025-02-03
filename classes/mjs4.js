@@ -361,7 +361,10 @@ export const El = {
     if(c.class) main.className=c.class;
     if(c.id) main.id=c.id;
     if(c.text) main.textContent=c.text;
-    if(c.onclose) main.onclose=c.onclose;
+    if(c.onclose) main.onclose=() => {
+      c.onclose()
+      if(c.delOnclose) main.remove();
+    };
     if(c.func) c.func(main);
     c.path.appendChild(main);
     if(c.show) main.show();
