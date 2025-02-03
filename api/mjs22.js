@@ -50,7 +50,12 @@ export const Mal = {
               ...o.headers
           },
           ...(o.data) && {body: this.dataConverter(o)}
-      }).then(r => r.json().then(
+      }).then(
+        r => {
+          if(r.status === 'ok') return r.json();
+          else
+          throw new Error('[MAL Widget ERR]', {cause: JSON.stringify(r)});
+        }).then(
           res => {
             console.log('q', this.getType(res));
             if(res.error) throw new Error('[MAL Widget]', {cause: JSON.stringify(res)});
