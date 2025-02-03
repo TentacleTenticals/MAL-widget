@@ -53,8 +53,10 @@ export const Mal = {
       }).then(
         r => {
           if(r.status === 'ok') return r.json();
-          else
+          else {
+            console.log('R', r);
           throw new Error('[MAL Widget ERR]', {cause: JSON.stringify(r)});
+          }
         }).then(
           res => {
             // console.log('q', this.getType(res));
@@ -66,7 +68,7 @@ export const Mal = {
           },
           err => {
               console.log('[MAL] ERR', err);
-              console.log('[MAL] R', r);
+              // console.log('[MAL] R', r);
           }
       )
   },
