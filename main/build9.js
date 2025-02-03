@@ -315,6 +315,7 @@ export function build(El, Mal, o){
               Mal.updateList({
                 value: o.s.main.id,
                 type: o.type,
+                url: o.url,
                 data: {
                   status: o.s.me.status,
                   score: o.s.me.rating,
