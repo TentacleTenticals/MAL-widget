@@ -19,6 +19,8 @@ export function connect(Mal, o){
   function search(r){
     Mal.search({
       type: o.type,
+      url: o.url,
+      token: o.token,
       query: {
         q: o.title.slice(0, 64),
         // offset: 1,
@@ -28,7 +30,7 @@ export function connect(Mal, o){
     }).then(
       res => {
         console.log('[MAL API]', res);
-        if(!res||!res.data||getType(res.data) !== 'Array'){
+        if(!res.data||getType(res.data) !== 'Array'){
           r.retry.try++;
           return search(r);
         }else
@@ -42,6 +44,8 @@ export function connect(Mal, o){
             Mal.getList({
               value: o.s.main.id,
               type: o.type,
+              url: o.url,
+              token: o.token,
               query: {
                 fields: ['id', 'title', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes']
               }
