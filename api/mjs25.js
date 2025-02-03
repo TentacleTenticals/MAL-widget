@@ -103,6 +103,8 @@ export const Mal = {
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
+    console.log('Q', q);
+
     return this.fetch(o);
   },
   updToken: function(o){
@@ -124,7 +126,7 @@ export const Mal = {
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
-    console.log('o', o)
+    console.log('o', o);
 
     return this.fetch(o);
   },
