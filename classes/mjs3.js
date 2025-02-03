@@ -1,4 +1,5 @@
 export const El = {
+  getType: (o) => o && o.constructor.toString().split(/[\(\) ]/)[1],
   Div: function(o){
     const main=document.createElement('div');
     if(o.class) main.className = o.class;
