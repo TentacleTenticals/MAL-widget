@@ -52,22 +52,24 @@ export const Mal = {
           ...(o.data) && {body: this.dataConverter(o)}
       }).then(
         r => {
-          if(r.status === 'ok') return r.json();
+          if(r.ok) return r.json();
           else {
             console.log('R', r);
-          throw new Error('[MAL Widget ERR]', {cause: JSON.stringify(r)});
+          throw new Error('[MAL API ERR]', {cause: r});
           }
         }).then(
           res => {
             // console.log('q', this.getType(res));
-            if(res.error) throw new Error('[MAL Widget]', {cause: JSON.stringify(res)});
+            if(res.error) throw new Error('[MAL API]', {cause: JSON.stringify(res)});
             else
             // console.log('qq', r);
               // console.log('[MAL1]', res);
               return res;
           },
           err => {
-              console.log('[MAL] ERR', err);
+            console.log('[MAL] ERR', err);
+            throw new Error('[MAL API ERR]', {cause: JSON.stringify(r)});
+            // return err;
               // console.log('[MAL] R', r);
           }
       )
