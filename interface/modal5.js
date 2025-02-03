@@ -86,22 +86,11 @@ export function tokenModal(El, Mal, o){
               func: (e) => el.btnToken = e,
               onclick: () => {
 
-                new Promise((resolve, error) => {
-                  Mal.getToken({
-                    url: o.url,
-                    ...o.secrets,
-                    codeVer: chall,
-                    // code: o.secrets.code
-                  }).then(
-                    res => {
-                      console.log('RES', res);
-                      resolve(res);
-                    },
-                    err => {
-                      console.log('ERR', err);
-                      error(err);
-                    }
-                  )
+                Mal.getToken({
+                  url: o.url,
+                  ...o.secrets,
+                  codeVer: chall,
+                  // code: o.secrets.code
                 }).then(
                   async res => {
                     console.log('[MAL Widget] Токены получены!');
@@ -117,7 +106,7 @@ export function tokenModal(El, Mal, o){
                   err => {
                     console.log('[MAL Widget ERR] Токены не получены!', err);
                   }
-                )
+                );
               }
             });
           }
