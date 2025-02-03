@@ -2,6 +2,7 @@ export const Mal = {
   url: 'https://api.myanimelist.net/v2',
   tokenUrl: 'https://myanimelist.net/v1/oauth2/token',
   authUrl: 'https://myanimelist.net/v1/oauth2/authorize',
+  getType: (o) => o && o.constructor.toString().split(/[\(\) ]/)[1],
   dataConverter: (o) => {
     if(!o.data) return;
     if(o.method === 'get') return;
@@ -51,7 +52,11 @@ export const Mal = {
           ...(o.data) && {body: this.dataConverter(o)}
       }).then(r => r.json().then(
           res => {
-              // console.log('[MAL]', res);
+            console.log('q', this.getType(res));
+            if(res.error) throw new Error('[MAL Widget]', {cause: JSON.stringify(res)});
+            else
+            // console.log('qq', r);
+              // console.log('[MAL1]', res);
               return res;
           },
           err => {
@@ -59,6 +64,18 @@ export const Mal = {
               console.log('[MAL] R', r);
           }
       ))
+  },
+  loginGen: function(o){
+    const data = {
+      'response_type': 'code',
+      'client_id': o.clientId,
+      'redirect_uri': o.redirectUri,
+      'code_challenge': o.codeChall
+    };
+
+    console.log('DAT', data);
+
+    return this.authUrl+'?'+new URLSearchParams(data);
   },
   getToken: function(o){
     o.url = 'https://myanimelist.net/v1/oauth2/token';
@@ -69,6 +86,7 @@ export const Mal = {
       client_id: o.clientId,
       client_secret: o.clientSecret,
       redirect_uri: o.redirectUri,
+      code: o.code,
       code_verifier: o.codeVer,
       ...o.data
     }
@@ -95,9 +113,11 @@ export const Mal = {
 
     o.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer '+o.token,
+      // 'Authorization': 'Bearer '+o.token,
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
+
+    console.log('o', o)
 
     return this.fetch(o);
   },
