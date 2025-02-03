@@ -186,6 +186,8 @@ export const Mal = {
       Url: `${this.url}/${o.type||''}/${o.value||''}/my_list_status?${o.query && this.s(o.query)||''}`
     }
 
+    console.log('O', o);
+
     return this.fetch(o);
   }
 };
