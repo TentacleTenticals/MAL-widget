@@ -149,7 +149,7 @@ export const Mal = {
     o.method = 'GET';
 
     o.headers = {
-      'Authorization': 'Bearer '+this.token,
+      'Authorization': 'Bearer '+o.token,
       Url: `${this.url}/${o.type||''}?${o.query && this.s(o.query)||''}`
     }
     console.log('S', o);
@@ -160,7 +160,7 @@ export const Mal = {
 
     o.headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer '+this.token,
+      'Authorization': 'Bearer '+o.token,
       Url: `${this.url}/${o.type||''}/${o.value||''}?${o.query && this.s(o.query)||''}`
     }
 
@@ -171,7 +171,7 @@ export const Mal = {
 
     o.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer '+this.token,
+      'Authorization': 'Bearer '+o.token,
       Url: `${this.url}/${o.type||''}/${o.value||''}/my_list_status?${o.query && this.s(o.query)||''}`
     }
 
