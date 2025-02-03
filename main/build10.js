@@ -316,6 +316,7 @@ export function build(El, Mal, o){
                 value: o.s.main.id,
                 type: o.type,
                 url: o.url,
+                token: o.token,
                 data: {
                   status: o.s.me.status,
                   score: o.s.me.rating,
