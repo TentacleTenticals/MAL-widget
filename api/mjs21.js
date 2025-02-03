@@ -44,7 +44,7 @@ export const Mal = {
     return new URLSearchParams(o);
   },
   fetch: function(o){
-      return fetch(this.vpn, {
+      return fetch(o.url, {
           method: o.method,
           headers: {
               ...o.headers
@@ -78,7 +78,7 @@ export const Mal = {
     return this.authUrl+'?'+new URLSearchParams(data);
   },
   getToken: function(o){
-    o.url = 'https://myanimelist.net/v1/oauth2/token';
+    // o.url = 'https://myanimelist.net/v1/oauth2/token';
     o.method = 'POST';
 
     o.data = {
@@ -99,7 +99,7 @@ export const Mal = {
     return this.fetch(o);
   },
   updToken: function(o){
-    o.url = 'https://myanimelist.net/v1/oauth2/token';
+    // o.url = 'https://myanimelist.net/v1/oauth2/token';
     o.method = 'POST';
 
     o.data = {
@@ -128,7 +128,7 @@ export const Mal = {
   },
   status: function(o){
     o.method = 'get';
-    o.url = this.vpn;
+    // o.url = this.vpn;
     o.query = new URLSearchParams({
       status: 'watching',
       limit: 4
