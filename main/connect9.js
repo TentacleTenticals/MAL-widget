@@ -1,6 +1,6 @@
 export function connect(Mal, o){
   const filter = /(?<a>[.,:;]+)|(?![\w]+)(?<b>-)(?![\w]+)|(?<c>-)/gm;
-  const getType = (o) => o.constructor.toString().split(/[\(\) ]/)[1];
+  const getType = (o) => o && o.constructor.toString().split(/[\(\) ]/)[1];
   const fixer = (text) => text.replace(filter, (_, a, b, c) => {
     if(a){
       // console.log('A', a);
@@ -28,10 +28,10 @@ export function connect(Mal, o){
     }).then(
       res => {
         console.log('[MAL API]', res);
-        if(getType(res.data) !== 'Array'){
+        if(!res||!res.data||getType(res.data) !== 'Array'){
           r.retry.try++;
           return search(r);
-        }
+        }else
         res.data.forEach(r => {
           // console.log(r.node.id);
           if(fixer(r.node.title) === o.title){
@@ -41,14 +41,14 @@ export function connect(Mal, o){
     
             Mal.getList({
               value: o.s.main.id,
-              type: 'anime',
+              type: o.type,
               query: {
                 fields: ['id', 'title', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes']
               }
             }).then(
               l => {
-                console.log('LIST', l);
-                console.log('S', l.my_list_status?.score||0)
+                // console.log('LIST', l);
+                // console.log('S', l.my_list_status?.score||0)
                 o.s.main.rating = l.mean;
                 o.s.main.rank = l.rank;
                 o.s.main.status = l.status;
@@ -75,5 +75,5 @@ export function connect(Mal, o){
     )
   }
 
-  search(o.retry);
+  search();
 }
