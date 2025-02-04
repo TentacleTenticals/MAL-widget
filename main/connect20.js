@@ -17,7 +17,7 @@ export function connect(Mal, o){
     }
   }).toLowerCase();
 
-  Mal.search({
+  return Mal.search({
     type: o.type,
     url: o.url,
     token: o.token,
@@ -30,10 +30,11 @@ export function connect(Mal, o){
   }).then(
     res => {
       console.log('[MAL API]', res);
-      if(!res||!res.data||getType(res.data) !== 'Array'){
-        throw new Error('[MAL Widget] Not array');
-      }else
-      res.data.forEach(r => {
+      // if(!res||!res.data||getType(res.data) !== 'Array'){
+      //   o.retry.try++;
+      //   throw new Error('[MAL Widget] Not array');
+      // }else
+      res && res.data && res.data.forEach(r => {
         // console.log(r.node.id);
         if(fixer(r.node.title) === o.title){
           console.log('GOT one!!!', {id: r.node.id, title:r.node.title});
