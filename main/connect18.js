@@ -33,8 +33,8 @@ export function connect(Mal, o){
       if(!res||!res.data||getType(res.data) !== 'Array'){
         if(+o.retry.try < +o.retry.max){
           o.retry.try++;
-          connect(Mal, o);
-          return;
+          return connect(Mal, o);
+          // return;
         }
       }else
       res.data.forEach(r => {
@@ -76,8 +76,8 @@ export function connect(Mal, o){
       console.log('[MAL API] ERR', err);
       if(+o.retry.try < +o.retry.max){
         o.retry.try++;
-        connect(Mal, o);
-        return;
+        return connect(Mal, o);
+        // return;
       }
     }
   )
