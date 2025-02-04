@@ -55,12 +55,12 @@ export const Mal = {
           if(r.ok) return r.json();
           else {
             console.log('R', r);
-          throw new Error('[MAL API ERR]', {cause: r});
+          throw Object.append(new Error('[MAL API ERR]', r));
           }
         }).then(
           res => {
             // console.log('q', this.getType(res));
-            if(res.error) throw new Error('[MAL API]', {cause: JSON.stringify(res)});
+            if(res.error) throw Object.append(new Error('[MAL API ERR]', res));
             else
             // console.log('qq', r);
               // console.log('[MAL1]', res);
@@ -68,8 +68,8 @@ export const Mal = {
           },
           err => {
             console.log('[MAL] ERR', err);
-            throw new Error('[MAL API ERR]', {cause: JSON.stringify(r)});
-            // return err;
+            // throw Object.append(new Error('[MAL API ERR]', err));
+            return err;
               // console.log('[MAL] R', r);
           }
       )
