@@ -16,7 +16,7 @@ export function connect(Mal, o){
     }
   }).toLowerCase();
 
-  function search(r){
+  function search(t){
     Mal.search({
       type: o.type,
       url: o.url,
@@ -30,9 +30,9 @@ export function connect(Mal, o){
     }).then(
       res => {
         console.log('[MAL API]', res);
-        if(!res.data||getType(res.data) !== 'Array'){
-          r.try++;
-          return search(r);
+        if(!res||!res.data||getType(res.data) !== 'Array'){
+          t.try++;
+          return search(t);
         }else
         res.data.forEach(r => {
           // console.log(r.node.id);
@@ -71,13 +71,13 @@ export function connect(Mal, o){
       },
       err => {
         console.log('[MAL API] ERR', err);
-        if(r.try < r.max){
-          r.try++;
-          return search(r);
+        if(t.try < t.max){
+          t.try++;
+          return search(t);
         }
       }
     )
   }
 
-  search();
+  search(o.t);
 }
