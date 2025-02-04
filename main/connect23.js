@@ -37,8 +37,8 @@ export async function connect(Mal, o){
             console.log('GOT one!!!', {id: e.node.id, title:r.node.title});
             o.s.main.id = e.node.id;
             o.s.main.title = e.node.title;
-            getList(Mal, o, e.node);
-            break;
+            return getList(Mal, o, e.node);
+            // break;
           }
         }
       }else
@@ -102,7 +102,7 @@ export async function connect(Mal, o){
   )
 };
 
-const getList = async (Mal, o, item) => Mal.getList({
+const getList = (Mal, o, item) => Mal.getList({
   value: item.node.id,
   type: o.type,
   url: o.url,
@@ -121,7 +121,7 @@ const getList = async (Mal, o, item) => Mal.getList({
     o.s.main.status = l.status;
     o.s.main.weekDay = l.broadcast?.day_of_the_week;
     o.s.main.weekTime = l.broadcast?.start_time;
-    o.s.main.url = `https://myanimelist.net/anime/${r.node.id}`;
+    o.s.main.url = `https://myanimelist.net/anime/${item.node.id}`;
 
     o.s.me.status = l.my_list_status?.status;
     o.s.me.rating = l.my_list_status?.score||0;
