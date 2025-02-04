@@ -1,4 +1,5 @@
 export function connect(Mal, o){
+  console.log('Connect', o);
   const filter = /(?<a>[.,:;]+)|(?![\w]+)(?<b>-)(?![\w]+)|(?<c>-)/gm;
   const getType = (o) => o && o.constructor.toString().split(/[\(\) ]/)[1];
   const fixer = (text) => text.replace(filter, (_, a, b, c) => {
