@@ -30,10 +30,10 @@ export function connect(Mal, o){
   }).then(
     res => {
       console.log('[MAL API]', res);
-      // if(!res||!res.data||getType(res.data) !== 'Array'){
-      //   o.retry.try++;
-      //   throw new Error('[MAL Widget] Not array');
-      // }else
+      if(!res||!res.data||getType(res.data) !== 'Array'){
+        // o.retry.try++;
+        throw new Error('[MAL Widget] Not array');
+      }else
       res && res.data && res.data.forEach(r => {
         // console.log(r.node.id);
         if(fixer(r.node.title) === o.title){
@@ -71,11 +71,11 @@ export function connect(Mal, o){
     },
     err => {
       console.log('[MAL API] ERR', err);
-      if(+o.retry.try < +o.retry.max){
-        o.retry.try++;
-        connect(Mal, o);
-        return;
-      }
+      // if(+o.retry.try < +o.retry.max){
+      //   o.retry.try++;
+      //   connect(Mal, o);
+      //   return;
+      // }
     }
   )
 }
