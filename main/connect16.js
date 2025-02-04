@@ -30,10 +30,12 @@ export function connect(Mal, o){
   }).then(
     res => {
       console.log('[MAL API]', res);
-      if(!res||!res.data||getType(res.data) !== 'Array' && +o.retry.try < +o.retry.max){
-        o.retry.try++;
-        connect(Mal, o);
-        return;
+      if(!res||!res.data||getType(res.data) !== 'Array'){
+        if(+o.retry.try < +o.retry.max){
+          o.retry.try++;
+          connect(Mal, o);
+          return;
+        }
       }else
       res.data.forEach(r => {
         // console.log(r.node.id);
