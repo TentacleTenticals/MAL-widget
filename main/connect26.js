@@ -34,7 +34,7 @@ export async function connect(Mal, o){
       if(res && res.data && getType(res.data) === 'Array'){
         for(let e of res.data){
           if(fixer(e.node.title) === o.title){
-            console.log('GOT one!!!', {id: e.node.id, title:r.node.title});
+            console.log('GOT one!!!', {id: e.node.id, title:e.node.title});
             o.s.main.id = e.node.id;
             o.s.main.title = e.node.title;
             return getList(Mal, o, e.node);
