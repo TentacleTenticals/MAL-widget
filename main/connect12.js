@@ -79,5 +79,5 @@ export function connect(Mal, o){
     )
   }
 
-  search(o.t);
+  search(o.retry);
 }
