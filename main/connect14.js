@@ -31,7 +31,7 @@ export function connect(Mal, o){
     }).then(
       res => {
         console.log('[MAL API]', res);
-        if(!res||!res.data||getType(res.data) !== 'Array'){
+        if(!res||!res.data||getType(res.data) !== 'Array' && t.try < t.max){
           t.try++;
           return search(t);
         }else
