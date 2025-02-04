@@ -31,11 +31,7 @@ export function connect(Mal, o){
     res => {
       console.log('[MAL API]', res);
       if(!res||!res.data||getType(res.data) !== 'Array'){
-        if(+o.retry.try < +o.retry.max){
-          o.retry.try++;
-          return connect(Mal, o);
-          // return;
-        }
+        throw new Error('[MAL Widget] Not array');
       }else
       res.data.forEach(r => {
         // console.log(r.node.id);
@@ -76,8 +72,8 @@ export function connect(Mal, o){
       console.log('[MAL API] ERR', err);
       if(+o.retry.try < +o.retry.max){
         o.retry.try++;
-        return connect(Mal, o);
-        // return;
+        connect(Mal, o);
+        return;
       }
     }
   )
