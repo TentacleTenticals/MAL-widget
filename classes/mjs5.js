@@ -4,6 +4,7 @@ export const El = {
     function color() {
       switch(col){
         case 'green': return 'bada55';
+        case 'red': return 'ff4500';
         case 'cyan': return '00ffff';
         case 'dodger': return '1e90ff';
         case 'orchid': return 'da70d6';
