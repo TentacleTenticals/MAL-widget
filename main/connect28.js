@@ -41,8 +41,10 @@ export async function connect(Mal, o){
             // break;
           }
         }
-      }else
-      throw new Error('[MAL Widget E] Not array/no array');
+      }else{
+        res = undefined;
+        throw new Error('[MAL Widget E] Not array/no array');
+      }
 
 
 
