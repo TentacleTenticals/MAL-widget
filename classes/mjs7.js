@@ -1,5 +1,17 @@
 export const El = {
   getType: (o) => o && o.constructor.toString().split(/[\(\) ]/)[1],
+  log: function(text, col, val){
+    function color() {
+      switch(col){
+        case 'green': return 'bada55';
+        case 'red': return 'ff4500';
+        case 'cyan': return '00ffff';
+        case 'dodger': return '1e90ff';
+        case 'orchid': return 'da70d6';
+      }
+    }
+    console.log('%c '+text, 'background: #222; color: '+'#'+color(), val||'');
+  },
   Div: function(o){
     const main=document.createElement('div');
     if(o.class) main.className = o.class;
