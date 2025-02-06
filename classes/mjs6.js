@@ -1,17 +1,5 @@
 export const El = {
   getType: (o) => o && o.constructor.toString().split(/[\(\) ]/)[1],
-  log: function(text, col, val){
-    function color() {
-      switch(col){
-        case 'green': return 'bada55';
-        case 'red': return 'ff4500';
-        case 'cyan': return '00ffff';
-        case 'dodger': return '1e90ff';
-        case 'orchid': return 'da70d6';
-      }
-    }
-    console.log('%c '+text, 'background: #222; color: '+'#'+color(), val||'');
-  },
   Div: function(o){
     const main=document.createElement('div');
     if(o.class) main.className = o.class;
@@ -24,7 +12,7 @@ export const El = {
     if(o.tab) main.tabIndex = o.tab;
     if(o.editable) main.setAttribute('contenteditable', true);
     if(o.style) main.style = o.style;
-    if(o.onclick) main.onmousedown = (e) => {if(e.button === 0) o.onclick(e);};
+    if(o.onclick) main.onmousedown = (e) => e.button === 0 && o.onclick(e);
     if(o.onRclick) main.oncontextmenu = o.onRclick;
     if(o.onkeyup) main.onkeyup = o.onkeyup;
     if(o.onkeydown) main.onkeydown = o.onkeydown;
@@ -50,80 +38,53 @@ export const El = {
   },
   Button: function(o){
     const main=document.createElement('button');
-    if(o.container){
-      this.container = this.Div({
-        path: o.path,
-        cName: typeof o.container === 'boolean' ? 'container' : o.container.cName,
-        group: o.container.g,
-        rtn: []
-      });
-    }
     if(o.class) main.className = o.class;
     if(o.title) main.title=o.title;
     if(o.id) main.id = o.id;
     if(o.text) main.textContent = o.text;
     if(o.style) main.style = o.style;
-    if(o.onclick) main.onmousedown = (e) => {if(e.button === 0) o.onclick(e);};
+    if(o.onclick) main.onmousedown = (e) => e.button === 0 && o.onclick(e);
     if(o.disabled) main.disabled = o.disabled;
-    (o.container ? this.container : o.path).appendChild(main);
-
-    if(o.label) this.mainLabel = new Div({
-      path: main,
-      cName: 'label',
-      text: o.label
-    });
+    o.path.appendChild(main);
 
     if(o.func) o.func(main);
 
-    if(o.rtn) {
-      if(!rtn.length > 0 && !container) return main;
-      this.obj = {};
-      if(o.container) this.obj.container = this.container;
-      rtn.forEach(e => {
-        if(e) this.obj[e] = this[e];
-      })
-      return this.obj;
-    }
+    if(o.rtn) return main;
   },
-  Image: function({path, cName, url, text, title, scale, style, loading, onclick}){
+  Image: function(o){
     const main=document.createElement('img');
-    if(cName) main.className=cName;
-    if(url) main.src=url;
-    if(text) main.setAttribute('text', text);
-    if(title) main.title=title;
-    loading ? main.loading=loading : main.loading='lazy';
-    if(style) main.style=style;
-    if(scale) main.style.scale=scale;
-    if(onclick) main.onmousedown=onclick;
-    path.appendChild(main);
-  },
-  Video: function({path, cName, url, poster, autoplay, loop, muted, controls, pIp, text, style, preload, onclick, onplay, onpause, onended, rtn}){
-    const main=document.createElement('video');
-    if(cName) main.className=cName;
-    if(url) main.src=url;
-    if(poster) main.poster=poster;
-    if(text) main.setAttribute('text', text);
-    preload ? main.preload=preload : main.preload='none';
-    if(autoplay) main.autoplay=autoplay;
-    if(muted) main.muted=muted;
-    if(loop) main.loop=loop;
-    if(controls) main.controls=controls;
-    pIp ? main.disablePictureInPicture=false : main.disablePictureInPicture=true;
-    if(style) main.style=style;
-    if(onclick) main.onmousedown=onclick;
-    if(onplay) main.onplay=onplay;
-    if(onpause) main.onpause=onpause;
-    if(onended) main.onended=onended;
-    path.appendChild(main);
+    if(o.cName) main.className=o.cName;
+    if(o.url) main.src=o.url;
+    if(o.text) main.setAttribute('text', o.text);
+    if(o.title) main.title=o.title;
+    o.loading ? main.loading=o.loading : main.loading='lazy';
+    if(o.style) main.style=o.style;
+    if(o.scale) main.style.scale=o.scale;
+    if(o.onclick) main.onmousedown = (e) => e.button === 0 && o.onclick(e);
+    o.path.appendChild(main);
 
-    if(rtn) {
-      if(!rtn.length > 0) return main;
-      this.obj={};
-      rtn.forEach(e => {
-        this.obj[e] = this[e];
-      })
-      return this.obj;
-    }
+    if(o.rtn) return main;
+  },
+  Video: function(o){
+    const main=document.createElement('video');
+    if(o.cName) main.className=o.cName;
+    if(o.url) main.src=o.url;
+    if(o.poster) main.poster=o.poster;
+    if(o.text) main.setAttribute('text', o.text);
+    o.preload ? main.preload=o.preload : main.preload='none';
+    if(o.autoplay) main.autoplay=o.autoplay;
+    if(o.muted) main.muted=o.muted;
+    if(o.loop) main.loop=o.loop;
+    if(o.controls) main.controls=o.controls;
+    o.pIp ? main.disablePictureInPicture=false : main.disablePictureInPicture=true;
+    if(o.style) main.style=o.style;
+    if(o.onclick) main.onmousedown = (e) => e.button === 0 && o.onclick(e);
+    if(o.onplay) main.onplay=o.onplay;
+    if(o.onpause) main.onpause=o.onpause;
+    if(o.onended) main.onended=o.onended;
+    o.path.appendChild(main);
+
+    if(o.rtn) return main;
   },
   Audio: function(o){
     const main=document.createElement('audio');
@@ -143,7 +104,7 @@ export const El = {
     if(o.url) main.href=o.url;
     if(o.target) main.target=o.target;
     else main.target='_blank';
-    if(o.onclick) main.onclick=o.onclick;
+    if(o.onclick) main.onmousedown = (e) => e.button === 0 && o.onclick(e);
     o.path.appendChild(main);
     if(o.func) o.func(main);
     if(o.rtn) return main;
@@ -152,11 +113,12 @@ export const El = {
   Input: function(o){
     if(o.label) this.l=this.Label({
       path: o.path,
-      cName: o.lName,
+      class: o.lClass,
       text: o.label,
       attr: o.lAttr,
       rtn: true
     });
+    
     const main=document.createElement('input');
     if(o.class) main.className=o.class;
     if(o.text) main.textContent=o.text;
@@ -180,7 +142,7 @@ export const El = {
     if(o.max) main.max=o.max;
     if(o.step) main.step=o.step;
     if(o.auto) main.autocomplete=o.auto;
-    if(o.onclick) main.onmousedown=o.onclick;
+    if(o.onclick) main.onmousedown = (e) => e.button === 0 && o.onclick(e);
     if(o.oninput) main.oninput=o.oninput;
     if(o.onchange) main.onchange=o.onchange;
     if(o.onfocus) main.onfocus=o.onfocus;
@@ -196,15 +158,7 @@ export const El = {
 
     if(o.func) o.func(main);
 
-    if(o.rtn){
-      if(!rtn.length > 0 && !o.container) return main;
-      this.obj={};
-      if(o.container) this.obj.container = this.container;
-      rtn.forEach(e => {
-        this.obj[e] = this[e];
-      })
-      return this.obj;
-    };
+    if(o.rtn) return main;
   },
 
   Select: function(o){
@@ -239,7 +193,7 @@ export const El = {
 
     if(o.func) o.func(main);
 
-    if(o.body) body(main);
+    if(o.rtn) return main;
   },
   Option: function({path, value}){
     const main=document.createElement('option');
@@ -354,53 +308,53 @@ export const El = {
     path.appendChild(main);
   },
 
-  Tarea: function(c){
+  Tarea: function(o){
     const main=document.createElement('textarea');
-    if(c.name) main.name=c.name;
-    if(c.class) main.className=c.class;
-    if(c.id) main.id=c.id;
-    if(c.placeholder) main.placeholder=c.placeholder;
-    if(c.rows) main.rows=c.rows;
-    if(c.cols) main.cols=c.cols;
-    if(c.text) main.textContent=c.text;
-    if(c.value) main.value=c.value;
-    c.path.appendChild(main);
+    if(o.name) main.name=o.name;
+    if(o.class) main.className=o.class;
+    if(o.id) main.id=o.id;
+    if(o.placeholder) main.placeholder=o.placeholder;
+    if(o.rows) main.rows=o.rows;
+    if(o.cols) main.cols=o.cols;
+    if(o.text) main.textContent=o.text;
+    if(o.value) main.value=o.value;
+    o.path.appendChild(main);
   },
 
-  Dialog: function(c){
+  Dialog: function(o){
     const main=document.createElement('dialog');
-    if(c.name) main.name=c.name;
-    if(c.class) main.className=c.class;
-    if(c.id) main.id=c.id;
-    if(c.text) main.textContent=c.text;
-    if(c.onclose) main.onclose=() => {
-      c.onclose()
-      if(c.delOnclose) main.remove();
+    if(o.name) main.name=o.name;
+    if(o.class) main.className=o.class;
+    if(o.id) main.id=o.id;
+    if(o.text) main.textContent=o.text;
+    if(o.onclose) main.onclose=() => {
+      o.onclose()
+      if(o.delOnclose) main.remove();
     };
-    if(c.func) c.func(main);
-    c.path.appendChild(main);
-    if(c.show) main.show();
-    if(c.showM) main.showModal();
+    if(o.func) o.func(main);
+    o.path.appendChild(main);
+    if(o.show) main.show();
+    if(o.showM) main.showModal();
   },
 
-  loading: function(c){
+  loading: function(o){
     const main=this.Div({
-      path: c.path,
+      path: o.path,
       cName: 'loading',
-      rtn: c.rtn,
+      rtn: o.rtn,
       func: (r) => {
         new El().Div({
           path: r,
           cName: 'anim'
         });
-        if(c.text) this.Div({
+        if(o.text) this.Div({
           path: r,
           cName: 'text',
-          text: c.text
+          text: o.text
         });
       }
     });
-    if(c.rtn) return main;
+    if(o.rtn) return main;
   },
 
   typeOf: function(target){
@@ -536,21 +490,14 @@ export const El = {
     if(o.title) main.title=o.title;
     if(o.text) main.textContent=o.text;
     if(o.attr) main.setAttribute(o.attr[0], o.attr[1]);
-    if(o.onclick) main.onclick=o.onclick;
+    if(o.onclick) main.onmousedown = (e) => e.button === 0 && o.onclick(e);
     o.path.appendChild(main);
 
     // console.log('ATTR', attr);
 
-    if(o.body) o.body(main);
+    if(o.func) o.func(main);
 
-    if(o.rtn){
-      if(!o.rtn.length > 0) return main;
-      const obj={};
-      o.rtn.forEach(e => {
-        if(e) obj[e] = this[e];
-      })
-      return obj;
-    }
+    if(o.rtn) return main;
   },
 
   Legend: function({path, text, onclick}){
