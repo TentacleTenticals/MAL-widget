@@ -35,7 +35,7 @@ export const css = () => `
   flex-direction: column;
   gap: 7px 3px;
   padding: 4px;
-  width: auto;
+  width: max-content;
   border: 1px solid rgb(0 0 0);
   border-radius: 3px;
   background-color: var(--bck-c);
@@ -101,12 +101,20 @@ export const css = () => `
             &.finished_airing {
               display: none;
             }
+            &.currently_publishing {
+              color: var(--col-thi);
+              background-color: var(--bck-c-six);
+            }
           }
         }
 
         .-s-item {
           display: flex;
           gap: 0 5px;
+
+          &.hidden {
+            display: none;
+          }
         }
 
         .-link {
@@ -151,6 +159,7 @@ export const css = () => `
 
       .-numbers {
         display: flex;
+        gap: 0 5px;
         padding: 0 10px 0 5px;
         margin: auto;
         border-radius: 15px;
@@ -189,6 +198,13 @@ export const css = () => `
           &::before {
             display: block;
             content: '/';
+          }
+        }
+
+        .vol {
+          &::after {
+            content: '|';
+            padding: 0 5px 0 10px;
           }
         }
       }
@@ -279,17 +295,6 @@ export const css = () => `
 
   .m-list {
     gap: 5px 0;
-  }
-
-  .helper {
-    margin: 10px 0 0 0;
-    border: 1px solid rgb(0 0 0);
-    border-radius: 3px;
-    background-color: rgb(223 223 223);
-
-    .header {
-      padding: 5px 0 0 10px;
-    }
   }
 }
 `
