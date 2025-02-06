@@ -173,7 +173,7 @@ const getList = (Mal, o, item) => Mal.getList({
   url: o.url,
   token: o.token,
   query: {
-    fields: ['id', 'title', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes']
+    fields: ['id', 'title', 'media_type', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes']
   }
 }).then(
   l => {
