@@ -4,7 +4,7 @@ export async function connect(Mal, o){
 
   function textMatcher(text, text2, perc, sum){
     function removeSym(text){
-      const filter = /(?<a>[.,:;]+)|(?![\w]+)(?<b>-)(?![\w]+)|(?<c>-)|(?<d> +)/gm;
+      const filter = /(?<a>[.,:;*]+)|(?![\w]+)(?<b>-)(?![\w]+)|(?<c>-)|(?<d> +)/gm;
       const fixer = (text) => text.replace(filter, '').toLowerCase();
       
       return fixer(text);
@@ -173,24 +173,35 @@ const getList = (Mal, o, item) => Mal.getList({
   url: o.url,
   token: o.token,
   query: {
-    fields: ['id', 'title', 'media_type', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes']
+    fields: ['id', 'title', 'media_type', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes', 'num_volumes', 'num_chapters']
   }
 }).then(
   l => {
+    console.log('MAL', l);
     // o.s.main.id = r.node.id;
     // o.s.main.title = r.node.title;
     // console.log('LIST', l);
     // console.log('S', l.my_list_status?.score||0)
-    o.s.main.rating = l.mean;
-    o.s.main.rank = l.rank;
-    o.s.main.status = l.status;
+    o.s.main.rating = l.mean||'-';
+    o.s.main.rank = l.rank||'-';
+    o.s.main.status = l.status||'';
+    o.s.main.broadcastStatus = Mal.titleStatus(l.status);
+    l.broadcast && (o.s.main.broadcastDate = true);
     l.broadcast && (o.s.main.weekDay = l.broadcast?.day_of_the_week);
     l.broadcast && (o.s.main.weekTime = l.broadcast?.start_time);
     o.s.main.url = `https://myanimelist.net/${o.type}/${item.id}`;
 
     o.s.me.status = l.my_list_status?.status;
     o.s.me.rating = l.my_list_status?.score||0;
-    o.s.main.epsNum = l.num_episodes;
-    o.s.me.eps = l.my_list_status?.num_episodes_watched||0;
+    if(o.type === 'anime'){
+      o.s.main.epsNum = l.num_episodes||'?';
+      o.s.me.eps = l.my_list_status?.num_episodes_watched||0;
+    }else{
+      o.s.main.volumesNum = l.num_volumes||'?';
+      o.s.main.chaptersNum = l.num_chapters||'?';
+      o.s.me.volumes = l.my_list_status?.num_volumes_read||0;
+      o.s.me.chapters = l.my_list_status?.num_chapters_read||0;
+      // o.s.main.volumes = l.me.volumes;
+    }
   }
 )
