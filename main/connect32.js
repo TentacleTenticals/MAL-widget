@@ -184,8 +184,8 @@ const getList = (Mal, o, item) => Mal.getList({
     o.s.main.rating = l.mean;
     o.s.main.rank = l.rank;
     o.s.main.status = l.status;
-    o.s.main.weekDay = l.broadcast?.day_of_the_week||'';
-    o.s.main.weekTime = l.broadcast?.start_time||'';
+    l.broadcast && (o.s.main.weekDay = l.broadcast?.day_of_the_week);
+    l.broadcast && (o.s.main.weekTime = l.broadcast?.start_time);
     o.s.main.url = `https://myanimelist.net/${o.type}/${item.id}`;
 
     o.s.me.status = l.my_list_status?.status;
