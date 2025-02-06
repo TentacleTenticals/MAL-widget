@@ -40,6 +40,18 @@ export const Mal = {
     if(!e) return days[day][0]+days[day][1][0];
     else return days[day][0]+days[day][1][1];
   },
+  titleStatus: function(status){
+    console.log('SS', status)
+    if(!status) return;
+    const s = {
+      currently_airing: 'Выходит',
+      currently_publishing: 'Публикуется',
+      finished_airing: 'Вышло',
+      finished_publishing: 'Закончено',
+      finished: 'Закончена'
+    }
+    return s[status]||status;
+  },
   s: function(o){
     return new URLSearchParams(o);
   },
@@ -50,29 +62,20 @@ export const Mal = {
               ...o.headers
           },
           ...(o.data) && {body: this.dataConverter(o)}
-      }).then(
-        r => {
-          if(r.ok) return r.json();
-          else {
-            console.log('R', r);
-          throw Object.append(new Error('[MAL API ERR]', r));
-          }
-        }).then(
+      }).then(r => r.json().then(
           res => {
-            // console.log('q', this.getType(res));
-            if(res.error) throw Object.append(new Error('[MAL API ERR]', res));
+            console.log('q', this.getType(res));
+            if(res.error) throw new Error('[MAL Widget]', {cause: JSON.stringify(res)});
             else
             // console.log('qq', r);
               // console.log('[MAL1]', res);
               return res;
           },
           err => {
-            console.log('[MAL] ERR', err);
-            // throw Object.append(new Error('[MAL API ERR]', err));
-            return err;
-              // console.log('[MAL] R', r);
+              console.log('[MAL] ERR', err);
+              console.log('[MAL] R', r);
           }
-      )
+      ))
   },
   loginGen: function(o){
     const data = {
@@ -105,8 +108,6 @@ export const Mal = {
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
-    console.log('Q', o);
-
     return this.fetch(o);
   },
   updToken: function(o){
@@ -128,7 +129,7 @@ export const Mal = {
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
-    console.log('o', o);
+    console.log('o', o)
 
     return this.fetch(o);
   },
@@ -185,8 +186,6 @@ export const Mal = {
       'Authorization': 'Bearer '+o.token,
       Url: `${this.url}/${o.type||''}/${o.value||''}/my_list_status?${o.query && this.s(o.query)||''}`
     }
-
-    console.log('O', o);
 
     return this.fetch(o);
   }
