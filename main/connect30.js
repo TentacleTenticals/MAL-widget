@@ -95,7 +95,7 @@ export async function connect(Mal, o){
 
       if(res && res.data && getType(res.data) === 'Array'){
         for(let e of res.data){
-          const match = textMatcher(e.node.title, o.title);
+          const match = textMatcher(e.node.title, o.title, o.textMatch.percents, o.textMatch.summ);
           if(match.result.percCheck === 'match'){
             console.log('GOT one!!!', {id: e.node.id, title:e.node.title});
             o.s.main.id = e.node.id;
