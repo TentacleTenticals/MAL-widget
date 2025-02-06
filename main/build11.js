@@ -87,8 +87,7 @@ export function build(El, Mal, o){
                       el.header.broadcast = b;
                       El.Div({
                         path: b,
-                        class: '-title',
-                        text: 'Выходит по'
+                        class: '-title'
                       });
                       El.Div({
                         path: b,
@@ -97,14 +96,12 @@ export function build(El, Mal, o){
                           El.Div({
                             path: i,
                             class: '-value -day',
-                            text: '-',
                             func: (e) => {
                               el.header.weekDay = e;
                             }
                           });
                           El.Div({
                             path: i,
-                            text: '-',
                             class: '-value -time',
                             func: (e) => {
                               el.header.weekTime = e;
