@@ -48,7 +48,7 @@ export function build(El, Mal, o){
               break;
               case 'status': el.header.broadcast.classList.add(v);
               break;
-              case 'weekDay': el.header.weekDay.textContent = Mal.wD(v, true);
+              case 'weekDay': el.header.weekDay.textContent = 'Выходит по ' + Mal.wD(v, true);
               break;
               case 'weekTime': el.header.weekTime.textContent = 'в '+v;
               break;
