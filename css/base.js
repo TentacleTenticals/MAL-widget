@@ -1,5 +1,5 @@
 export const mainCss = () => `
-.flex {
+.flx {
   display: flex;
 
   &.hor {
