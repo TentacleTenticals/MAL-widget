@@ -254,6 +254,16 @@ export const css = () => `
       }
     }
 
+    .-status.-updatedAt {
+      display: flex;
+      gap: 0 3px;
+
+      .-num {
+        margin: auto;
+        font-family: "Play", sans-serif;
+      }
+    }
+
     .-btn.-save {
       font-family: "Play", sans-serif;
       font-weight: 600;
