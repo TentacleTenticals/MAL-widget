@@ -35,7 +35,7 @@ export const css = () => `
   flex-direction: column;
   gap: 7px 3px;
   padding: 4px;
-  width: max-content;
+  width: auto;
   border: 1px solid rgb(0 0 0);
   border-radius: 3px;
   background-color: var(--bck-c);
