@@ -4,7 +4,7 @@ export async function connect(El, Mal, o){
 
   function textMatcher(text, text2, perc, sum){
     function removeSym(text){
-      const filter = /(?<a>[.,:;*]+)|(?![\w]+)(?<b>-)(?![\w]+)|(?<c>-)|(?<d> +)/gm;
+      const filter = /([\W]*)/gm;
       const fixer = (text) => text.replace(filter, '').toLowerCase();
       
       return fixer(text);
