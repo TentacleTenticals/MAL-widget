@@ -1,4 +1,4 @@
-export async function connect(Mal, o){
+export async function connect(El, Mal, o){
   console.log('Connect', o);
   const getType = (o) => o && o.constructor.toString().split(/[\(\) ]/)[1];
 
@@ -100,7 +100,7 @@ export async function connect(Mal, o){
             console.log('GOT one!!!', {id: e.node.id, title:e.node.title});
             o.s.main.id = e.node.id;
             o.s.main.title = e.node.title;
-            return getList(Mal, o, e.node);
+            return getList(El, Mal, o, e.node);
             // break;
           }
         }
@@ -167,7 +167,7 @@ export async function connect(Mal, o){
   )
 };
 
-const getList = (Mal, o, item) => Mal.getList({
+const getList = (El, Mal, o, item) => Mal.getList({
   value: item.id,
   type: o.type,
   url: o.url,
@@ -178,6 +178,7 @@ const getList = (Mal, o, item) => Mal.getList({
 }).then(
   l => {
     console.log('MAL', l);
+    const time = El.getTime(l.my_list_status?.updated_at, 'full');
     // o.s.main.id = r.node.id;
     // o.s.main.title = r.node.title;
     // console.log('LIST', l);
@@ -193,6 +194,7 @@ const getList = (Mal, o, item) => Mal.getList({
 
     o.s.me.status = l.my_list_status?.status;
     o.s.me.rating = l.my_list_status?.score||0;
+    time && (o.s.me.updatedAt = time.date+' '+time.time);
     if(o.type === 'anime'){
       o.s.main.epsNum = l.num_episodes||'?';
       o.s.me.eps = l.my_list_status?.num_episodes_watched||0;
