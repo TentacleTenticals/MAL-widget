@@ -1,4 +1,4 @@
-export function build(El, Mal, o){
+export function build(El, Mal, o) {
   El.Div({
     path: o.path,
     insert: 'beforeBegin',
@@ -6,9 +6,9 @@ export function build(El, Mal, o){
     func: (m) => {
       const el = {
         header: {},
-        footer: {}
+        footer: {},
       };
-      function item(i){
+      function item(i) {
         El.Div({
           path: i.path,
           class: i.class,
@@ -18,16 +18,17 @@ export function build(El, Mal, o){
               path: r,
               class: i.c.class,
               text: i.c.text,
-              func: i.c.func
+              func: i.c.func,
             });
-          }
+          },
         });
-      };
-  
+      }
+
       El.Div({
         path: m,
         class: '-header',
-        func: (h) => {// m 0
+        func: (h) => {
+          // m 0
           const handler = {
             set(target, key, value, receiver) {
               if (value !== target[key]) {
@@ -37,53 +38,69 @@ export function build(El, Mal, o){
                 return true;
               }
               return false;
-            }
+            },
           };
           o.s.main = new Proxy(o.data.main, handler);
           // const el = {};
-      
-          function upd(key, v){
-            switch(key){
-              case 'title': el.title.textContent = v;
-              break;
-              case 'status': el.header.broadcast.classList.add(v);
-              break;
-              case 'broadcastStatus': el.header.broadcastStatus.textContent = v;
-              break;
-              case 'broadcastDate': el.header.broadcastDate.classList.remove('hidden');
-              break;
-              case 'weekDay': el.header.weekDay.textContent = Mal.wD(v, true);
-              break;
-              case 'weekTime': el.header.weekTime.textContent = 'в '+v;
-              break;
-              case 'rating': el.header.rating.textContent = v;
-              break;
-              case 'rank': el.header.rank.textContent = '# '+v;
-              break;
-              case 'id': el.header.id.textContent = v;
-              break;
-              case 'url': el.header.url.href = v;
-              break;
-              case 'epsNum': el.footer.epsNum.textContent = v;
-              break;
-              case 'volumesNum': el.footer.volumesNum.textContent = v;
-              break;
-              case 'chaptersNum': el.footer.chaptersNum.textContent = v;
-              break;
+
+          function upd(key, v) {
+            switch (key) {
+              case 'title':
+                el.title.textContent = v;
+                break;
+              case 'status':
+                el.header.broadcast.classList.add(v);
+                break;
+              case 'broadcastStatus':
+                el.header.broadcastStatus.textContent = v;
+                break;
+              case 'broadcastDate':
+                el.header.broadcastDate.classList.remove('hidden');
+                break;
+              case 'weekDay':
+                el.header.weekDay.textContent = Mal.wD(v, true);
+                break;
+              case 'weekTime':
+                el.header.weekTime.textContent = 'в ' + v;
+                break;
+              case 'rating':
+                el.header.rating.textContent = v;
+                break;
+              case 'rank':
+                el.header.rank.textContent = '# ' + v;
+                break;
+              case 'id':
+                el.header.id.textContent = v;
+                break;
+              case 'url':
+                el.header.url.href = v;
+                break;
+              case 'epsNum':
+                el.footer.epsNum.textContent = v;
+                break;
+              case 'volumesNum':
+                el.footer.volumesNum.textContent = v;
+                break;
+              case 'chaptersNum':
+                el.footer.chaptersNum.textContent = v;
+                break;
             }
           }
-  
-          El.Div({//h 0
+
+          El.Div({
+            //h 0
             path: h,
             class: '-title',
-            text: 'MAL'
+            text: 'MAL',
           });
-  
-          El.Div({//h 1
+
+          El.Div({
+            //h 1
             path: h,
             class: '-info',
             func: (info) => {
-              El.Div({//info 0
+              El.Div({
+                //info 0
                 path: info,
                 class: '-list',
                 // text: 'Info',
@@ -96,7 +113,7 @@ export function build(El, Mal, o){
                       El.Div({
                         path: b,
                         class: '-title',
-                        func: (t) => el.header.broadcastStatus = t
+                        func: (t) => (el.header.broadcastStatus = t),
                       });
                       El.Div({
                         path: b,
@@ -108,21 +125,22 @@ export function build(El, Mal, o){
                             class: '-value -day',
                             func: (e) => {
                               el.header.weekDay = e;
-                            }
+                            },
                           });
                           El.Div({
                             path: i,
                             class: '-value -time',
                             func: (e) => {
                               el.header.weekTime = e;
-                            }
+                            },
                           });
-                        }
+                        },
                       });
-                    }
+                    },
                   });
-  
-                  item({//i 0
+
+                  item({
+                    //i 0
                     path: i,
                     class: '-item -rating',
                     text: 'Rating',
@@ -130,11 +148,12 @@ export function build(El, Mal, o){
                       class: '-value',
                       func: (e) => {
                         el.header.rating = e;
-                      }
-                    }
+                      },
+                    },
                   });
 
-                  item({//i 0
+                  item({
+                    //i 0
                     path: i,
                     class: '-item -rank',
                     text: 'Rank',
@@ -142,11 +161,12 @@ export function build(El, Mal, o){
                       class: '-value',
                       func: (e) => {
                         el.header.rank = e;
-                      }
-                    }
+                      },
+                    },
                   });
-      
-                  item({//i 1
+
+                  item({
+                    //i 1
                     path: i,
                     class: '-item -id',
                     text: 'MAL ID',
@@ -154,10 +174,10 @@ export function build(El, Mal, o){
                       class: '-value',
                       func: (e) => {
                         el.header.id = e;
-                      }
-                    }
+                      },
+                    },
                   });
-  
+
                   El.A({
                     path: i,
                     class: '-link',
@@ -166,25 +186,27 @@ export function build(El, Mal, o){
                     target: '__blank',
                     func: (e) => {
                       el.header.url = e;
-                    }
+                    },
                   });
-                }
+                },
               });
-            }
+            },
           });
-        }
+        },
       });
-  
-      El.Div({//m 1
+
+      El.Div({
+        //m 1
         path: m,
         class: '-itemTitle',
         text: '-',
         func: (e) => {
           el.title = e;
-        }
+        },
       });
-  
-      El.Div({//m 2
+
+      El.Div({
+        //m 2
         path: m,
         class: '-footer',
         func: (footer) => {
@@ -197,34 +219,53 @@ export function build(El, Mal, o){
                 return true;
               }
               return false;
-            }
+            },
           };
           o.s.me = new Proxy(o.data.me, handler);
-  
-          function upd(key, value){
-            switch(key){
-              case 'status': el.footer.status.value = value;
-              break;
-              case 'eps': el.footer.eps.value = value;
-              break;
-              case 'volumes': el.footer.volumes.value = value;
-              break;
-              case 'chapters': el.footer.chapters.value = value;
-              break;
-              case 'rating': el.footer.rating.value = value;
+
+          function upd(key, value) {
+            switch (key) {
+              case 'status':
+                el.footer.status.value = value;
+                break;
+              case 'eps':
+                el.footer.eps.value = value;
+                break;
+              case 'volumes':
+                el.footer.volumes.value = value;
+                break;
+              case 'chapters':
+                el.footer.chapters.value = value;
+                break;
+              case 'rating':
+                el.footer.rating.value = value;
+                break;
+              case 'updatedAt':
+                el.footer.updatedAt.textContent = value;
+                break;
             }
           }
-  
-          El.Select({//s 0
+
+          El.Select({
+            //s 0
             path: footer,
             class: '-status -st',
             options: [
               ['-', undefined],
-              o.type === 'anime' ? ['смотрю', 'watching'] : ['читаю', 'reading'],
-              o.type === 'anime' ? ['просмотрено', 'completed'] : ['прочитана', 'completed'],
-              o.type === 'anime' ? ['приостановлено', 'on_hold'] : ['приостановлена', 'on_hold'],
-              o.type === 'anime' ? ['брошено', 'dropped'] : ['брошена', 'dropped'],
-              o.type === 'anime' ? ['планирую посмотреть', 'plan_to_watch'] : ['планирую прочесть', 'plan_to_read']
+              ...(o.type === 'anime') && [
+                ['смотрю', 'watching'],
+                ['просмотрено', 'completed'],
+                ['приостановлено', 'on_hold'],
+                ['брошено', 'dropped'],
+                ['планирую посмотреть', 'plan_to_watch']
+              ]||
+              [
+                ['читаю', 'reading'],
+                ['прочитано', 'completed'],
+                ['приостановлено', 'on_hold'],
+                ['брошено', 'dropped'],
+                ['планирую прочитать', 'plan_to_read']
+              ]
             ],
             // value: d.status,
             onchange: (e) => {
@@ -232,20 +273,22 @@ export function build(El, Mal, o){
             },
             func: (e) => {
               el.footer.status = e;
-              console.log(el.footer.status)
-            }
+              console.log(el.footer.status);
+            },
           });
-          El.Div({//s 1
+          El.Div({
+            //s 1
             path: footer,
             class: '-status -episodes',
             func: (n) => {
-              if(o.type === 'anime'){
+              if (o.type === 'anime') {
                 El.Div({
                   path: n,
                   class: '-numbers',
                   text: 'Watched',
                   func: (num) => {
-                    El.Input({//n VOLUMES NUM
+                    El.Input({
+                      //n VOLUMES NUM
                       path: num,
                       class: '-num',
                       type: 'number',
@@ -255,46 +298,48 @@ export function build(El, Mal, o){
                       max: el.footer.epsNum,
                       pattern: '[0-9]{2}',
                       onblur: (e) => {
-                        if(o.s.me.volumes === e.target.value) return;
+                        if (o.s.me.volumes === e.target.value) return;
                         o.s.me.eps = e.target.value;
-                        e.target.style.width = `${e.target.value.length*8}px`;
+                        e.target.style.width = `${e.target.value.length * 8}px`;
                       },
                       oninput: (e) => {
-                        e.target.style.width = `${e.target.value.length*8}px`;
+                        e.target.style.width = `${e.target.value.length * 8}px`;
                       },
                       func: (e) => {
-                        e.style.width = `${o.s.me.volumes.length*8}px`;
+                        e.style.width = `${o.s.me.volumes.length * 8}px`;
                         el.footer.eps = e;
 
-                        El.Div({// VOLUMES MAX
+                        El.Div({
+                          // VOLUMES MAX
                           path: e.parentNode,
                           class: '-max',
                           // text: d.epNum,
                           func: (e) => {
                             el.footer.epsNum = e;
-                          }
+                          },
                         });
 
-                        El.Button({// PLUS
+                        El.Button({
+                          // PLUS
                           path: e.parentNode,
                           class: '-btn -plus',
                           text: '+',
                           onclick: () => {
                             o.s.me.eps++;
-                          }
+                          },
                         });
-                      }
+                      },
                     });
-                  }
+                  },
                 });
-              }else
-              if(o.type === 'manga'){
+              } else if (o.type === 'manga') {
                 El.Div({
                   path: n,
                   class: '-numbers',
                   text: 'Readed',
                   func: (num) => {
-                    El.Input({//n VOLUMES NUM
+                    El.Input({
+                      //n VOLUMES NUM
                       path: num,
                       class: '-num',
                       type: 'number',
@@ -304,38 +349,41 @@ export function build(El, Mal, o){
                       max: el.footer.volumesNum,
                       pattern: '[0-9]{2}',
                       onblur: (e) => {
-                        if(o.s.me.volumes === e.target.value) return;
+                        if (o.s.me.volumes === e.target.value) return;
                         o.s.me.volumes = e.target.value;
-                        e.target.style.width = `${e.target.value.length*8}px`;
+                        e.target.style.width = `${e.target.value.length * 8}px`;
                       },
                       oninput: (e) => {
-                        e.target.style.width = `${e.target.value.length*8}px`;
+                        e.target.style.width = `${e.target.value.length * 8}px`;
                       },
                       func: (e) => {
-                        e.style.width = `${o.s.me.volumes.length*8}px`;
+                        e.style.width = `${o.s.me.volumes.length * 8}px`;
                         el.footer.volumes = e;
 
-                        El.Div({// VOLUMES MAX
+                        El.Div({
+                          // VOLUMES MAX
                           path: e.parentNode,
                           class: '-max',
                           // text: d.epNum,
                           func: (e) => {
                             el.footer.volumesNum = e;
-                          }
+                          },
                         });
 
-                        El.Button({// PLUS
+                        El.Button({
+                          // PLUS
                           path: e.parentNode,
                           class: '-btn -plus',
                           text: '+',
                           onclick: () => {
                             o.s.me.volumes++;
-                          }
+                          },
                         });
-                      }
+                      },
                     });
 
-                    El.Input({//n VOLUMES NUM
+                    El.Input({
+                      //n VOLUMES NUM
                       path: num,
                       class: '-num',
                       type: 'number',
@@ -345,46 +393,50 @@ export function build(El, Mal, o){
                       max: el.footer.chaptersNum,
                       pattern: '[0-9]{2}',
                       onblur: (e) => {
-                        if(o.s.me.volumes === e.target.value) return;
+                        if (o.s.me.volumes === e.target.value) return;
                         o.s.me.chapters = e.target.value;
-                        e.target.style.width = `${e.target.value.length*8}px`;
+                        e.target.style.width = `${e.target.value.length * 8}px`;
                       },
                       oninput: (e) => {
-                        e.target.style.width = `${e.target.value.length*8}px`;
+                        e.target.style.width = `${e.target.value.length * 8}px`;
                       },
                       func: (e) => {
-                        e.style.width = `${o.s.me.chapters.length*8}px`;
+                        e.style.width = `${o.s.me.chapters.length * 8}px`;
                         el.footer.chapters = e;
 
-                        El.Div({// VOLUMES MAX
+                        El.Div({
+                          // VOLUMES MAX
                           path: e.parentNode,
                           class: '-max',
                           // text: d.epNum,
                           func: (e) => {
                             el.footer.chaptersNum = e;
-                          }
+                          },
                         });
 
-                        El.Button({// PLUS
+                        El.Button({
+                          // PLUS
                           path: e.parentNode,
                           class: '-btn -plus',
                           text: '+',
                           onclick: () => {
                             o.s.me.chapters++;
-                          }
+                          },
                         });
-                      }
+                      },
                     });
-                  }
+                  },
                 });
               }
-  
-              El.Div({//n 0
+
+              El.Div({
+                //n 0
                 path: n,
                 class: '-status -rating',
                 text: 'My rating',
                 func: (num) => {
-                  El.Input({//n 0
+                  El.Input({
+                    //n 0
                     path: num,
                     class: '-num',
                     // editable: true,
@@ -393,28 +445,47 @@ export function build(El, Mal, o){
                     max: 10,
                     pattern: '[0-9]{2}',
                     onblur: (e) => {
-                      if(o.s.me.rating === e.target.value) return;
+                      if (o.s.me.rating === e.target.value) return;
                       o.s.me.rating = e.target.value;
-                      e.target.style.width = `${e.target.value.length*8}px`;
+                      e.target.style.width = `${e.target.value.length * 8}px`;
                     },
                     oninput: (e) => {
-                      e.target.style.width = `${e.target.value.length*8}px`;
+                      e.target.style.width = `${e.target.value.length * 8}px`;
                     },
                     func: (e) => {
-                      e.style.width = `${o.s.me.rating.length*8}px`;
+                      e.style.width = `${o.s.me.rating.length * 8}px`;
                       el.footer.rating = e;
-                    }
+                    },
                   });
-                }
+                },
               });
-            }
+
+              El.Div({
+                //n 0
+                path: n,
+                class: '-status -updatedAt',
+                text: '⏰',
+                func: (num) => {
+                  El.Div({
+                    //n 0
+                    path: num,
+                    class: '-num',
+                    func: (e) => {
+                      el.footer.updatedAt = e;
+                    },
+                  });
+                },
+              });
+            },
           });
-  
-          El.Button({//n 3
+
+          El.Button({
+            //n 3
             path: footer,
             class: '-btn -save',
             text: 'Save',
-            onclick: () => {
+            // func: (s) => el.footer.save = s,
+            onclick: (s) => {
               document.activeElement.blur();
               Mal.updateList({
                 value: o.s.main.id,
@@ -424,19 +495,27 @@ export function build(El, Mal, o){
                 data: {
                   status: o.s.me.status,
                   score: o.s.me.rating,
-                  ...(o.type === 'anime') && {num_watched_episodes: o.s.me.eps},
-                  ...(o.type === 'manga') && {num_volumes_read: o.s.me.volumes},
-                  ...(o.type === 'manga') && {num_chapters_read: o.s.me.chapters}
-                }
-              }).then(
-                l => {
-                  console.log('[MAL Widget] UPD', l);
-                }
-              )
+                  ...(o.type === 'anime' && {
+                    num_watched_episodes: o.s.me.eps,
+                  }),
+                  ...(o.type === 'manga' && {
+                    num_volumes_read: o.s.me.volumes,
+                    num_chapters_read: o.s.me.chapters
+                  })
+                },
+              }).then(l => {
+                console.log('[MAL Widget] UPD', l);
+                const time = El.getTime(l?.updated_at, 'full');
+                s.target.textContent = 'Saved ✅';
+                time && (o.s.me.updatedAt = time.date+' '+time.time);
+                setTimeout(() => {
+                  s.target.textContent = 'Save';
+                }, 5000);
+              });
             }
           });
         }
-      })
+      });
     }
-  })
+  });
 }
