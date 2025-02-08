@@ -169,7 +169,7 @@ export function build(El, Mal, o) {
                     //i 1
                     path: i,
                     class: '-item -id',
-                    text: 'MAL ID',
+                    text: 'ID',
                     c: {
                       class: '-value',
                       func: (e) => {
@@ -243,6 +243,9 @@ export function build(El, Mal, o) {
               case 'priority':
                 el.footer.priority.value = value;
                 break;
+              case 'rewatchNreread':
+                el.footer.rewatchNreread.checked = value;
+                break;
               case 'updatedAt':
                 el.footer.updatedAt.textContent = value;
                 break;
@@ -252,7 +255,7 @@ export function build(El, Mal, o) {
           El.Div({
             //n 0
             path: footer,
-            class: 'flx statusDate',
+            class: 'flx status-items',
             func: (flx) => {
               El.Select({
                 //s 0
@@ -285,82 +288,9 @@ export function build(El, Mal, o) {
                 },
               });
 
-              El.Div({
-                //n 0
-                path: flx,
-                class: '-status -updatedAt',
-                text: '⏰',
-                func: (num) => {
-                  El.Div({
-                    //n 0
-                    path: num,
-                    class: '-num',
-                    func: (e) => {
-                      el.footer.updatedAt = e;
-                    },
-                  });
-                },
-              });
-            }
-          });
-
-          // El.Select({
-          //   //s 0
-          //   path: footer,
-          //   class: '-status -st',
-          //   options: [
-          //     ['-', undefined],
-          //     ...(o.type === 'anime') && [
-          //       ['смотрю', 'watching'],
-          //       ['просмотрено', 'completed'],
-          //       ['приостановлено', 'on_hold'],
-          //       ['брошено', 'dropped'],
-          //       ['планирую посмотреть', 'plan_to_watch']
-          //     ]||
-          //     [
-          //       ['читаю', 'reading'],
-          //       ['прочитано', 'completed'],
-          //       ['приостановлено', 'on_hold'],
-          //       ['брошено', 'dropped'],
-          //       ['планирую прочитать', 'plan_to_read']
-          //     ]
-          //   ],
-          //   // value: d.status,
-          //   onchange: (e) => {
-          //     o.s.me.status = e.target.value;
-          //   },
-          //   func: (e) => {
-          //     el.footer.status = e;
-          //     console.log(el.footer.status);
-          //   },
-          // });
-
-          // El.Div({
-          //   //n 0
-          //   path: footer,
-          //   class: '-status -updatedAt',
-          //   text: '⏰',
-          //   func: (num) => {
-          //     El.Div({
-          //       //n 0
-          //       path: num,
-          //       class: '-num',
-          //       func: (e) => {
-          //         el.footer.updatedAt = e;
-          //       },
-          //     });
-          //   },
-          // });
-
-          
-          El.Div({
-            //s 1
-            path: footer,
-            class: '-status -episodes',
-            func: (n) => {
               if (o.type === 'anime') {
                 El.Div({
-                  path: n,
+                  path: flx,
                   class: '-numbers',
                   text: 'Watched',
                   func: (num) => {
@@ -409,10 +339,11 @@ export function build(El, Mal, o) {
                     });
                   },
                 });
-              } else if (o.type === 'manga') {
+              }else
+              if (o.type === 'manga') {
                 El.Div({
-                  path: n,
-                  class: '-numbers',
+                  path: flx,
+                  class: '-watchNread',
                   text: 'Readed',
                   func: (num) => {
                     El.Input({
@@ -505,7 +436,63 @@ export function build(El, Mal, o) {
                   },
                 });
               }
+            }
+          });
 
+          // El.Select({
+          //   //s 0
+          //   path: footer,
+          //   class: '-status -st',
+          //   options: [
+          //     ['-', undefined],
+          //     ...(o.type === 'anime') && [
+          //       ['смотрю', 'watching'],
+          //       ['просмотрено', 'completed'],
+          //       ['приостановлено', 'on_hold'],
+          //       ['брошено', 'dropped'],
+          //       ['планирую посмотреть', 'plan_to_watch']
+          //     ]||
+          //     [
+          //       ['читаю', 'reading'],
+          //       ['прочитано', 'completed'],
+          //       ['приостановлено', 'on_hold'],
+          //       ['брошено', 'dropped'],
+          //       ['планирую прочитать', 'plan_to_read']
+          //     ]
+          //   ],
+          //   // value: d.status,
+          //   onchange: (e) => {
+          //     o.s.me.status = e.target.value;
+          //   },
+          //   func: (e) => {
+          //     el.footer.status = e;
+          //     console.log(el.footer.status);
+          //   },
+          // });
+
+          // El.Div({
+          //   //n 0
+          //   path: footer,
+          //   class: '-status -updatedAt',
+          //   text: '⏰',
+          //   func: (num) => {
+          //     El.Div({
+          //       //n 0
+          //       path: num,
+          //       class: '-num',
+          //       func: (e) => {
+          //         el.footer.updatedAt = e;
+          //       },
+          //     });
+          //   },
+          // });
+
+          
+          El.Div({
+            //s 1
+            path: footer,
+            class: 'flx -more',
+            func: (n) => {
               El.Div({
                 //n 0
                 path: n,
@@ -537,36 +524,68 @@ export function build(El, Mal, o) {
                 },
               });
 
-              El.Div({
-                //n 0
+              El.Input({
                 path: n,
-                class: '-status -priority',
-                text: 'Priority',
-                func: (num) => {
-                  El.Input({
-                    //n 0
-                    path: num,
-                    class: '-num',
-                    // editable: true,
-                    type: 'number',
-                    min: 0,
-                    max: 2,
-                    pattern: '[0-9]{2}',
-                    onblur: (e) => {
-                      if (o.s.me.priority === e.target.value) return;
-                      o.s.me.priority = e.target.value;
-                      e.target.style.width = `${e.target.value.length * 8}px`;
-                    },
-                    oninput: (e) => {
-                      e.target.style.width = `${e.target.value.length * 8}px`;
-                    },
-                    func: (e) => {
-                      e.style.width = `${o.s.me.rating.length * 8}px`;
-                      el.footer.priority = e;
-                    },
-                  });
+                label: o.type === 'anime' ? 'Rewatch' : 'Reread',
+                type: 'checkbox',
+                lClass: 'flx label -rewatchNreread',
+                class: '-status -rewatchNreread',
+                onchange: (e) => {
+                  o.s.me.rewatchNreread = e.target.checked;
                 },
+                func: (e) => {
+                  el.footer.rewatchNreread = e;
+                }
               });
+
+              El.Select({
+                path: n,
+                label: 'Priority',
+                lClass: 'flx label -priority',
+                class: '-status -priority',
+                options: [
+                  ['Low', 0],
+                  ['Mid', 1],
+                  ['High', 2]
+                ],
+                onchange: (e) => {
+                  o.s.me.priority = e.target.value;
+                },
+                func: (e) => {
+                  el.footer.priority = e;
+                }
+              });
+
+              // El.Div({
+              //   //n 0
+              //   path: n,
+              //   class: '-status -priority',
+              //   text: 'Priority',
+              //   func: (num) => {
+              //     El.Input({
+              //       //n 0
+              //       path: num,
+              //       class: '-num',
+              //       // editable: true,
+              //       type: 'number',
+              //       min: 0,
+              //       max: 2,
+              //       pattern: '[0-9]{2}',
+              //       onblur: (e) => {
+              //         if (o.s.me.priority === e.target.value) return;
+              //         o.s.me.priority = e.target.value;
+              //         e.target.style.width = `${e.target.value.length * 8}px`;
+              //       },
+              //       oninput: (e) => {
+              //         e.target.style.width = `${e.target.value.length * 8}px`;
+              //       },
+              //       func: (e) => {
+              //         e.style.width = `${o.s.me.rating.length * 8}px`;
+              //         el.footer.priority = e;
+              //       },
+              //     });
+              //   },
+              // });
 
               // El.Div({
               //   //n 0
@@ -587,41 +606,65 @@ export function build(El, Mal, o) {
             },
           });
 
-          El.Button({
-            //n 3
+          El.Div({
             path: footer,
-            class: '-btn -save',
-            text: 'Save',
-            // func: (s) => el.footer.save = s,
-            onclick: (s) => {
-              document.activeElement.blur();
-              Mal.updateList({
-                value: o.s.main.id,
-                type: o.type,
-                url: o.url,
-                token: o.token,
-                data: {
-                  status: o.s.me.status,
-                  score: o.s.me.rating,
-                  ...(o.type === 'anime' && {
-                    num_watched_episodes: o.s.me.eps,
-                  }),
-                  ...(o.type === 'manga' && {
-                    num_volumes_read: o.s.me.volumes,
-                    num_chapters_read: o.s.me.chapters
-                  })
+            class: 'flx date-save',
+            func: (sav) => {
+              El.Div({
+                path: sav,
+                class: '-status -updatedAt',
+                text: '⏰',
+                func: (num) => {
+                  El.Div({
+                    path: num,
+                    class: '-num',
+                    func: (e) => {
+                      el.footer.updatedAt = e;
+                    },
+                  });
                 },
-              }).then(l => {
-                console.log('[MAL Widget] UPD', l);
-                const time = El.getTime(l?.updated_at, 'full');
-                s.target.textContent = 'Saved ✅';
-                time && (o.s.me.updatedAt = time.date+' '+time.time);
-                setTimeout(() => {
-                  s.target.textContent = 'Save';
-                }, 5000);
+              });
+
+              El.Button({
+                //n 3
+                path: sav,
+                class: '-btn -save',
+                text: 'Save',
+                // func: (s) => el.footer.save = s,
+                onclick: (s) => {
+                  document.activeElement.blur();
+                  Mal.updateList({
+                    value: o.s.main.id,
+                    type: o.type,
+                    url: o.url,
+                    token: o.token,
+                    data: {
+                      status: o.s.me.status||(o.type === 'anime' ? 'watching':'reading'),
+                      score: o.s.me.rating,
+                      priority: o.s.me.priority,
+                      ...(o.type === 'anime' && {
+                        num_watched_episodes: o.s.me.eps,
+                        is_rewatching: o.s.me.rewatchNreread
+                      }),
+                      ...(o.type === 'manga' && {
+                        num_volumes_read: o.s.me.volumes,
+                        num_chapters_read: o.s.me.chapters,
+                        is_rereading: o.s.me.rewatchNreread
+                      })
+                    },
+                  }).then(l => {
+                    console.log('[MAL Widget] UPD', l);
+                    const time = El.getTime(l?.updated_at, 'full');
+                    s.target.textContent = 'Saved ✅';
+                    time && (o.s.me.updatedAt = time.date+' '+time.time);
+                    setTimeout(() => {
+                      s.target.textContent = 'Save';
+                    }, 5000);
+                  });
+                }
               });
             }
-          });
+          })
         }
       });
     }
