@@ -58,7 +58,7 @@ export function build(El, Mal, o) {
                 el.header.broadcastDate.classList.remove('hidden');
                 break;
               case 'weekDay':
-                el.header.weekDay.textContent = Mal.wD(v, true);
+                el.header.weekDay.textContent = 'по ' + Mal.wD(v, true);
                 break;
               case 'weekTime':
                 el.header.weekTime.textContent = 'в ' + v;
