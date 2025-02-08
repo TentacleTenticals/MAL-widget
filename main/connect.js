@@ -173,7 +173,7 @@ const getList = (El, Mal, o, item) => Mal.getList({
   url: o.url,
   token: o.token,
   query: {
-    fields: ['id', 'title', 'media_type', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes', 'num_volumes', 'num_chapters']
+    fields: ['id', 'title', 'media_type', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes', 'num_volumes', 'num_chapters', 'priority']
   }
 }).then(
   l => {
@@ -199,11 +199,13 @@ const getList = (El, Mal, o, item) => Mal.getList({
     if(o.type === 'anime'){
       o.s.main.epsNum = l.num_episodes||'?';
       o.s.me.eps = l.my_list_status?.num_episodes_watched||0;
+      o.s.me.rewatchNreread = l.my_list_status?.is_rewatching||false;
     }else{
       o.s.main.volumesNum = l.num_volumes||'?';
       o.s.main.chaptersNum = l.num_chapters||'?';
       o.s.me.volumes = l.my_list_status?.num_volumes_read||0;
       o.s.me.chapters = l.my_list_status?.num_chapters_read||0;
+      o.s.me.rewatchNreread = l.my_list_status?.is_rereading||false;
       // o.s.main.volumes = l.me.volumes;
     }
   }
