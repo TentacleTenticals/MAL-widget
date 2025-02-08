@@ -132,18 +132,34 @@ export const css = () => `
 
   .-footer {
     display: flex;
-    gap: 0 7px;
+    flex-wrap: wrap;
+    gap: 5px 7px;
 
-    .-status.-st {
-      padding: 2px;
-      margin: 0;
-      height: unset;
-      line-height: normal;
-      border: 1px solid rgb(115 115 115);
-      border-radius: 3px;
-      outline: none;
-      color: var(--col);
-      background-color: var(--bck-c-for);
+    .statusDate {
+      gap: 0 10px;
+
+      .-status.-st {
+        padding: 2px;
+        margin: 0;
+        height: unset;
+        line-height: normal;
+        border: 1px solid rgb(115 115 115);
+        border-radius: 3px;
+        outline: none;
+        color: var(--col);
+        background-color: var(--bck-c-for);
+      }
+    }
+
+    .-status.-updatedAt {
+      display: flex;
+      gap: 0 3px;
+
+      .-num {
+        margin: auto;
+        font-family: "Play", sans-serif;
+        color: var(--col);
+      }
     }
 
     .-status.-episodes {
@@ -254,17 +270,41 @@ export const css = () => `
       }
     }
 
-    .-status.-updatedAt {
+    .-status.-priority {
       display: flex;
       gap: 0 3px;
+      padding: 0 10px 0 5px;
+      font-size: 14px;
+      font-family: "Amarante", serif;
+      border-radius: 14px;
+      color: var(--col);
+      background-color: var(--bck-c-for);
 
       .-num {
+        display: flex;
+        appearance: none;
+        padding: 0;
         margin: auto;
-        font-family: "Play", sans-serif;
+        min-width: 12px;
+        height: unset;
+        font-family: "Amarante", serif;
+        font-size: 14px;
+        line-height: normal;
+        color: var(--col);
+        text-align: center;
+        outline: none;
+        border: unset;
+        border-radius: 14px;
+        background-color: unset;
+
+        &::-webkit-inner-spin-button {
+          display: none;
+        }
       }
     }
 
     .-btn.-save {
+      margin-left: auto;
       font-family: "Play", sans-serif;
       font-weight: 600;
       border: 1px solid var(--bor-c);
