@@ -155,7 +155,7 @@ export const css = () => `
         display: flex;
         gap: 0 5px;
         padding: 0 10px 0 5px;
-        margin: auto 0 auto auto;
+        margin: auto 0 auto 0;
         border-radius: 15px;
         color: var(--col);
         /* background-color: var(--bck-c-for); */
