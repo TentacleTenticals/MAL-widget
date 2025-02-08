@@ -225,7 +225,7 @@ export const El = {
   Select: function(o){
     if(o.label) this.l=this.Label({
       path: o.path,
-      class: o.lName,
+      class: o.lClass,
       text: o.label,
       attr: o.lAttr,
       rtn: true
