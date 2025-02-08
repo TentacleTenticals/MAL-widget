@@ -5,7 +5,8 @@ export async function connect(El, Mal, o){
   function textMatcher(text, text2, perc, sum){
     function removeSym(text){
       const filter = /([\W]*)/gm;
-      const fixer = (text) => text.replace(filter, '').toLowerCase();
+      const norm = /[\u0300-\u036F]/g;
+      const fixer = (text) => text.normalize('NFKD').replace(norm, '').replace(filter, '').toLowerCase();
       
       return fixer(text);
     };
