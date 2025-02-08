@@ -194,6 +194,7 @@ const getList = (El, Mal, o, item) => Mal.getList({
 
     o.s.me.status = l.my_list_status?.status;
     o.s.me.rating = l.my_list_status?.score||0;
+    o.s.me.priority = l.my_list_status?.priority||0;
     time && (o.s.me.updatedAt = time.date+' '+time.time);
     if(o.type === 'anime'){
       o.s.main.epsNum = l.num_episodes||'?';
