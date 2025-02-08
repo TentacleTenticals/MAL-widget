@@ -135,7 +135,8 @@ export const css = () => `
     flex-wrap: wrap;
     gap: 5px 7px;
 
-    .statusDate {
+    .status-items {
+      flex-grow: 1;
       gap: 0 10px;
 
       .-status.-st {
@@ -149,45 +150,105 @@ export const css = () => `
         color: var(--col);
         background-color: var(--bck-c-for);
       }
-    }
 
-    .-status.-updatedAt {
-      display: flex;
-      gap: 0 3px;
-
-      .-num {
-        margin: auto;
-        font-family: "Play", sans-serif;
-        color: var(--col);
-      }
-    }
-
-    .-status.-episodes {
-      display: flex;
-      align-items: center;
-      gap: 0 5px;
-      padding: 2px 10px 2px 5px;
-      font-size: 15px;
-      border: 1px solid var(--bor-c);
-      border-radius: 14px;
-      color: var(--col);
-            background-color: var(--bck-c);
-
-      .-numbers {
+      .-watchNread {
         display: flex;
         gap: 0 5px;
         padding: 0 10px 0 5px;
-        margin: auto;
+        margin: auto 0 auto auto;
         border-radius: 15px;
         color: var(--col);
-        background-color: var(--bck-c-for);
+        /* background-color: var(--bck-c-for); */
         font-family: "Amarante", serif;
+  
+          .-num {
+            display: flex;
+            appearance: none;
+            padding: 0;
+            margin: auto 0 auto 3px;
+            min-width: 12px;
+            height: unset;
+            font-family: "Amarante", serif;
+            font-size: 14px;
+            line-height: normal;
+            color: var(--col);
+            text-align: center;
+            outline: none;
+            border: unset;
+            border-radius: 2px;
+            background-color: unset;
+  
+            &::-webkit-inner-spin-button {
+              display: none;
+            }
+          }
+          .-max {
+            display: flex;
+            gap: 0 2px;
+            margin: auto;
+            font-size: 14px;
+            color: var(--col);
+  
+            &::before {
+              display: block;
+              content: '/';
+            }
+          }
+  
+          .vol {
+            &::after {
+              content: '|';
+              padding: 0 5px 0 10px;
+            }
+          }
+  
+        .-btn.-plus {
+          display: flex;
+          align-items: center;
+          padding: 2px;
+          margin: auto 0 auto 5px;
+          aspect-ratio: 1/1;
+          line-height: 0;
+          border: 1px solid var(--bor-c);
+          border-radius: 50%;
+        }
+      }
+    }
 
+    .-more {
+      gap: 0 5px;
+      width: 100%;
+
+      .label {
+        align-items: center;
+        gap: 0 3px;
+        margin: auto;
+        color: var(--col);
+
+        &.-rewatchNreread {
+          margin: 0 auto 0 0;
+        }
+
+        &.-priority {
+          margin: 0 0 0 auto;
+        }
+      }
+
+      .-status.-priority {
+        display: flex;
+        gap: 0 3px;
+        padding: 0 10px 0 5px;
+        font-size: 14px;
+        font-family: "Amarante", serif;
+        border-radius: 14px;
+        color: var(--col);
+        background-color: var(--bck-c-for);
+  
         .-num {
           display: flex;
           appearance: none;
           padding: 0;
-          margin: auto 0 auto 3px;
+          margin: auto;
           min-width: 12px;
           height: unset;
           font-family: "Amarante", serif;
@@ -197,43 +258,13 @@ export const css = () => `
           text-align: center;
           outline: none;
           border: unset;
-          border-radius: 2px;
+          border-radius: 14px;
           background-color: unset;
-
+  
           &::-webkit-inner-spin-button {
             display: none;
           }
         }
-        .-max {
-          display: flex;
-          gap: 0 2px;
-          margin: auto;
-          font-size: 14px;
-          color: var(--col);
-
-          &::before {
-            display: block;
-            content: '/';
-          }
-        }
-
-        .vol {
-          &::after {
-            content: '|';
-            padding: 0 5px 0 10px;
-          }
-        }
-      }
-
-      .-btn.-plus {
-        display: flex;
-        align-items: center;
-        padding: 2px;
-        margin: auto 0 auto 5px;
-        aspect-ratio: 1/1;
-        line-height: 0;
-        border: 1px solid var(--bor-c);
-        border-radius: 50%;
       }
     }
 
@@ -270,51 +301,34 @@ export const css = () => `
       }
     }
 
-    .-status.-priority {
-      display: flex;
-      gap: 0 3px;
-      padding: 0 10px 0 5px;
-      font-size: 14px;
-      font-family: "Amarante", serif;
-      border-radius: 14px;
-      color: var(--col);
-      background-color: var(--bck-c-for);
+    .date-save {
+      gap: 0 10px;
+      margin-left: auto;
 
-      .-num {
+      .-status.-updatedAt {
         display: flex;
-        appearance: none;
-        padding: 0;
+        gap: 0 3px;
         margin: auto;
-        min-width: 12px;
-        height: unset;
-        font-family: "Amarante", serif;
-        font-size: 14px;
-        line-height: normal;
-        color: var(--col);
-        text-align: center;
-        outline: none;
-        border: unset;
-        border-radius: 14px;
-        background-color: unset;
-
-        &::-webkit-inner-spin-button {
-          display: none;
+  
+        .-num {
+          margin: auto;
+          font-family: "Play", sans-serif;
+          color: var(--col);
         }
       }
-    }
 
-    .-btn.-save {
-      margin-left: auto;
-      font-family: "Play", sans-serif;
-      font-weight: 600;
-      border: 1px solid var(--bor-c);
-      border-radius: 2px;
-      color: var(--col-thi);
-      background-color: var(--bck-c-thi);
+      .-btn.-save {
+        font-family: "Play", sans-serif;
+        font-weight: 600;
+        border: 1px solid var(--bor-c);
+        border-radius: 2px;
+        color: var(--col-thi);
+        background-color: var(--bck-c-thi);
 
-      &:hover {
-        filter: brightness(0.8);
-        cursor: pointer;
+        &:hover {
+          filter: brightness(0.8);
+          cursor: pointer;
+        }
       }
     }
   }
