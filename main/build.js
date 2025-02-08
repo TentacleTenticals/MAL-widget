@@ -240,42 +240,119 @@ export function build(El, Mal, o) {
               case 'rating':
                 el.footer.rating.value = value;
                 break;
+              case 'priority':
+                el.footer.priority.value = value;
+                break;
               case 'updatedAt':
                 el.footer.updatedAt.textContent = value;
                 break;
             }
           }
 
-          El.Select({
-            //s 0
+          El.Div({
+            //n 0
             path: footer,
-            class: '-status -st',
-            options: [
-              ['-', undefined],
-              ...(o.type === 'anime') && [
-                ['смотрю', 'watching'],
-                ['просмотрено', 'completed'],
-                ['приостановлено', 'on_hold'],
-                ['брошено', 'dropped'],
-                ['планирую посмотреть', 'plan_to_watch']
-              ]||
-              [
-                ['читаю', 'reading'],
-                ['прочитано', 'completed'],
-                ['приостановлено', 'on_hold'],
-                ['брошено', 'dropped'],
-                ['планирую прочитать', 'plan_to_read']
-              ]
-            ],
-            // value: d.status,
-            onchange: (e) => {
-              o.s.me.status = e.target.value;
-            },
-            func: (e) => {
-              el.footer.status = e;
-              console.log(el.footer.status);
-            },
+            class: 'flx statusDate',
+            func: (flx) => {
+              El.Select({
+                //s 0
+                path: flx,
+                class: '-status -st',
+                options: [
+                  ['-', undefined],
+                  ...(o.type === 'anime') && [
+                    ['смотрю', 'watching'],
+                    ['просмотрено', 'completed'],
+                    ['приостановлено', 'on_hold'],
+                    ['брошено', 'dropped'],
+                    ['планирую посмотреть', 'plan_to_watch']
+                  ]||
+                  [
+                    ['читаю', 'reading'],
+                    ['прочитано', 'completed'],
+                    ['приостановлено', 'on_hold'],
+                    ['брошено', 'dropped'],
+                    ['планирую прочитать', 'plan_to_read']
+                  ]
+                ],
+                // value: d.status,
+                onchange: (e) => {
+                  o.s.me.status = e.target.value;
+                },
+                func: (e) => {
+                  el.footer.status = e;
+                  console.log(el.footer.status);
+                },
+              });
+
+              El.Div({
+                //n 0
+                path: flx,
+                class: '-status -updatedAt',
+                text: '⏰',
+                func: (num) => {
+                  El.Div({
+                    //n 0
+                    path: num,
+                    class: '-num',
+                    func: (e) => {
+                      el.footer.updatedAt = e;
+                    },
+                  });
+                },
+              });
+            }
           });
+
+          // El.Select({
+          //   //s 0
+          //   path: footer,
+          //   class: '-status -st',
+          //   options: [
+          //     ['-', undefined],
+          //     ...(o.type === 'anime') && [
+          //       ['смотрю', 'watching'],
+          //       ['просмотрено', 'completed'],
+          //       ['приостановлено', 'on_hold'],
+          //       ['брошено', 'dropped'],
+          //       ['планирую посмотреть', 'plan_to_watch']
+          //     ]||
+          //     [
+          //       ['читаю', 'reading'],
+          //       ['прочитано', 'completed'],
+          //       ['приостановлено', 'on_hold'],
+          //       ['брошено', 'dropped'],
+          //       ['планирую прочитать', 'plan_to_read']
+          //     ]
+          //   ],
+          //   // value: d.status,
+          //   onchange: (e) => {
+          //     o.s.me.status = e.target.value;
+          //   },
+          //   func: (e) => {
+          //     el.footer.status = e;
+          //     console.log(el.footer.status);
+          //   },
+          // });
+
+          // El.Div({
+          //   //n 0
+          //   path: footer,
+          //   class: '-status -updatedAt',
+          //   text: '⏰',
+          //   func: (num) => {
+          //     El.Div({
+          //       //n 0
+          //       path: num,
+          //       class: '-num',
+          //       func: (e) => {
+          //         el.footer.updatedAt = e;
+          //       },
+          //     });
+          //   },
+          // });
+
+          
           El.Div({
             //s 1
             path: footer,
@@ -463,19 +540,50 @@ export function build(El, Mal, o) {
               El.Div({
                 //n 0
                 path: n,
-                class: '-status -updatedAt',
-                text: '⏰',
+                class: '-status -priority',
+                text: 'Priority',
                 func: (num) => {
-                  El.Div({
+                  El.Input({
                     //n 0
                     path: num,
                     class: '-num',
+                    // editable: true,
+                    type: 'number',
+                    min: 0,
+                    max: 2,
+                    pattern: '[0-9]{2}',
+                    onblur: (e) => {
+                      if (o.s.me.priority === e.target.value) return;
+                      o.s.me.priority = e.target.value;
+                      e.target.style.width = `${e.target.value.length * 8}px`;
+                    },
+                    oninput: (e) => {
+                      e.target.style.width = `${e.target.value.length * 8}px`;
+                    },
                     func: (e) => {
-                      el.footer.updatedAt = e;
+                      e.style.width = `${o.s.me.rating.length * 8}px`;
+                      el.footer.priority = e;
                     },
                   });
                 },
               });
+
+              // El.Div({
+              //   //n 0
+              //   path: n,
+              //   class: '-status -updatedAt',
+              //   text: '⏰',
+              //   func: (num) => {
+              //     El.Div({
+              //       //n 0
+              //       path: num,
+              //       class: '-num',
+              //       func: (e) => {
+              //         el.footer.updatedAt = e;
+              //       },
+              //     });
+              //   },
+              // });
             },
           });
 
