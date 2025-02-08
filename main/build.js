@@ -291,7 +291,7 @@ export function build(El, Mal, o) {
               if (o.type === 'anime') {
                 El.Div({
                   path: flx,
-                  class: '-numbers',
+                  class: '-watchNread',
                   text: 'Watched',
                   func: (num) => {
                     El.Input({
