@@ -263,7 +263,7 @@ export function build(El, Mal, o) {
                 class: '-status -st',
                 options: [
                   ['-', undefined],
-                  ...(o.type === 'anime') && [
+                  ...(o.siteType === 'anime') && [
                     ['смотрю', 'watching'],
                     ['просмотрено', 'completed'],
                     ['приостановлено', 'on_hold'],
@@ -288,7 +288,7 @@ export function build(El, Mal, o) {
                 },
               });
 
-              if (o.type === 'anime') {
+              if (o.siteType === 'anime') {
                 El.Div({
                   path: flx,
                   class: '-watchNread',
@@ -340,7 +340,7 @@ export function build(El, Mal, o) {
                   },
                 });
               }else
-              if (o.type === 'manga') {
+              if (o.siteType === 'manga') {
                 El.Div({
                   path: flx,
                   class: '-watchNread',
@@ -445,7 +445,7 @@ export function build(El, Mal, o) {
           //   class: '-status -st',
           //   options: [
           //     ['-', undefined],
-          //     ...(o.type === 'anime') && [
+          //     ...(o.siteType === 'anime') && [
           //       ['смотрю', 'watching'],
           //       ['просмотрено', 'completed'],
           //       ['приостановлено', 'on_hold'],
@@ -526,7 +526,7 @@ export function build(El, Mal, o) {
 
               El.Input({
                 path: n,
-                label: o.type === 'anime' ? 'Rewatch' : 'Reread',
+                label: o.siteType === 'anime' ? 'Rewatch' : 'Reread',
                 type: 'checkbox',
                 lClass: 'flx label -rewatchNreread',
                 class: '-status -rewatchNreread',
@@ -635,18 +635,18 @@ export function build(El, Mal, o) {
                   document.activeElement.blur();
                   Mal.updateList({
                     value: o.s.main.id,
-                    type: o.type,
+                    type: o.siteType,
                     url: o.url,
                     token: o.token,
                     data: {
-                      status: o.s.me.status||(o.type === 'anime' ? 'watching':'reading'),
+                      status: o.s.me.status||(o.siteType === 'anime' ? 'watching':'reading'),
                       score: o.s.me.rating,
                       priority: o.s.me.priority,
-                      ...(o.type === 'anime' && {
+                      ...(o.siteType === 'anime' && {
                         num_watched_episodes: o.s.me.eps,
                         is_rewatching: o.s.me.rewatchNreread
                       }),
-                      ...(o.type === 'manga' && {
+                      ...(o.siteType === 'manga' && {
                         num_volumes_read: o.s.me.volumes,
                         num_chapters_read: o.s.me.chapters,
                         is_rereading: o.s.me.rewatchNreread
