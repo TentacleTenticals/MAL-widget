@@ -81,7 +81,7 @@ export async function connect(El, Mal, o){
   }
 
   return Mal.search({
-    type: o.type,
+    type: o.siteType,
     url: o.url,
     token: o.token,
     query: {
@@ -131,7 +131,7 @@ export async function connect(El, Mal, o){
   
       //     Mal.getList({
       //       value: o.s.main.id,
-      //       type: o.type,
+      //       type: o.siteType,
       //       url: o.url,
       //       token: o.token,
       //       query: {
@@ -170,7 +170,7 @@ export async function connect(El, Mal, o){
 
 const getList = (El, Mal, o, item) => Mal.getList({
   value: item.id,
-  type: o.type,
+  type: o.siteType,
   url: o.url,
   token: o.token,
   query: {
@@ -191,13 +191,13 @@ const getList = (El, Mal, o, item) => Mal.getList({
     l.broadcast && (o.s.main.broadcastDate = true);
     l.broadcast && (o.s.main.weekDay = l.broadcast?.day_of_the_week);
     l.broadcast && (o.s.main.weekTime = l.broadcast?.start_time);
-    o.s.main.url = `https://myanimelist.net/${o.type}/${item.id}`;
+    o.s.main.url = `https://myanimelist.net/${o.siteType}/${item.id}`;
 
     o.s.me.status = l.my_list_status?.status;
     o.s.me.rating = l.my_list_status?.score||0;
     o.s.me.priority = l.my_list_status?.priority||0;
     time && (o.s.me.updatedAt = time.date+' '+time.time);
-    if(o.type === 'anime'){
+    if(o.siteType === 'anime'){
       o.s.main.epsNum = l.num_episodes||'?';
       o.s.me.eps = l.my_list_status?.num_episodes_watched||0;
       o.s.me.rewatchNreread = l.my_list_status?.is_rewatching||false;
