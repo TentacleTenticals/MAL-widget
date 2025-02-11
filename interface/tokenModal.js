@@ -87,7 +87,7 @@ export function tokenModal(El, Mal, o){
               onclick: () => {
 
                 return Mal.getToken({
-                  url: o.url,
+                  url: o.secrets.catcher_url,
                   ...o.secrets,
                   codeVer: chall,
                   // code: o.secrets.code
