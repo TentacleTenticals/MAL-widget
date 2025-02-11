@@ -637,7 +637,7 @@ export function build(El, Mal, o) {
                     value: o.s.main.id,
                     type: o.siteType,
                     url: o.url,
-                    token: o.token,
+                    accToken: o.accToken,
                     data: {
                       status: o.s.me.status||(o.siteType === 'anime' ? 'watching':'reading'),
                       score: o.s.me.rating,
