@@ -80,8 +80,8 @@ export const Mal = {
   loginGen: function(o){
     const data = {
       'response_type': 'code',
-      'client_id': o.clientId,
-      'redirect_uri': o.redirectUri,
+      'client_id': o.client_id,
+      'redirect_uri': o.redirect_uri,
       'code_challenge': o.codeChall
     };
 
@@ -95,9 +95,9 @@ export const Mal = {
 
     o.data = {
       grant_type: 'authorization_code',
-      client_id: o.clientId,
-      client_secret: o.clientSecret,
-      redirect_uri: o.redirectUri,
+      client_id: o.client_id,
+      client_secret: o.client_secret,
+      redirect_uri: o.redirect_uri,
       code: o.code,
       code_verifier: o.codeVer,
       ...o.data
@@ -116,10 +116,10 @@ export const Mal = {
 
     o.data = {
       grant_type: 'refresh_token',
-      client_id: o.clientId,
-      client_secret: o.clientSecret,
-      redirect_uri: o.redirectUri,
-      refresh_token: o.refToken,
+      client_id: o.client_id,
+      client_secret: o.client_secret,
+      redirect_uri: o.redirect_uri,
+      refresh_token: o.refresh_token,
       ...o.data
     };
 
