@@ -82,7 +82,7 @@ export async function connect(El, Mal, o){
 
   return Mal.search({
     type: o.siteType,
-    url: o.url,
+    url: o.catcherUrl,
     accToken: o.accToken,
     query: {
       q: o.title.slice(0, 64),
@@ -132,7 +132,7 @@ export async function connect(El, Mal, o){
       //     Mal.getList({
       //       value: o.s.main.id,
       //       type: o.siteType,
-      //       url: o.url,
+      //       url: o.catcherUrl,
       //       accToken: o.accToken,
       //       query: {
       //         fields: ['id', 'title', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes']
@@ -171,7 +171,7 @@ export async function connect(El, Mal, o){
 const getList = (El, Mal, o, item) => Mal.getList({
   value: item.id,
   type: o.siteType,
-  url: o.url,
+  url: o.catcherUrl,
   accToken: o.accToken,
   query: {
     fields: ['id', 'title', 'media_type', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes', 'num_volumes', 'num_chapters', 'priority']
