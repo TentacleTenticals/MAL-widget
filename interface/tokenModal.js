@@ -103,11 +103,11 @@ export function tokenModal(El, Mal, o){
                     //   d.close();
                     // };
                     d.close();
-                    return o.promise[0]({tokenInfo:'tokens created', ...res});
+                    return o.promise[0]({tokenInfo:{msg:'tokens created'}, ...res});
                   },
                   err => {
                     console.log('[MAL Widget ERR] Токены не получены!', err);
-                    return o.promise[1]({tokenInfo:'error', err:err});
+                    return o.promise[1]({tokenInfo:{msg:'error'}, err:err});
                   }
                 );
               }
