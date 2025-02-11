@@ -5,7 +5,7 @@ export function tokenModal(El, Mal, o){
     show: true,
     onclose: (d) => {
       // d.remove();
-      o.onclose();
+      o.onclose && o.onclose();
     },
     func: (d) => {
       const chall = Mal.cc(128);
