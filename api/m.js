@@ -80,8 +80,8 @@ export const Mal = {
   loginGen: function(o){
     const data = {
       'response_type': 'code',
-      'client_id': o.client_id,
-      'redirect_uri': o.redirect_uri,
+      'client_id': o.clientId,
+      'redirect_uri': o.redirectUri,
       'code_challenge': o.codeChall
     };
 
@@ -95,9 +95,9 @@ export const Mal = {
 
     o.data = {
       grant_type: 'authorization_code',
-      client_id: o.client_id,
-      client_secret: o.client_secret,
-      redirect_uri: o.redirect_uri,
+      client_id: o.clientId,
+      client_secret: o.clientSecret,
+      redirect_uri: o.redirectUri,
       code: o.code,
       code_verifier: o.codeVer,
       ...o.data
@@ -116,16 +116,16 @@ export const Mal = {
 
     o.data = {
       grant_type: 'refresh_token',
-      client_id: o.client_id,
-      client_secret: o.client_secret,
-      redirect_uri: o.redirect_uri,
-      refresh_token: o.refresh_token,
+      client_id: o.clientId,
+      client_secret: o.clientSecret,
+      redirect_uri: o.redirectUri,
+      refresh_token: o.refToken,
       ...o.data
     };
 
     o.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      // 'Authorization': 'Bearer '+o.token,
+      // 'Authorization': 'Bearer '+o.accToken,
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
@@ -161,7 +161,7 @@ export const Mal = {
     o.method = 'GET';
 
     o.headers = {
-      'Authorization': 'Bearer '+o.token,
+      'Authorization': 'Bearer '+o.accToken,
       Url: `${this.url}/${o.type||''}?${o.query && this.s(o.query)||''}`
     }
     console.log('S', o);
@@ -172,7 +172,7 @@ export const Mal = {
 
     o.headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer '+o.token,
+      'Authorization': 'Bearer '+o.accToken,
       Url: `${this.url}/${o.type||''}/${o.value||''}?${o.query && this.s(o.query)||''}`
     }
 
@@ -183,7 +183,7 @@ export const Mal = {
 
     o.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer '+o.token,
+      'Authorization': 'Bearer '+o.accToken,
       Url: `${this.url}/${o.type||''}/${o.value||''}/my_list_status?${o.query && this.s(o.query)||''}`
     }
 
