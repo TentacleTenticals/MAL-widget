@@ -636,7 +636,7 @@ export function build(El, Mal, o) {
                   Mal.updateList({
                     value: o.s.main.id,
                     type: o.siteType,
-                    url: o.url,
+                    url: o.catcherUrl,
                     accToken: o.accToken,
                     data: {
                       status: o.s.me.status||(o.siteType === 'anime' ? 'watching':'reading'),
