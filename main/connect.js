@@ -80,7 +80,7 @@ export async function connect(El, Mal, o){
     return o;
   }
 
-  return Mal.search({
+  const malFind = (o) => Mal.search({
     type: o.siteType,
     url: o.catcherUrl,
     accToken: o.accToken,
@@ -90,7 +90,9 @@ export async function connect(El, Mal, o){
       limit: 20,
       nsfw: true
     }
-  }).then(
+  });
+
+  return malFind(o).then(
     res => {
       console.log('[MAL API]', res);
 
