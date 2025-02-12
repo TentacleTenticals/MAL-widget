@@ -80,21 +80,6 @@ export async function connect(El, Mal, o){
     return o;
   }
 
-  const qq = (o) => Mal.search({
-    type: o.siteType,
-    url: o.catcherUrl,
-    accToken: o.accToken,
-    query: {
-      q: o.title.slice(0, 64),
-      // offset: 1,
-      limit: 20,
-      nsfw: true
-    }
-  });
-
-  const ll = await qq(o);
-  console.log('LL', ll);
-
   return Mal.search({
     type: o.siteType,
     url: o.catcherUrl,
