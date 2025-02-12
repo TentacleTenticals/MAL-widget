@@ -63,8 +63,9 @@ export const Mal = {
           },
           ...(o.data) && {body: this.dataConverter(o)}
       }).then(
-        r => {
+        async r => {
           if(!r.ok){
+            console.log('[MAL API] R', await r.json());
             // throw Object.assign(new Error('[MAL API]', {cause:r||JSON.stringify(r)}), r);
             throw new Error('[MAL API]', {cause:JSON.stringify(r)});
           }
