@@ -65,9 +65,7 @@ export const Mal = {
       }).then(
         r => {
           if(!r.ok){
-            const er = new Error('[MAL API]');
-            er.err = r;
-            throw er;
+            throw (new Error('[MAL API]', r, cause:r||JSON.stringify(r)))
           }
           else return r.json();
         }).then(
