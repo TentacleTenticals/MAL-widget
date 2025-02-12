@@ -1,527 +1,228 @@
-export function build(El, Mal, o) {
-  if(!document.getElementById('mal widget')) El.Div({
-    path: o.path,
-    insert: 'beforeBegin',
-    class: `-mal ${o.cfg.theme}`,
-    id: 'mal widget',
-    func: (m) => {
-      const el = {
-        header: {},
-        footer: {},
-      };
-      function item(i) {
-        El.Div({
-          path: i.path,
-          class: i.class,
-          text: i.text,
-          func: (r) => {
-            El.Div({
-              path: r,
-              class: i.c.class,
-              text: i.c.text,
-              func: i.c.func,
-            });
-          },
-        });
-      }
+export async function connect(El, Mal, o){
+  console.log('Connect', o);
+  const getType = (o) => o && o.constructor.toString().split(/[\(\) ]/)[1];
 
-      El.Div({
-        path: m,
-        class: '-header',
-        func: (h) => {
-          function upd(key, v, t) {
-            switch (key) {
-              case 'title':
-                t.title.textContent = v;
-                break;
-              case 'status':
-                t.header.broadcast.classList.add(v);
-                break;
-              case 'broadcastStatus':
-                t.header.broadcastStatus.textContent = v;
-                break;
-              case 'broadcastDate':
-                t.header.broadcastDate.classList.remove('hidden');
-                break;
-              case 'weekDay':
-                t.header.weekDay.textContent = 'по ' + Mal.wD(v, true);
-                break;
-              case 'weekTime':
-                t.header.weekTime.textContent = 'в ' + v;
-                break;
-              case 'rating':
-                t.header.rating.textContent = v;
-                break;
-              case 'rank':
-                t.header.rank.textContent = '# ' + v;
-                break;
-              case 'id':
-                t.header.id.textContent = v;
-                break;
-              case 'url':
-                t.header.url.href = v;
-                break;
-              case 'epsNum':
-                t.footer.epsNum.textContent = v;
-                break;
-              case 'volumesNum':
-                t.footer.volumesNum.textContent = v;
-                break;
-              case 'chaptersNum':
-                t.footer.chaptersNum.textContent = v;
-                break;
-            }
-          }
+  function textMatcher(text, text2, perc, sum){
+    function removeSym(text){
+      const filter = /([\W]*)/gm;
+      const norm = /[\u0300-\u036F]/g;
+      const fixer = (text) => text.normalize('NFKD').replace(norm, '').replace(filter, '').toLowerCase();
+      
+      return fixer(text);
+    };
+    
+    const o = {
+      txt1: text,
+      txt2: text2,
+      resArray: [],
+      status: {
+        matchLen: 0,
+        notMatchLen: 0,
+        maxLen: 0
+      },
+      result: {}
+    };
+    text = removeSym(text);
+    text2 = removeSym(text2);
+    
+    if(text.length > text2.length){
+      o.status.maxLen = text.length;
+      o.main = text;
+      o.sec = text2;
+    }else{
+      o.status.maxLen = text2.length;
+      o.main = text2;
+      o.sec = text;
+    }
+    let match = '';
+    let notM = '';
+    
+    for(let i = 0; i < o.status.maxLen; i++){
+      // console.log('Q', i);
+      if(o.main[i] === o.sec[i]){
+        // console.log('Ok', match);
+        // o.txt ? '' : o.txt = '';
+        // o.txt += text[i];
+        match += o.main[i]||'';
+        notM && o.resArray.push({notM: notM, n:i-1||''});;
+        notM = '';
+      }else
+      if(o.main[i] !== o.sec[i]){
+        // console.log('NOT', match);
+        notM += o.main[i]||'';
+        match && o.resArray.push({match: match, n:i-1||''});
+        match = '';
+        // console.log('QQ', text2.slice(0, i) + text2.slice(i+1, text2.length));
+        o.main = o.main.slice(0, i) + o.main.slice(i+1, o.main.length);
+      }else o.resArray.push(match)
+    }
+    match && o.resArray.push({match: match, n:o.main.length});
+    
+    // let len = 0;
+    o.resArray.forEach(e => {
+      if(e.match) o.status.matchLen += e.match.length;
+      else o.status.notMatchLen += e.notM.length;
+    });
+    
+    o.result.percents = ((100 * o.status.matchLen) / o.main.length).toFixed(2);
+    
+    if(o.result.percents > perc){
+      o.result.percCheck = 'match';
+      // console.log('[Text Matcher] Percents MATCH!', o.percent);
+    }
+    if(o.status.notMatchLen < sum){
+      o.result.summCheck = 'match';
+      // console.log('[Text Matcher] Sum MATCH!', o.status.notMatchLen);
+    }
+    
+    console.log('[Text Matcher]', o);
+    
+    return o;
+  }
 
-          function upd2(key, value, t) {
-            switch (key) {
-              case 'status':
-                t.footer.status.value = value;
-                break;
-              case 'eps':
-                t.footer.eps.value = value;
-                break;
-              case 'volumes':
-                t.footer.volumes.value = value;
-                break;
-              case 'chapters':
-                t.footer.chapters.value = value;
-                break;
-              case 'rating':
-                t.footer.rating.value = value;
-                break;
-              case 'priority':
-                t.footer.priority.value = value;
-                break;
-              case 'rewatchNreread':
-                t.footer.rewatchNreread.checked = value;
-                break;
-              case 'updatedAt':
-                t.footer.updatedAt.textContent = value;
-                break;
-            }
-          }
-
-          o.s.main = new Proxy(o.data.main, El.ProxyHandler(upd, el));
-          o.s.me = new Proxy(o.data.me, El.ProxyHandler(upd2, el));
-
-          El.Div({
-            //h 0
-            path: h,
-            class: '-title',
-            text: 'MAL',
-          });
-
-          El.Div({
-            //h 1
-            path: h,
-            class: '-info',
-            func: (info) => {
-              El.Div({
-                //info 0
-                path: info,
-                class: '-list',
-                // text: 'Info',
-                func: (i) => {
-                  El.Div({
-                    path: i,
-                    class: '-item -broadcast',
-                    func: (b) => {
-                      el.header.broadcast = b;
-                      El.Div({
-                        path: b,
-                        class: '-title',
-                        func: (t) => el.header.broadcastStatus = t,
-                      });
-                      El.Div({
-                        path: b,
-                        class: '-s-item hidden',
-                        func: (i) => {
-                          el.header.broadcastDate = i;
-                          El.Div({
-                            path: i,
-                            class: '-value -day',
-                            func: (e) => el.header.weekDay = e
-                          });
-                          El.Div({
-                            path: i,
-                            class: '-value -time',
-                            func: (e) => el.header.weekTime = e
-                          });
-                        },
-                      });
-                    },
-                  });
-
-                  item({
-                    //i 0
-                    path: i,
-                    class: '-item -rating',
-                    text: 'Rating',
-                    c: {
-                      class: '-value',
-                      func: (e) => el.header.rating = e
-                    },
-                  });
-
-                  item({
-                    //i 0
-                    path: i,
-                    class: '-item -rank',
-                    text: 'Rank',
-                    c: {
-                      class: '-value',
-                      func: (e) => el.header.rank = e
-                    },
-                  });
-
-                  item({
-                    //i 1
-                    path: i,
-                    class: '-item -id',
-                    text: 'ID',
-                    c: {
-                      class: '-value',
-                      func: (e) => el.header.id = e
-                    },
-                  });
-
-                  El.A({
-                    path: i,
-                    class: '-link',
-                    text: '🔗',
-                    url: o.s.main.url,
-                    target: '__blank',
-                    func: (e) => el.header.url = e
-                  });
-                },
-              });
-            },
-          });
-        },
-      });
-
-      El.Div({
-        //m 1
-        path: m,
-        class: '-itemTitle',
-        text: '-',
-        func: (e) => el.title = e
-      });
-
-      El.Div({
-        //m 2
-        path: m,
-        class: '-footer',
-        func: (footer) => {
-          El.Div({
-            //n 0
-            path: footer,
-            class: 'flx status-items',
-            func: (flx) => {
-              El.Select({
-                //s 0
-                path: flx,
-                class: '-status -st',
-                options: [
-                  ['-', undefined],
-                  ...(o.siteType === 'anime') && [
-                    ['смотрю', 'watching'],
-                    ['просмотрено', 'completed'],
-                    ['приостановлено', 'on_hold'],
-                    ['брошено', 'dropped'],
-                    ['планирую посмотреть', 'plan_to_watch']
-                  ]||
-                  [
-                    ['читаю', 'reading'],
-                    ['прочитано', 'completed'],
-                    ['приостановлено', 'on_hold'],
-                    ['брошено', 'dropped'],
-                    ['планирую прочитать', 'plan_to_read']
-                  ]
-                ],
-                onchange: (e) => {
-                  o.s.me.status = e.target.value;
-                },
-                func: (e) => el.footer.status = e
-              });
-
-              if (o.siteType === 'anime') {
-                El.Div({
-                  path: flx,
-                  class: '-watchNread',
-                  text: 'Watched',
-                  func: (num) => {
-                    El.Input({
-                      //n VOLUMES NUM
-                      path: num,
-                      class: '-num',
-                      type: 'number',
-                      label: 'eps',
-                      lClass: 'flx',
-                      min: 0,
-                      max: el.footer.epsNum,
-                      pattern: '[0-9]{2}',
-                      onblur: (e) => {
-                        if (o.s.me.volumes === e.target.value) return;
-                        o.s.me.eps = e.target.value;
-                        e.target.style.width = `${e.target.value.length * 8}px`;
-                      },
-                      oninput: (e) => {
-                        e.target.style.width = `${e.target.value.length * 8}px`;
-                      },
-                      func: (e) => {
-                        e.style.width = `${o.s.me.volumes.length * 8}px`;
-                        el.footer.eps = e;
-
-                        El.Div({
-                          // VOLUMES MAX
-                          path: e.parentNode,
-                          class: '-max',
-                          // text: d.epNum,
-                          func: (e) => el.footer.epsNum = e
-                        });
-
-                        El.Button({
-                          // PLUS
-                          path: e.parentNode,
-                          class: '-btn -plus',
-                          text: '+',
-                          onclick: () => {
-                            o.s.me.eps++;
-                          },
-                        });
-                      },
-                    });
-                  },
-                });
-              }else
-              if (o.siteType === 'manga') {
-                El.Div({
-                  path: flx,
-                  class: '-watchNread',
-                  text: 'Readed',
-                  func: (num) => {
-                    El.Input({
-                      //n VOLUMES NUM
-                      path: num,
-                      class: '-num',
-                      type: 'number',
-                      label: 'vol',
-                      lClass: 'flx vol',
-                      min: 0,
-                      max: el.footer.volumesNum,
-                      pattern: '[0-9]{2}',
-                      onblur: (e) => {
-                        if (o.s.me.volumes === e.target.value) return;
-                        o.s.me.volumes = e.target.value;
-                        e.target.style.width = `${e.target.value.length * 8}px`;
-                      },
-                      oninput: (e) => {
-                        e.target.style.width = `${e.target.value.length * 8}px`;
-                      },
-                      func: (e) => {
-                        e.style.width = `${o.s.me.volumes.length * 8}px`;
-                        el.footer.volumes = e;
-
-                        El.Div({
-                          // VOLUMES MAX
-                          path: e.parentNode,
-                          class: '-max',
-                          // text: d.epNum,
-                          func: (e) => el.footer.volumesNum = e
-                        });
-
-                        El.Button({
-                          // PLUS
-                          path: e.parentNode,
-                          class: '-btn -plus',
-                          text: '+',
-                          onclick: () => {
-                            o.s.me.volumes++;
-                          },
-                        });
-                      },
-                    });
-
-                    El.Input({
-                      //n VOLUMES NUM
-                      path: num,
-                      class: '-num',
-                      type: 'number',
-                      label: 'chp',
-                      lClass: 'flx',
-                      min: 0,
-                      max: el.footer.chaptersNum,
-                      pattern: '[0-9]{2}',
-                      onblur: (e) => {
-                        if (o.s.me.volumes === e.target.value) return;
-                        o.s.me.chapters = e.target.value;
-                        e.target.style.width = `${e.target.value.length * 8}px`;
-                      },
-                      oninput: (e) => {
-                        e.target.style.width = `${e.target.value.length * 8}px`;
-                      },
-                      func: (e) => {
-                        e.style.width = `${o.s.me.chapters.length * 8}px`;
-                        el.footer.chapters = e;
-
-                        El.Div({
-                          // VOLUMES MAX
-                          path: e.parentNode,
-                          class: '-max',
-                          // text: d.epNum,
-                          func: (e) => el.footer.chaptersNum = e
-                        });
-
-                        El.Button({
-                          // PLUS
-                          path: e.parentNode,
-                          class: '-btn -plus',
-                          text: '+',
-                          onclick: () => {
-                            o.s.me.chapters++;
-                          }
-                        });
-                      }
-                    });
-                  }
-                });
-              }
-            }
-          });
-          
-          El.Div({
-            //s 1
-            path: footer,
-            class: 'flx -more',
-            func: (n) => {
-              El.Div({
-                //n 0
-                path: n,
-                class: '-status -rating',
-                text: 'My rating',
-                func: (num) => {
-                  El.Input({
-                    //n 0
-                    path: num,
-                    class: '-num',
-                    // editable: true,
-                    type: 'number',
-                    min: 0,
-                    max: 10,
-                    pattern: '[0-9]{2}',
-                    onblur: (e) => {
-                      if (o.s.me.rating === e.target.value) return;
-                      o.s.me.rating = e.target.value;
-                      e.target.style.width = `${e.target.value.length * 8}px`;
-                    },
-                    oninput: (e) => {
-                      e.target.style.width = `${e.target.value.length * 8}px`;
-                    },
-                    func: (e) => {
-                      e.style.width = `${o.s.me.rating.length * 8}px`;
-                      el.footer.rating = e;
-                    },
-                  });
-                },
-              });
-
-              El.Input({
-                path: n,
-                label: o.siteType === 'anime' ? 'Rewatch' : 'Reread',
-                type: 'checkbox',
-                lClass: 'flx label -rewatchNreread',
-                class: '-status -rewatchNreread',
-                onchange: (e) => {
-                  o.s.me.rewatchNreread = e.target.checked;
-                },
-                func: (e) => {
-                  el.footer.rewatchNreread = e;
-                }
-              });
-
-              El.Select({
-                path: n,
-                label: 'Priority',
-                lClass: 'flx label -priority',
-                class: '-status -priority',
-                options: [
-                  ['Low', 0],
-                  ['Mid', 1],
-                  ['High', 2]
-                ],
-                onchange: (e) => {
-                  o.s.me.priority = e.target.value;
-                },
-                func: (e) => {
-                  el.footer.priority = e;
-                }
-              });
-            }
-          });
-
-          El.Div({
-            path: footer,
-            class: 'flx date-save',
-            func: (sav) => {
-              El.Div({
-                path: sav,
-                class: '-status -updatedAt',
-                text: '⏰',
-                func: (num) => {
-                  El.Div({
-                    path: num,
-                    class: '-num',
-                    func: (e) => {
-                      el.footer.updatedAt = e;
-                    },
-                  });
-                },
-              });
-
-              El.Button({
-                //n 3
-                path: sav,
-                class: '-btn -save',
-                text: 'Save',
-                // func: (s) => el.footer.save = s,
-                onclick: (s) => {
-                  document.activeElement.blur();
-                  Mal.updateList({
-                    value: o.s.main.id,
-                    type: o.siteType,
-                    url: o.catcherUrl,
-                    accToken: o.accToken,
-                    data: {
-                      status: o.s.me.status||(o.siteType === 'anime' ? 'watching':'reading'),
-                      score: o.s.me.rating,
-                      priority: o.s.me.priority,
-                      ...(o.siteType === 'anime' && {
-                        num_watched_episodes: o.s.me.eps,
-                        is_rewatching: o.s.me.rewatchNreread
-                      }),
-                      ...(o.siteType === 'manga' && {
-                        num_volumes_read: o.s.me.volumes,
-                        num_chapters_read: o.s.me.chapters,
-                        is_rereading: o.s.me.rewatchNreread
-                      })
-                    },
-                  }).then(l => {
-                    console.log('[MAL Widget] UPD', l);
-                    const time = El.getTime(l?.updated_at, 'full');
-                    s.target.textContent = 'Saved ✅';
-                    time && (o.s.me.updatedAt = time.date+' '+time.time);
-                    setTimeout(() => {
-                      s.target.textContent = 'Save';
-                    }, 5000);
-                  });
-                }
-              });
-            }
-          })
-        }
-      });
+  const qq = (o) => Mal.search({
+    type: o.siteType,
+    url: o.catcherUrl,
+    accToken: o.accToken,
+    query: {
+      q: o.title.slice(0, 64),
+      // offset: 1,
+      limit: 20,
+      nsfw: true
     }
   });
-}
+
+  const ll = await qq(o);
+  console.log('LL', ll);
+
+  return Mal.search({
+    type: o.siteType,
+    url: o.catcherUrl,
+    accToken: o.accToken,
+    query: {
+      q: o.title.slice(0, 64),
+      // offset: 1,
+      limit: 20,
+      nsfw: true
+    }
+  }).then(
+    res => {
+      console.log('[MAL API]', res);
+
+      if(res && res.data && getType(res.data) === 'Array'){
+        for(let e of res.data){
+          const match = textMatcher(e.node.title, o.title, o.cfg.textMatch.percents, o.cfg.textMatch.summ);
+          if(match.result.percCheck === 'match'){
+            console.log('GOT one!!!', {id: e.node.id, title:e.node.title});
+            o.s.main.id = e.node.id;
+            o.s.main.title = e.node.title;
+            return getList(El, Mal, o, e.node);
+            // break;
+          }
+        }
+      }else{
+        res = undefined;
+        throw new Error('[MAL Widget E] Not array/no array');
+      }
+
+
+
+
+
+
+
+
+      
+      // if(!res||!res.data||getType(res.data) !== 'Array'){
+      //   // o.retry.try++;
+      //   throw new Error('[MAL Widget] Not array');
+      // }else
+      // res && res.data && res.data.forEach(r => {
+      //   // console.log(r.node.id);
+      //   if(fixer(r.node.title) === o.title){
+      //     console.log('GOT one!!!', {id: r.node.id, title:r.node.title});
+      //     o.s.main.id = r.node.id;
+      //     o.s.main.title = r.node.title;
+  
+      //     Mal.getList({
+      //       value: o.s.main.id,
+      //       type: o.siteType,
+      //       url: o.catcherUrl,
+      //       accToken: o.accToken,
+      //       query: {
+      //         fields: ['id', 'title', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes']
+      //       }
+      //     }).then(
+      //       l => {
+      //         // console.log('LIST', l);
+      //         // console.log('S', l.my_list_status?.score||0)
+      //         o.s.main.rating = l.mean;
+      //         o.s.main.rank = l.rank;
+      //         o.s.main.status = l.status;
+      //         o.s.main.weekDay = l.broadcast?.day_of_the_week;
+      //         o.s.main.weekTime = l.broadcast?.start_time;
+      //         o.s.main.url = `https://myanimelist.net/anime/${r.node.id}`;
+
+      //         o.s.me.status = l.my_list_status?.status;
+      //         o.s.me.rating = l.my_list_status?.score||0;
+      //         o.s.main.epsNum = l.num_episodes;
+      //         o.s.me.eps = l.my_list_status?.num_episodes_watched||0;
+      //       }
+      //     )
+      //   }
+      // })
+    },
+    err => {
+      console.log('[MAL API] ERR', err);
+      // if(+o.retry.try < +o.retry.max){
+      //   o.retry.try++;
+      //   connect(Mal, o);
+      //   return;
+      // }
+    }
+  )
+};
+
+const getList = (El, Mal, o, item) => Mal.getList({
+  value: item.id,
+  type: o.siteType,
+  url: o.catcherUrl,
+  accToken: o.accToken,
+  query: {
+    fields: ['id', 'title', 'media_type', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes', 'num_volumes', 'num_chapters', 'priority']
+  }
+}).then(
+  l => {
+    console.log('MAL', l);
+    const time = El.getTime(l.my_list_status?.updated_at, 'full');
+    // o.s.main.id = r.node.id;
+    // o.s.main.title = r.node.title;
+    // console.log('LIST', l);
+    // console.log('S', l.my_list_status?.score||0)
+    o.s.main.rating = l.mean||'-';
+    o.s.main.rank = l.rank||'-';
+    o.s.main.status = l.status||'';
+    o.s.main.broadcastStatus = Mal.titleStatus(l.status);
+    l.broadcast && (o.s.main.broadcastDate = true);
+    l.broadcast && (o.s.main.weekDay = l.broadcast?.day_of_the_week);
+    l.broadcast && (o.s.main.weekTime = l.broadcast?.start_time);
+    o.s.main.url = `https://myanimelist.net/${o.siteType}/${item.id}`;
+
+    o.s.me.status = l.my_list_status?.status;
+    o.s.me.rating = l.my_list_status?.score||0;
+    o.s.me.priority = l.my_list_status?.priority||0;
+    time && (o.s.me.updatedAt = time.date+' '+time.time);
+    if(o.siteType === 'anime'){
+      o.s.main.epsNum = l.num_episodes||'?';
+      o.s.me.eps = l.my_list_status?.num_episodes_watched||0;
+      o.s.me.rewatchNreread = l.my_list_status?.is_rewatching||false;
+    }else{
+      o.s.main.volumesNum = l.num_volumes||'?';
+      o.s.main.chaptersNum = l.num_chapters||'?';
+      o.s.me.volumes = l.my_list_status?.num_volumes_read||0;
+      o.s.me.chapters = l.my_list_status?.num_chapters_read||0;
+      o.s.me.rewatchNreread = l.my_list_status?.is_rereading||false;
+      // o.s.main.volumes = l.me.volumes;
+    }
+  }
+)
