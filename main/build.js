@@ -1,8 +1,9 @@
 export function build(El, Mal, o) {
-  El.Div({
+  if(!document.getElementById('mal widget')) El.Div({
     path: o.path,
     insert: 'beforeBegin',
-    class: `-mal ${o.theme}`,
+    class: `-mal ${o.cfg.theme}`,
+    id: 'mal widget',
     func: (m) => {
       const el = {
         header: {},
@@ -28,64 +29,81 @@ export function build(El, Mal, o) {
         path: m,
         class: '-header',
         func: (h) => {
-          // m 0
-          const handler = {
-            set(target, key, value, receiver) {
-              if (value !== target[key]) {
-                // console.log(`Setting ${key} to ${value}`);
-                target[key] = value;
-                upd(key, value);
-                return true;
-              }
-              return false;
-            },
-          };
-          o.s.main = new Proxy(o.data.main, handler);
-          // const el = {};
-
-          function upd(key, v) {
+          function upd(key, v, t) {
             switch (key) {
               case 'title':
-                el.title.textContent = v;
+                t.title.textContent = v;
                 break;
               case 'status':
-                el.header.broadcast.classList.add(v);
+                t.header.broadcast.classList.add(v);
                 break;
               case 'broadcastStatus':
-                el.header.broadcastStatus.textContent = v;
+                t.header.broadcastStatus.textContent = v;
                 break;
               case 'broadcastDate':
-                el.header.broadcastDate.classList.remove('hidden');
+                t.header.broadcastDate.classList.remove('hidden');
                 break;
               case 'weekDay':
-                el.header.weekDay.textContent = 'по ' + Mal.wD(v, true);
+                t.header.weekDay.textContent = 'по ' + Mal.wD(v, true);
                 break;
               case 'weekTime':
-                el.header.weekTime.textContent = 'в ' + v;
+                t.header.weekTime.textContent = 'в ' + v;
                 break;
               case 'rating':
-                el.header.rating.textContent = v;
+                t.header.rating.textContent = v;
                 break;
               case 'rank':
-                el.header.rank.textContent = '# ' + v;
+                t.header.rank.textContent = '# ' + v;
                 break;
               case 'id':
-                el.header.id.textContent = v;
+                t.header.id.textContent = v;
                 break;
               case 'url':
-                el.header.url.href = v;
+                t.header.url.href = v;
                 break;
               case 'epsNum':
-                el.footer.epsNum.textContent = v;
+                t.footer.epsNum.textContent = v;
                 break;
               case 'volumesNum':
-                el.footer.volumesNum.textContent = v;
+                t.footer.volumesNum.textContent = v;
                 break;
               case 'chaptersNum':
-                el.footer.chaptersNum.textContent = v;
+                t.footer.chaptersNum.textContent = v;
                 break;
             }
           }
+
+          function upd2(key, value, t) {
+            switch (key) {
+              case 'status':
+                t.footer.status.value = value;
+                break;
+              case 'eps':
+                t.footer.eps.value = value;
+                break;
+              case 'volumes':
+                t.footer.volumes.value = value;
+                break;
+              case 'chapters':
+                t.footer.chapters.value = value;
+                break;
+              case 'rating':
+                t.footer.rating.value = value;
+                break;
+              case 'priority':
+                t.footer.priority.value = value;
+                break;
+              case 'rewatchNreread':
+                t.footer.rewatchNreread.checked = value;
+                break;
+              case 'updatedAt':
+                t.footer.updatedAt.textContent = value;
+                break;
+            }
+          }
+
+          o.s.main = new Proxy(o.data.main, El.ProxyHandler(upd, el));
+          o.s.me = new Proxy(o.data.me, El.ProxyHandler(upd2, el));
 
           El.Div({
             //h 0
@@ -113,7 +131,7 @@ export function build(El, Mal, o) {
                       El.Div({
                         path: b,
                         class: '-title',
-                        func: (t) => (el.header.broadcastStatus = t),
+                        func: (t) => el.header.broadcastStatus = t,
                       });
                       El.Div({
                         path: b,
@@ -123,16 +141,12 @@ export function build(El, Mal, o) {
                           El.Div({
                             path: i,
                             class: '-value -day',
-                            func: (e) => {
-                              el.header.weekDay = e;
-                            },
+                            func: (e) => el.header.weekDay = e
                           });
                           El.Div({
                             path: i,
                             class: '-value -time',
-                            func: (e) => {
-                              el.header.weekTime = e;
-                            },
+                            func: (e) => el.header.weekTime = e
                           });
                         },
                       });
@@ -146,9 +160,7 @@ export function build(El, Mal, o) {
                     text: 'Rating',
                     c: {
                       class: '-value',
-                      func: (e) => {
-                        el.header.rating = e;
-                      },
+                      func: (e) => el.header.rating = e
                     },
                   });
 
@@ -159,9 +171,7 @@ export function build(El, Mal, o) {
                     text: 'Rank',
                     c: {
                       class: '-value',
-                      func: (e) => {
-                        el.header.rank = e;
-                      },
+                      func: (e) => el.header.rank = e
                     },
                   });
 
@@ -172,9 +182,7 @@ export function build(El, Mal, o) {
                     text: 'ID',
                     c: {
                       class: '-value',
-                      func: (e) => {
-                        el.header.id = e;
-                      },
+                      func: (e) => el.header.id = e
                     },
                   });
 
@@ -184,9 +192,7 @@ export function build(El, Mal, o) {
                     text: '🔗',
                     url: o.s.main.url,
                     target: '__blank',
-                    func: (e) => {
-                      el.header.url = e;
-                    },
+                    func: (e) => el.header.url = e
                   });
                 },
               });
@@ -200,9 +206,7 @@ export function build(El, Mal, o) {
         path: m,
         class: '-itemTitle',
         text: '-',
-        func: (e) => {
-          el.title = e;
-        },
+        func: (e) => el.title = e
       });
 
       El.Div({
@@ -210,48 +214,6 @@ export function build(El, Mal, o) {
         path: m,
         class: '-footer',
         func: (footer) => {
-          const handler = {
-            set(target, key, value, receiver) {
-              if (value !== target[key]) {
-                // console.log(`Setting ${key} to ${value}`);
-                target[key] = value;
-                upd(key, value);
-                return true;
-              }
-              return false;
-            },
-          };
-          o.s.me = new Proxy(o.data.me, handler);
-
-          function upd(key, value) {
-            switch (key) {
-              case 'status':
-                el.footer.status.value = value;
-                break;
-              case 'eps':
-                el.footer.eps.value = value;
-                break;
-              case 'volumes':
-                el.footer.volumes.value = value;
-                break;
-              case 'chapters':
-                el.footer.chapters.value = value;
-                break;
-              case 'rating':
-                el.footer.rating.value = value;
-                break;
-              case 'priority':
-                el.footer.priority.value = value;
-                break;
-              case 'rewatchNreread':
-                el.footer.rewatchNreread.checked = value;
-                break;
-              case 'updatedAt':
-                el.footer.updatedAt.textContent = value;
-                break;
-            }
-          }
-
           El.Div({
             //n 0
             path: footer,
@@ -278,14 +240,10 @@ export function build(El, Mal, o) {
                     ['планирую прочитать', 'plan_to_read']
                   ]
                 ],
-                // value: d.status,
                 onchange: (e) => {
                   o.s.me.status = e.target.value;
                 },
-                func: (e) => {
-                  el.footer.status = e;
-                  console.log(el.footer.status);
-                },
+                func: (e) => el.footer.status = e
               });
 
               if (o.siteType === 'anime') {
@@ -321,9 +279,7 @@ export function build(El, Mal, o) {
                           path: e.parentNode,
                           class: '-max',
                           // text: d.epNum,
-                          func: (e) => {
-                            el.footer.epsNum = e;
-                          },
+                          func: (e) => el.footer.epsNum = e
                         });
 
                         El.Button({
@@ -373,9 +329,7 @@ export function build(El, Mal, o) {
                           path: e.parentNode,
                           class: '-max',
                           // text: d.epNum,
-                          func: (e) => {
-                            el.footer.volumesNum = e;
-                          },
+                          func: (e) => el.footer.volumesNum = e
                         });
 
                         El.Button({
@@ -417,9 +371,7 @@ export function build(El, Mal, o) {
                           path: e.parentNode,
                           class: '-max',
                           // text: d.epNum,
-                          func: (e) => {
-                            el.footer.chaptersNum = e;
-                          },
+                          func: (e) => el.footer.chaptersNum = e
                         });
 
                         El.Button({
@@ -429,64 +381,15 @@ export function build(El, Mal, o) {
                           text: '+',
                           onclick: () => {
                             o.s.me.chapters++;
-                          },
+                          }
                         });
-                      },
+                      }
                     });
-                  },
+                  }
                 });
               }
             }
           });
-
-          // El.Select({
-          //   //s 0
-          //   path: footer,
-          //   class: '-status -st',
-          //   options: [
-          //     ['-', undefined],
-          //     ...(o.siteType === 'anime') && [
-          //       ['смотрю', 'watching'],
-          //       ['просмотрено', 'completed'],
-          //       ['приостановлено', 'on_hold'],
-          //       ['брошено', 'dropped'],
-          //       ['планирую посмотреть', 'plan_to_watch']
-          //     ]||
-          //     [
-          //       ['читаю', 'reading'],
-          //       ['прочитано', 'completed'],
-          //       ['приостановлено', 'on_hold'],
-          //       ['брошено', 'dropped'],
-          //       ['планирую прочитать', 'plan_to_read']
-          //     ]
-          //   ],
-          //   // value: d.status,
-          //   onchange: (e) => {
-          //     o.s.me.status = e.target.value;
-          //   },
-          //   func: (e) => {
-          //     el.footer.status = e;
-          //     console.log(el.footer.status);
-          //   },
-          // });
-
-          // El.Div({
-          //   //n 0
-          //   path: footer,
-          //   class: '-status -updatedAt',
-          //   text: '⏰',
-          //   func: (num) => {
-          //     El.Div({
-          //       //n 0
-          //       path: num,
-          //       class: '-num',
-          //       func: (e) => {
-          //         el.footer.updatedAt = e;
-          //       },
-          //     });
-          //   },
-          // });
-
           
           El.Div({
             //s 1
@@ -555,55 +458,7 @@ export function build(El, Mal, o) {
                   el.footer.priority = e;
                 }
               });
-
-              // El.Div({
-              //   //n 0
-              //   path: n,
-              //   class: '-status -priority',
-              //   text: 'Priority',
-              //   func: (num) => {
-              //     El.Input({
-              //       //n 0
-              //       path: num,
-              //       class: '-num',
-              //       // editable: true,
-              //       type: 'number',
-              //       min: 0,
-              //       max: 2,
-              //       pattern: '[0-9]{2}',
-              //       onblur: (e) => {
-              //         if (o.s.me.priority === e.target.value) return;
-              //         o.s.me.priority = e.target.value;
-              //         e.target.style.width = `${e.target.value.length * 8}px`;
-              //       },
-              //       oninput: (e) => {
-              //         e.target.style.width = `${e.target.value.length * 8}px`;
-              //       },
-              //       func: (e) => {
-              //         e.style.width = `${o.s.me.rating.length * 8}px`;
-              //         el.footer.priority = e;
-              //       },
-              //     });
-              //   },
-              // });
-
-              // El.Div({
-              //   //n 0
-              //   path: n,
-              //   class: '-status -updatedAt',
-              //   text: '⏰',
-              //   func: (num) => {
-              //     El.Div({
-              //       //n 0
-              //       path: num,
-              //       class: '-num',
-              //       func: (e) => {
-              //         el.footer.updatedAt = e;
-              //       },
-              //     });
-              //   },
-              // });
-            },
+            }
           });
 
           El.Div({
