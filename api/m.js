@@ -64,7 +64,11 @@ export const Mal = {
           ...(o.data) && {body: this.dataConverter(o)}
       }).then(
         r => {
-          if(!r.ok) throw Object.assign(new Error('[MAL API]'), r)
+          if(!r.ok){
+            const er = new Error('[MAL API]');
+            er.err = r;
+            throw er;
+          }
           else return r.json();
         }).then(
           res => {
