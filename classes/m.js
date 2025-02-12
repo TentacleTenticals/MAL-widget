@@ -12,6 +12,19 @@ export const El = {
     }
     console.log('%c '+text, 'background: #222; color: '+'#'+color(), val||'');
   },
+  ProxyHandler: (upd, t) => {
+    return {
+      set(target, key, value) {
+        if (value !== target[key]) {
+          console.log(`Setting ${key} to ${value}`);
+          target[key] = value;
+          upd(key, value, t);
+          return true;
+        }
+        return false;
+      }
+    }
+  },
   getTime: function(time, format){
     if(!time) return;
     const ms = Date.parse(time);
