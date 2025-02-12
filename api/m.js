@@ -65,7 +65,7 @@ export const Mal = {
       }).then(
         r => {
           if(!r.ok){
-            const er = new Error(r);
+            const er = new Error('[MAL API]');
             er.err = r;
             throw er;
           }
@@ -79,7 +79,7 @@ export const Mal = {
               return res;
           },
           err => {
-              console.log('[MAL] ERR', err);
+              console.log(err);
           }
       )
   },
