@@ -131,7 +131,7 @@ export const Mal = {
 
     o.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      // 'Authorization': 'Bearer '+o.accToken,
+      'Authorization': 'Bearer '+o.accToken,
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
