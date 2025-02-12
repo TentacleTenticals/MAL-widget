@@ -62,10 +62,13 @@ export const Mal = {
               ...o.headers
           },
           ...(o.data) && {body: this.dataConverter(o)}
-      }).then(r => r.json().then(
+      }).then(
+        r => {
+          if(!r.ok) throw Object.append(new Error('[MAL API]'), r)
+          else return r.json();
+        }).then(
           res => {
-            console.log('q', this.getType(res));
-            if(res.error) throw new Error('[MAL Widget]', {cause: JSON.stringify(res)});
+            if(res.error) throw Object.append(new Error('[MAL API]'), res)
             else
             // console.log('qq', r);
               // console.log('[MAL1]', res);
@@ -73,9 +76,8 @@ export const Mal = {
           },
           err => {
               console.log('[MAL] ERR', err);
-              console.log('[MAL] R', r);
           }
-      ))
+      )
   },
   loginGen: function(o){
     const data = {
