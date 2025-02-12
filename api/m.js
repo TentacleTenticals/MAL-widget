@@ -65,14 +65,14 @@ export const Mal = {
       }).then(
         r => {
           if(!r.ok){
-            const er = new Error('[MAL API]');
+            const er = new Error(r);
             er.err = r;
             throw er;
           }
           else return r.json();
         }).then(
           res => {
-            if(res.error) throw Object.assign(new Error('[MAL API]'), res)
+            if(res.error) throw new Error('[MAL API]', err)
             else
             // console.log('qq', r);
               // console.log('[MAL1]', res);
