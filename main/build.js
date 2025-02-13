@@ -400,14 +400,14 @@ export function build(El, Mal, o) {
                 //n 0
                 path: n,
                 class: '-status -rating',
-                text: 'My rating',
                 func: (num) => {
                   El.Input({
                     //n 0
                     path: num,
                     class: '-num',
-                    // editable: true,
                     type: 'number',
+                    label: 'My rating',
+                    lClass: 'flx',
                     min: 0,
                     max: 10,
                     pattern: '[0-9]{2}',
@@ -423,6 +423,12 @@ export function build(El, Mal, o) {
                       e.style.width = `${o.s.me.rating.length * 8}px`;
                       el.footer.rating = e;
                     },
+                  });
+
+                  El.Div({
+                    path: num,
+                    class: '-max',
+                    text: '10',
                   });
                 },
               });
