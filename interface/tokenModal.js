@@ -1,8 +1,9 @@
 export function tokenModal(El, Mal, o){
   return El.Dialog({
     path: document.body,
-    class: 'modal',
-    show: true,
+    class: 'mdl start',
+    showM: true,
+    prevClose: true,
     onclose: (d) => {
       // d.remove();
       o.onclose && o.onclose();
