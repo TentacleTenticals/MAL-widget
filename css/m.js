@@ -192,6 +192,7 @@ export const css = () => `
             gap: 0 2px;
             margin: auto;
             font-size: 14px;
+            line-height: normal;
             color: var(--col);
   
             &::before {
@@ -323,6 +324,9 @@ export const css = () => `
       .-max {
         display: flex;
         gap: 0 2px;
+        margin: auto;
+        line-height: normal;
+        
         &::before {
           display: block;
           content: '/';
