@@ -105,8 +105,7 @@ export const Mal = {
       client_secret: o.clientSecret,
       redirect_uri: o.redirectUri,
       code: o.code,
-      code_verifier: o.codeVer,
-      ...o.data
+      code_verifier: o.codeVer
     }
 
     o.headers = {
@@ -125,8 +124,7 @@ export const Mal = {
       client_id: o.clientId,
       client_secret: o.clientSecret,
       redirect_uri: o.redirectUri,
-      refresh_token: o.refToken,
-      ...o.data
+      refresh_token: o.refToken
     };
 
     o.headers = {
@@ -135,7 +133,7 @@ export const Mal = {
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
-    console.log('o', o)
+    console.log('UPD token', o);
 
     return this.fetch(o);
   },
