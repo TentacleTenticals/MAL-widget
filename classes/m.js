@@ -401,6 +401,14 @@ export const El = {
     if(o.class) main.className=o.class;
     if(o.id) main.id=o.id;
     if(o.text) main.textContent=o.text;
+    if(o.onkey) main.onkeydown=(e) => {
+      if(o.prevClose && e.key === 'Escape') e.preventDefault();
+      o.onkey(e);
+    }
+    else
+    main.onkeydown=(e) => {
+      if(o.prevClose && e.key === 'Escape') e.preventDefault();
+    }
     if(o.onclose) main.onclose=() => {
       o.onclose()
       if(o.delOnclose) main.remove();
