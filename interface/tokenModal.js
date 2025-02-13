@@ -1,11 +1,5 @@
 export function tokenModal(El, Mal, o){
-  El.Dialog({
-    path: document.body,
-    class: 'modal',
-    show: true,
-    onclose: (d) => {
-      // d.remove();
-      o.onclose();
+
     },
     func: (d) => {
       const chall = Mal.cc(128);
@@ -86,8 +80,7 @@ export function tokenModal(El, Mal, o){
               func: (e) => el.btnToken = e,
               onclick: () => {
 
-                Mal.getToken({
-                  url: o.url,
+
                   ...o.secrets,
                   codeVer: chall,
                   // code: o.secrets.code
@@ -96,15 +89,7 @@ export function tokenModal(El, Mal, o){
                     console.log('[MAL Widget] Токены получены!');
                     el.MSG.textContent = 'Токены получены';
                     el.btnToken.disabled = true;
-                    if(o.gm){
-                      await o.gm.setValue('token', res.access_token);
-                      await o.gm.setValue('refresh_token', res.refresh_token);
-                      await o.gm.setValue('date', Date.parse(new Date));
-                      d.close();
-                    };
-                  },
-                  err => {
-                    console.log('[MAL Widget ERR] Токены не получены!', err);
+
                   }
                 );
               }

@@ -176,7 +176,7 @@ export const El = {
   Select: function(o){
     if(o.label) this.l=this.Label({
       path: o.path,
-      class: o.lName,
+
       text: o.label,
       attr: o.lAttr,
       rtn: true
@@ -339,6 +339,7 @@ export const El = {
     if(o.class) main.className=o.class;
     if(o.id) main.id=o.id;
     if(o.text) main.textContent=o.text;
+
     if(o.onclose) main.onclose=() => {
       o.onclose()
       if(o.delOnclose) main.remove();

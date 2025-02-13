@@ -9,6 +9,7 @@ export const css = () => `
   --col: rgb(255 255 255);
   --col-sec: rgb(253 53 53);
   --col-thi: rgb(0 0 0);
+
   --bck-c: rgb(0 0 0);
   --bck-c-sec: rgb(65 65 65);
   --bck-c-thi: rgb(255 255 255);
@@ -35,7 +36,7 @@ export const css = () => `
   flex-direction: column;
   gap: 7px 3px;
   padding: 4px;
-  width: max-content;
+
   border: 1px solid rgb(0 0 0);
   border-radius: 3px;
   background-color: var(--bck-c);
@@ -125,53 +126,17 @@ export const css = () => `
   }
 
   .-itemTitle {
-    color: var(--col);
-    /* font-family: 'Parkinsans', sans-serif; */
-    font-family: 'Faculty Glyphic', sans-serif;
+
   }
 
   .-footer {
     display: flex;
-    gap: 0 7px;
-
-    .-status.-st {
-      padding: 2px;
-      margin: 0;
-      height: unset;
-      line-height: normal;
-      border: 1px solid rgb(115 115 115);
-      border-radius: 3px;
-      outline: none;
-      color: var(--col);
-      background-color: var(--bck-c-for);
-    }
-
-    .-status.-episodes {
-      display: flex;
-      align-items: center;
-      gap: 0 5px;
-      padding: 2px 10px 2px 5px;
-      font-size: 15px;
-      border: 1px solid var(--bor-c);
-      border-radius: 14px;
-      color: var(--col);
-            background-color: var(--bck-c);
-
-      .-numbers {
-        display: flex;
-        gap: 0 5px;
-        padding: 0 10px 0 5px;
-        margin: auto;
-        border-radius: 15px;
-        color: var(--col);
-        background-color: var(--bck-c-for);
-        font-family: "Amarante", serif;
 
         .-num {
           display: flex;
           appearance: none;
           padding: 0;
-          margin: auto 0 auto 3px;
+
           min-width: 12px;
           height: unset;
           font-family: "Amarante", serif;
@@ -181,55 +146,23 @@ export const css = () => `
           text-align: center;
           outline: none;
           border: unset;
-          border-radius: 2px;
-          background-color: unset;
 
           &::-webkit-inner-spin-button {
             display: none;
           }
         }
-        .-max {
-          display: flex;
-          gap: 0 2px;
-          margin: auto;
-          font-size: 14px;
-          color: var(--col);
 
-          &::before {
-            display: block;
-            content: '/';
-          }
-        }
-
-        .vol {
-          &::after {
-            content: '|';
-            padding: 0 5px 0 10px;
-          }
-        }
-      }
-
-      .-btn.-plus {
-        display: flex;
-        align-items: center;
-        padding: 2px;
-        margin: auto 0 auto 5px;
-        aspect-ratio: 1/1;
-        line-height: 0;
-        border: 1px solid var(--bor-c);
-        border-radius: 50%;
       }
     }
 
     .-status.-rating {
       display: flex;
-      gap: 0 3px;
-      padding: 0 10px 0 5px;
+
       font-size: 14px;
       font-family: "Amarante", serif;
       border-radius: 14px;
       color: var(--col);
-      background-color: var(--bck-c-for);
+
 
       .-num {
         display: flex;
@@ -241,7 +174,7 @@ export const css = () => `
         font-family: "Amarante", serif;
         font-size: 14px;
         line-height: normal;
-        color: var(--col);
+
         text-align: center;
         outline: none;
         border: unset;
@@ -252,37 +185,7 @@ export const css = () => `
           display: none;
         }
       }
-    }
 
-    .-btn.-save {
-      font-family: "Play", sans-serif;
-      font-weight: 600;
-      border: 1px solid var(--bor-c);
-      border-radius: 2px;
-      color: var(--col-thi);
-      background-color: var(--bck-c-thi);
-
-      &:hover {
-        filter: brightness(0.8);
-        cursor: pointer;
-      }
-    }
-  }
-}
-
-.startModal {
-  position: absolute;
-  top: 0;
-
-  padding: 10px;
-
-  .m-header {
-    text-align: center;
-  }
-}
-
-.modal {
-  padding: 10px;
 
   .m-header {
     text-align: center;
@@ -296,5 +199,5 @@ export const css = () => `
   .m-list {
     gap: 5px 0;
   }
-}
+
 `

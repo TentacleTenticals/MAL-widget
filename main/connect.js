@@ -1,10 +1,10 @@
-export async function connect(Mal, o){
+
   console.log('Connect', o);
   const getType = (o) => o && o.constructor.toString().split(/[\(\) ]/)[1];
 
   function textMatcher(text, text2, perc, sum){
     function removeSym(text){
-      const filter = /(?<a>[.,:;*]+)|(?![\w]+)(?<b>-)(?![\w]+)|(?<c>-)|(?<d> +)/gm;
+
       const norm = /[\u0300-\u036F]/g;
       const fixer = (text) => text.normalize('NFKD').replace(norm, '').replace(filter, '').toLowerCase();
       
@@ -80,28 +80,25 @@ export async function connect(Mal, o){
     return o;
   }
 
-  return Mal.search({
-    type: o.type,
-    url: o.url,
-    token: o.token,
+
     query: {
       q: o.title.slice(0, 64),
       // offset: 1,
       limit: 20,
       nsfw: true
     }
-  }).then(
+
     res => {
       console.log('[MAL API]', res);
 
       if(res && res.data && getType(res.data) === 'Array'){
         for(let e of res.data){
-          const match = textMatcher(e.node.title, o.title, o.textMatch.percents, o.textMatch.summ);
+
           if(match.result.percCheck === 'match'){
             console.log('GOT one!!!', {id: e.node.id, title:e.node.title});
             o.s.main.id = e.node.id;
             o.s.main.title = e.node.title;
-            return getList(Mal, o, e.node);
+
             // break;
           }
         }
@@ -131,9 +128,7 @@ export async function connect(Mal, o){
   
       //     Mal.getList({
       //       value: o.s.main.id,
-      //       type: o.type,
-      //       url: o.url,
-      //       token: o.token,
+
       //       query: {
       //         fields: ['id', 'title', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes']
       //       }
@@ -168,17 +163,12 @@ export async function connect(Mal, o){
   )
 };
 
-const getList = (Mal, o, item) => Mal.getList({
-  value: item.id,
-  type: o.type,
-  url: o.url,
-  token: o.token,
-  query: {
-    fields: ['id', 'title', 'media_type', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes', 'num_volumes', 'num_chapters']
+
   }
 }).then(
   l => {
     console.log('MAL', l);
+
     // o.s.main.id = r.node.id;
     // o.s.main.title = r.node.title;
     // console.log('LIST', l);
@@ -190,18 +180,13 @@ const getList = (Mal, o, item) => Mal.getList({
     l.broadcast && (o.s.main.broadcastDate = true);
     l.broadcast && (o.s.main.weekDay = l.broadcast?.day_of_the_week);
     l.broadcast && (o.s.main.weekTime = l.broadcast?.start_time);
-    o.s.main.url = `https://myanimelist.net/${o.type}/${item.id}`;
 
-    o.s.me.status = l.my_list_status?.status;
-    o.s.me.rating = l.my_list_status?.score||0;
-    if(o.type === 'anime'){
-      o.s.main.epsNum = l.num_episodes||'?';
-      o.s.me.eps = l.my_list_status?.num_episodes_watched||0;
     }else{
       o.s.main.volumesNum = l.num_volumes||'?';
       o.s.main.chaptersNum = l.num_chapters||'?';
       o.s.me.volumes = l.my_list_status?.num_volumes_read||0;
       o.s.me.chapters = l.my_list_status?.num_chapters_read||0;
+
       // o.s.main.volumes = l.me.volumes;
     }
   }
