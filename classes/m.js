@@ -12,6 +12,68 @@ export const El = {
     }
     console.log('%c '+text, 'background: #222; color: '+'#'+color(), val||'');
   },
+  ProxyHandler: (upd, t) => {
+    return {
+      set(target, key, value) {
+        if (value !== target[key]) {
+          console.log(`Setting ${key} to ${value}`);
+          target[key] = value;
+          upd(key, value, t);
+          return true;
+        }
+        return false;
+      }
+    }
+  },
+  getTime: function(time, format){
+    if(!time) return;
+    const ms = Date.parse(time);
+    const d = new Date(time);
+    const check = (u) => (u > 9) ? u : '0'+u;
+    const month = {
+      0: ['Январь', 'Янв'],
+      1: ['Февраль', 'Фев'],
+      2: ['Март', 'Мар'],
+      3: ['Апрель', 'Апр'],
+      4: ['Май', 'Май'],
+      5: ['Июнь', 'Июн'],
+      6: ['Июль', 'Июл'],
+      7: ['Август', 'Авг'],
+      8: ['Сентябрь', 'Сен'],
+      9: ['Октябрь', 'Окт'],
+      10: ['Ноябрь', 'Ноя'],
+      11: ['Декабрь', 'Дек']
+    };
+    const day = {
+      1: ['Понедельник', 'Пн'],
+      2: ['Вторник', 'Вт'],
+      3: ['Среда', 'Ср'],
+      4: ['Четверг', 'Чт'],
+      5: ['Пятница', 'Пт'],
+      6: ['Суббота', 'Сб'],
+      0: ['Воскресенье', 'Вс']
+    };
+    
+    switch(format){
+      case 'string': return {time: d.toString()};
+      case 'ms': return {time: ms};
+      case 'full': return {
+        time: `${check(d.getHours())}:${check(d.getMinutes())}:${check(d.getSeconds())}`,
+        date: `${check(d.getFullYear())}/${check(d.getMonth()+1)}/${check(d.getDate())}`
+      }
+      case 'fullWords': return {
+        time: `${check(d.getHours())}:${check(d.getMinutes())}:${check(d.getSeconds())}`,
+        date: `${check(d.getFullYear())}/${check(d.getMonth()+1)}|${month[d.getMonth()][0]}/${check(d.getDate())}|${day[d.getDay()][0]}`
+      }
+      case 'fullShortWords': return {
+        time: `${check(d.getHours())}:${check(d.getMinutes())}:${check(d.getSeconds())}`,
+        date: `${check(d.getFullYear())}/${check(d.getMonth()+1)} ${month[d.getMonth()][1]}/${check(d.getDate())} ${day[d.getDay()][1]}`
+      }
+      default: return {time: `${check(d.getHours())}:${check(d.getMinutes())}:${check(d.getSeconds())}`,
+        date: `${check(d.getFullYear())}/${check(d.getMonth()+1)}/${check(d.getDate())}`
+      }
+    }
+  },
   Div: function(o){
     const main=document.createElement('div');
     if(o.class) main.className = o.class;
@@ -176,7 +238,7 @@ export const El = {
   Select: function(o){
     if(o.label) this.l=this.Label({
       path: o.path,
-
+      class: o.lClass,
       text: o.label,
       attr: o.lAttr,
       rtn: true
@@ -339,7 +401,14 @@ export const El = {
     if(o.class) main.className=o.class;
     if(o.id) main.id=o.id;
     if(o.text) main.textContent=o.text;
-
+    if(o.onkey) main.onkeydown=(e) => {
+      if(o.prevClose && e.key === 'Escape') e.preventDefault();
+      o.onkey(e);
+    }
+    else
+    main.onkeydown=(e) => {
+      if(o.prevClose && e.key === 'Escape') e.preventDefault();
+    }
     if(o.onclose) main.onclose=() => {
       o.onclose()
       if(o.delOnclose) main.remove();
