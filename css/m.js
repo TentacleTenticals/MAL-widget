@@ -246,6 +246,8 @@ export const css = () => `
         display: flex;
         gap: 0 3px;
         padding: 0 10px 0 5px;
+        width: auto;
+        height: auto;
         font-size: 14px;
         font-family: "Amarante", serif;
         border-radius: 14px;
@@ -284,6 +286,10 @@ export const css = () => `
       font-family: "Amarante", serif;
       border-radius: 14px;
       color: var(--col);
+
+      .flx {
+        gap: 0 2px;
+      }
 
       &::after {
         display: block;
