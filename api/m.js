@@ -57,29 +57,28 @@ export const Mal = {
   },
   fetch: function(o){
       return fetch(o.url, {
-          method: o.method,
-          headers: {
-              ...o.headers
-          },
-          ...(o.data) && {body: this.dataConverter(o)}
+        method: o.method,
+        headers: {
+          ...o.headers
+        },
+        ...(o.data) && {body: this.dataConverter(o)}
       }).then(
         r => {
+          // console.log('[MAL API] R', r);
           if(!r.ok){
-            // console.log('[MAL API] R', await r.json());
-            // throw Object.assign(new Error('[MAL API]', {cause:r||JSON.stringify(r)}), r);
-            throw new Error('[MAL API]', {cause:r.statusText});
-          }
-          else return r.json();
+            throw Object.assign(new Error('[MAL API] R', {cause:'Not ok'}), {error:{response:r}});
+          }else return r.json();
         }).then(
           res => {
-            if(res.error) throw new Error('[MAL API]', err)
+            if(res && res.error) throw Object.assign(new Error('[MAL API] RES', {cause:'No data'}), {error:{response:res}});
             else
             // console.log('qq', r);
               // console.log('[MAL1]', res);
               return res;
           },
           err => {
-              console.log(err);
+              console.log(err, err.error);
+              throw Object.assign(new Error('[MAL API] ERR', {cause:'Error on fetch'}), {error:{response:err}});
           }
       )
   },
@@ -129,7 +128,7 @@ export const Mal = {
 
     o.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer '+o.accToken,
+      // 'Authorization': 'Bearer '+o.accToken,
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
