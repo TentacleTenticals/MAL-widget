@@ -422,15 +422,15 @@ export function build(El, Mal, o) {
                     func: (e) => {
                       e.style.width = `${o.s.me.rating.length * 8}px`;
                       el.footer.rating = e;
+
+                      El.Div({
+                        path: e.parentNode,
+                        class: '-max',
+                        text: '10',
+                      });
                     },
                   });
-
-                  El.Div({
-                    path: num,
-                    class: '-max',
-                    text: '10',
-                  });
-                },
+                }
               });
 
               El.Input({
