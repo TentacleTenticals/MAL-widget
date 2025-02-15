@@ -21,14 +21,14 @@
 
 (async () => {
 
-  const {Mal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.52/api/m.js');
-  const {El} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.52/classes/m.js');
-  const {css} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.52/css/m.js');
-  const {baseCSS} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.52/css/base.js');
+  const {Mal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/api/m.js');
+  const {El} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/classes/m.js');
+  const {css} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/css/m.js');
+  const {baseCSS} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/css/base.js');
 
-  const {build} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.52/func/build.js');
-  const {connect} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.52/func/connect.js');
-  const {tokenModal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.52/interface/tokenModal.js');
+  const {build} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/func/build.js');
+  const {connect} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/func/connect.js');
+  const {tokenModal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/interface/tokenModal.js');
   const init = {};
 
   El.log('[MAL Widget] Loading...', 'green');
