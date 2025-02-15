@@ -12,6 +12,7 @@
   * ID
   * ссылку на тайтл
 
+[Установить MAL Widget](https://raw.githubusercontent.com/TentacleTenticals/MAL-widget/refs/heads/main/main/main.user.js)
 
 # Принцип действия
 Скрипт основан на поиске названия тайтла на странице сайта аниме/манги, с дальнейшим использованием MAL API.
