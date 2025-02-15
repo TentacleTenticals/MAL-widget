@@ -183,6 +183,8 @@ const getList = (El, Mal, o, item) => Mal.getList({
   l => {
     console.log('MAL', l);
     const time = El.getTime(l.my_list_status?.updated_at, 'full');
+    o.s.main.id = l.id;
+    o.s.main.title = l.title;
     // o.s.main.id = r.node.id;
     // o.s.main.title = r.node.title;
     // console.log('LIST', l);
