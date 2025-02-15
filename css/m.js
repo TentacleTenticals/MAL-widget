@@ -376,6 +376,7 @@ export const css = () => `
 
 .mdl {
   padding: 10px;
+  margin: auto;
 
   &::backdrop {
     background-color: rgb(0 0 0 / 0.70);
