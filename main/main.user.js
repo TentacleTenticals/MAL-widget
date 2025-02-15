@@ -12,10 +12,8 @@
 // @author      TentacleTenticals
 // @description Скрипт для добавления виджета MAL на аниме/манга сайты
 // @homepage    https://github.com/TentacleTenticals/MAL-widget
-
 // @updateURL   https://raw.githubusercontent.com/TentacleTenticals/MAL-widget/refs/heads/main/main/main.user.js
 // @downloadURL https://raw.githubusercontent.com/TentacleTenticals/MAL-widget/refs/heads/main/main/main.user.js
-
 //
 // @requireq     https://raw.githubusercontent.com/TentacleTenticals/dtf-libs-2.0/main/classes/mjs.js?
 // @requireq      https://github.com/TentacleTenticals/MAL-widget/raw/refs/heads/main/css/main.js
@@ -28,10 +26,8 @@
   const {css} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.52/css/m.js');
   const {baseCSS} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.52/css/base.js');
 
-
   const {build} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.52/func/build.js');
   const {connect} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.52/func/connect.js');
-
   const {tokenModal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.52/interface/tokenModal.js');
   const init = {};
 
