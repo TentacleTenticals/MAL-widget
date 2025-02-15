@@ -41,7 +41,7 @@ export const Mal = {
     else return days[day][0]+days[day][1][1];
   },
   titleStatus: function(status){
-    console.log('SS', status)
+    // console.log('SS', status);
     if(!status) return;
     const s = {
       currently_airing: 'Выходит',
