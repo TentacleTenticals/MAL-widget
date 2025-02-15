@@ -101,8 +101,8 @@ export async function connect(El, Mal, o){
           const match = textMatcher(e.node.title, o.title, o.cfg.textMatch.percents, o.cfg.textMatch.summ);
           if(match.result.percCheck === 'match'){
             console.log('GOT one!!!', {id: e.node.id, title:e.node.title});
-            o.s.main.id = e.node.id;
-            o.s.main.title = e.node.title;
+            // o.s.main.id = e.node.id;
+            // o.s.main.title = e.node.title;
             return getList(El, Mal, o, e.node);
             // break;
           }
@@ -185,7 +185,9 @@ const getList = (El, Mal, o, item) => Mal.getList({
   }
 }).then(
   l => {
-    console.log('MAL', l);
+    console.log('MAL getList', l);
+    console.log(`ITEMS ${l.id}, ${l.title}`);
+    console.log('OS', o);
     const time = El.getTime(l.my_list_status?.updated_at, 'full');
     o.s.main.id = l.id;
     o.s.main.title = l.title;
