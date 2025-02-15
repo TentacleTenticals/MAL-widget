@@ -16,7 +16,7 @@ export const El = {
     return {
       set(target, key, value) {
         if (value !== target[key]) {
-          console.log(`Setting ${key} to ${value}`);
+          // console.log(`Setting ${key} to ${value}`);
           target[key] = value;
           upd(key, value, t);
           return true;
