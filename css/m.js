@@ -169,6 +169,7 @@ export const css = () => `
           .-num {
             display: flex;
             appearance: none;
+            -moz-appearance: textfield;
             padding: 0;
             margin: auto 0 auto 3px;
             min-width: 12px;
@@ -260,6 +261,7 @@ export const css = () => `
         .-num {
           display: flex;
           appearance: none;
+          -moz-appearance: textfield;
           padding: 0;
           margin: auto;
           min-width: 12px;
@@ -304,6 +306,7 @@ export const css = () => `
       .-num {
         display: flex;
         appearance: none;
+        -moz-appearance: textfield;
         padding: 0;
         margin: auto;
         min-width: 12px;
