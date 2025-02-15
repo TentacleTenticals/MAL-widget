@@ -101,15 +101,18 @@ export async function connect(El, Mal, o){
           const match = textMatcher(e.node.title, o.title, o.cfg.textMatch.percents, o.cfg.textMatch.summ);
           if(match.result.percCheck === 'match'){
             console.log('GOT one!!!', {id: e.node.id, title:e.node.title});
-            o.s.main.id = e.node.id;
-            o.s.main.title = e.node.title;
+            // o.s.main.id = e.node.id;
+            // o.s.main.title = e.node.title;
             return getList(El, Mal, o, e.node);
             // break;
           }
         }
       }else{
-        res = undefined;
-        throw new Error('[MAL Widget E] Not array/no array');
+        // res = undefined;
+        if(!res||!res.id) throw new Error('[MAL Widget E] Not array/no array');
+        else{
+          return getList(El, Mal, o, {id:res.id});
+        }
       }
 
 
@@ -180,8 +183,9 @@ const getList = (El, Mal, o, item) => Mal.getList({
   }
 }).then(
   l => {
-    console.log('MAL', l);
     const time = El.getTime(l.my_list_status?.updated_at, 'full');
+    o.s.main.id = l.id;
+    o.s.main.title = l.title;
     // o.s.main.id = r.node.id;
     // o.s.main.title = r.node.title;
     // console.log('LIST', l);

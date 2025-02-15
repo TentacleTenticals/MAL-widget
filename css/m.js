@@ -192,6 +192,7 @@ export const css = () => `
             gap: 0 2px;
             margin: auto;
             font-size: 14px;
+            line-height: normal;
             color: var(--col);
   
             &::before {
@@ -234,11 +235,13 @@ export const css = () => `
         &.-rewatchNreread {
           margin: 0 auto 0 0;
           font-size: 14px;
+          font-weight: 400;
         }
 
         &.-priority {
           margin: 0 0 0 auto;
           font-size: 14px;
+          font-weight: 400;
         }
       }
 
@@ -323,6 +326,9 @@ export const css = () => `
       .-max {
         display: flex;
         gap: 0 2px;
+        margin: auto;
+        line-height: normal;
+        
         &::before {
           display: block;
           content: '/';
