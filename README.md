@@ -14,6 +14,11 @@
 
 [Установить MAL Widget](https://raw.githubusercontent.com/TentacleTenticals/MAL-widget/refs/heads/main/main/main.user.js)
 
+# Какие сайты поддерживаются
+* animespirit
+* animejoy
+* mangalib
+
 # Принцип действия
 Скрипт основан на поиске названия тайтла на странице сайта аниме/манги, с дальнейшим использованием MAL API.
 
