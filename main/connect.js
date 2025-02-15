@@ -108,8 +108,9 @@ export async function connect(El, Mal, o){
           }
         }
       }else{
-        res = undefined;
-        throw new Error('[MAL Widget E] Not array/no array');
+        // res = undefined;
+        if(!res||!res.id) throw new Error('[MAL Widget E] Not array/no array');
+        else return getList(El, Mal, o, {id:res.id});
       }
 
 
