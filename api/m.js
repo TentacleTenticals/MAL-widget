@@ -167,7 +167,7 @@ export const Mal = {
       'Authorization': 'Bearer '+o.accToken,
       Url: `${this.url}/${o.type||''}?${o.query && this.s(o.query)||''}`
     }
-    console.log('S', o);
+    // console.log('S', o);
     return this.fetch(o);
   },
   getList: function(o){
