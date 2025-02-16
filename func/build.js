@@ -1,9 +1,9 @@
 export function build(El, Mal, o) {
-  if(!document.getElementById('mal widget')) El.Div({
+  if(!document.getElementById('mal-widget')) El.Div({
     path: o.path,
     insert: 'beforeBegin',
     class: `-mal ${o.cfg.theme}`,
-    id: 'mal widget',
+    id: 'mal-widget',
     func: (m) => {
       const el = {
         header: {},

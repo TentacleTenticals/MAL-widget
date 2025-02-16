@@ -90,12 +90,9 @@ export const Mal = {
       'code_challenge': o.codeChall
     };
 
-    console.log('DAT', data);
-
     return this.authUrl+'?'+new URLSearchParams(data);
   },
   getToken: function(o){
-    // o.url = 'https://myanimelist.net/v1/oauth2/token';
     o.method = 'POST';
 
     o.data = {
@@ -115,7 +112,6 @@ export const Mal = {
     return this.fetch(o);
   },
   updToken: function(o){
-    // o.url = 'https://myanimelist.net/v1/oauth2/token';
     o.method = 'POST';
 
     o.data = {
@@ -132,7 +128,7 @@ export const Mal = {
       Url: `${this.tokenUrl}?${o.query && this.s(o.query)||''}`
     };
 
-    console.log('UPD token', o);
+    // console.log('UPD token', o);
 
     return this.fetch(o);
   },
@@ -167,7 +163,7 @@ export const Mal = {
       'Authorization': 'Bearer '+o.accToken,
       Url: `${this.url}/${o.type||''}?${o.query && this.s(o.query)||''}`
     }
-    console.log('S', o);
+    // console.log('S', o);
     return this.fetch(o);
   },
   getList: function(o){
