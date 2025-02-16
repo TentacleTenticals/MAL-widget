@@ -108,11 +108,14 @@ export async function connect(El, Mal, o){
           }
         }
       }else{
+        console.log('MALR', o.cfg);
+        if(o.cfg.malRetry.try === 0) throw new Error('[MAL Widget E] Tab loaded, need retry');
+        else return getList(El, Mal, o, {id:res.id});
         // res = undefined;
-        if(!res||!res.id) throw new Error('[MAL Widget E] Not array/no array');
-        else{
-          return getList(El, Mal, o, {id:res.id});
-        }
+        // if(!res||!res.id) throw new Error('[MAL Widget E] Not array/no array');
+        // else{
+        //   return getList(El, Mal, o, {id:res.id});
+        // }
       }
 
 
