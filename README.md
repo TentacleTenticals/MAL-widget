@@ -14,6 +14,11 @@
 
 [Установить MAL Widget](https://raw.githubusercontent.com/TentacleTenticals/MAL-widget/refs/heads/main/main/main.user.js)
 
+# Патчлист
+* 1.0.2:
+  * Попытка исправить баг, возникающий при загрузке выгруженной вкладки (Hibernated tab was loaded, need retry). С ней выдаётся неверный объект, что ломает скрипт.
+    * Баг древний и я думал что удалось его пофиксить, но он всё равно вылез. На этот раз не вылезал, сколько раз не прогонял.
+
 # Какие сайты поддерживаются
 * animespirit
 * animejoy
