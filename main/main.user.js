@@ -364,7 +364,7 @@
       timer: 1, // Таймер проверки токенов. Одна единица = 1 день
       malRetry: {try:0, max:3}, // Количество повторных попыток запросов на MAL
       textMatch: {percents:95, summ:5},
-      sitesImport: true,
+      sitesImport: false,
       theme: 'theme-dark'
     },
     sites: [ // Список поддерживаемых сайтов
