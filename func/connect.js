@@ -1,5 +1,5 @@
 export async function connect(El, Mal, o){
-  console.log('Connect', o);
+  // console.log('Connect', o);
   const getType = (o) => o && o.constructor.toString().split(/[\(\) ]/)[1];
 
   function textMatcher(text, text2, perc, sum){
