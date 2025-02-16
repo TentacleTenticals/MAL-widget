@@ -4,11 +4,10 @@
 // @match       https://anime-joy.online/*
 // @match       https://*animespirit.ru/*
 // @match       https://mangalib.me/ru*
-// @include1     /https:\/\/.*(animejoy|animespirit)\..+/gm
 // @grant       GM.setValue
 // @grant       GM.getValue
 // @noframes
-// @version     1.0.0
+// @version     1.0.1
 // @author      TentacleTenticals
 // @description Скрипт для добавления виджета MAL на аниме/манга сайты
 // @homepage    https://github.com/TentacleTenticals/MAL-widget
@@ -21,14 +20,14 @@
 
 (async () => {
 
-  const {Mal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/api/m.js');
-  const {El} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/classes/m.js');
-  const {css} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/css/m.js');
-  const {baseCSS} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/css/base.js');
+  const {Mal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.56/api/m.js');
+  const {El} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.56/classes/m.js');
+  const {css} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.56/css/m.js');
+  const {baseCSS} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.56/css/base.js');
 
-  const {build} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/func/build.js');
-  const {connect} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/func/connect.js');
-  const {tokenModal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/interface/tokenModal.js');
+  const {build} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.56/func/build.js');
+  const {connect} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.56/func/connect.js');
+  const {tokenModal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.56/interface/tokenModal.js');
   const init = {};
 
   El.log('[MAL Widget] Loading...', 'green');
@@ -56,27 +55,28 @@
   function sFunc(o){
     // console.log('LOG', o);
     const path = () => document.body.querySelector(o.path);
+    const title = () => document.body.querySelector(o.pathTitle)?.textContent;
 
     return new Promise((res, err) => {
       const search = () => {
         if(!o.divRetry.try) o.divRetry.try = 0;
         if(o.divRetry.try < o.divRetry.max){
           o.divRetry.try++;
-          const r = path();
+          const r = {
+            path: path(),
+            title: title()
+          };
           // El.log('RES', 'green', r);
-          if(r) return res(r);
+          if(r.path && r.title && El.getType(r.title) === 'String') return res(r);
           else setTimeout(() => search(), o.timeout);//search();
-        }else err('Nope');
+        }else err('[MAL Widget sFunc] Не получены пути для встраивания виджета/получения названия тайтла');
       }
       return search();
     }).then(
       res => {
         // console.log('RETURN', res);
 
-        return {
-          path: res,
-          title: document.body.querySelector(o.pathTitle)?.textContent
-        };
+        return res;
       }
     )
   };
@@ -111,6 +111,8 @@
       me: {}
     };
 
+    if(data.main.title) console.log('OOOOOOO', data.main);
+
     function buildCon(){
       connect(El, Mal, {...o, s:s, data:data}).then(
         res => {
@@ -120,7 +122,8 @@
           El.log('[MAL Widget ERR] Connect', 'red', err);
           if(o.cfg.malRetry.try < o.cfg.malRetry.max){
             o.cfg.malRetry.try++;
-            buildCon();
+            document.getElementById('mal-widget').remove();
+            run(o);
             // connect(El, Mal, {s:s, title:i.title, type:i.type, url:o.url, token:o.token, retry:o.retry});
           }
         }
@@ -132,6 +135,19 @@
 
   const fc = {
     initer: async function(o){
+      if(o.cfg.sitesImport){
+        const sites = await GM.getValue('sites', null);
+        if(!sites) await GM.setValue('sites', ['']);
+        else{
+          for(let s of sites){
+            if(s && s.match(/http[s]:\/\/.+/)){
+              El.log('[MAL Widget] Найдена ссылка, импортирую...', s, 'green');
+              o.sites.push(...(await import(s)).sites);
+            }
+          }
+          console.log('SITES UPD', o);
+        }
+      }
       // El.log('[MAL Widget] Initer', 'green');
 
       const site = siteName(o.sites);
@@ -348,6 +364,7 @@
       timer: 1, // Таймер проверки токенов. Одна единица = 1 день
       malRetry: {try:0, max:3}, // Количество повторных попыток запросов на MAL
       textMatch: {percents:95, summ:5},
+      sitesImport: true,
       theme: 'theme-dark'
     },
     sites: [ // Список поддерживаемых сайтов
