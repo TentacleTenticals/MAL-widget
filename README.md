@@ -25,7 +25,7 @@
   * Если она активна, то при запуске скрипта с ней создастся новое значение в [Данные] "**sites**"
   * **sites** позволяет импортировать поддержку сайтов по ссылке
     * Формат ссылки обязан быть на манер [https]cdn.jsdelivr.net/gh/[никнейм гитхаб акка]/[название проекта]@[версия]/[путь]
-    * К примеру, https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/export/test.js
+    * К примеру, https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.54/export/example.js
 
 # Какие сайты поддерживаются
 * animespirit
