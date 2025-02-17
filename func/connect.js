@@ -108,12 +108,13 @@ export async function connect(El, Mal, o){
           }
         }
       }else{
-        console.log('Tab loaded...trying to fix', o.cfg);
-        if(!o.cfg.malRetry.try) o.cfg.malRetry.try = 0;
-        if(o.cfg.malRetry.try === 0) throw new Error('[MAL Widget ERR] Hibernated tab was loaded, need retry');
-        else return getList(El, Mal, o, {id:res.id});
+        // winodw.location.reload();
+        // console.log('Tab loaded...trying to fix', o.cfg);
+        // if(!o.cfg.malRetry.try) o.cfg.malRetry.try = 0;
+        // if(o.cfg.malRetry.try === 0) throw new Error('[MAL Widget ERR] Hibernated tab was loaded, need retry');
+        // else return getList(El, Mal, o, {id:res.id});
         // res = undefined;
-        // if(!res||!res.id) throw new Error('[MAL Widget E] Not array/no array');
+        throw new Error('[MAL Widget Error] Hibernated tab was loaded, need retry');
         // else{
         //   return getList(El, Mal, o, {id:res.id});
         // }
