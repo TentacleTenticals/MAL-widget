@@ -7,7 +7,7 @@
 // @grant       GM.setValue
 // @grant       GM.getValue
 // @noframes
-// @version     1.0.2
+// @version     1.0.3
 // @author      TentacleTenticals
 // @description Скрипт для добавления виджета MAL на аниме/манга сайты
 // @homepage    https://github.com/TentacleTenticals/MAL-widget
@@ -20,14 +20,14 @@
 
 (async () => {
 
-  const {Mal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.58/api/m.js');
-  const {El} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.58/classes/m.js');
-  const {css} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.58/css/m.js');
-  const {baseCSS} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.58/css/base.js');
+  const {Mal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/api/m.js');
+  const {El} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/classes/m.js');
+  const {css} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/css/m.js');
+  const {baseCSS} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/css/base.js');
 
-  const {build} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.58/func/build.js');
-  const {connect} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.58/func/connect.js');
-  const {tokenModal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.58/interface/tokenModal.js');
+  const {build} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/func/build.js');
+  const {search} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/func/search.js');
+  const {tokenModal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/interface/tokenModal.js');
   const init = {};
 
   El.log('[MAL Widget] Loading...', 'green');
@@ -81,7 +81,7 @@
     )
   };
 
-  function run(o){
+  async function run(o){
     console.log('[MAL Widget] Run');
 
     const data = {
@@ -111,26 +111,51 @@
       me: {}
     };
 
-    if(data.main.title) console.log('OOOOOOO', data.main);
+    search(El, Mal, {...o, s:s, data:data}).then(
+      res => {
+        El.log('[MAL Widget] Connect', 'green', res);
+        build(El, Mal, {...o, data:data, s:s});
 
-    function buildCon(){
-      connect(El, Mal, {...o, s:s, data:data}).then(
-        res => {
-          El.log('[MAL Widget] Connect', 'green', res);
-        },
-        err => {
-          El.log('[MAL Widget ERR] Connect', 'red', err);
-          if(o.cfg.malRetry.try < o.cfg.malRetry.max){
-            o.cfg.malRetry.try++;
-            document.getElementById('mal-widget').remove();
-            run(o);
-            // connect(El, Mal, {s:s, title:i.title, type:i.type, url:o.url, token:o.token, retry:o.retry});
-          }
+        const time = El.getTime(res.my_list_status?.updated_at, 'full');
+        s.main.id = res.id;
+        s.main.title = res.title;
+        s.main.rating = res.mean||'-';
+        s.main.rank = res.rank||'-';
+        s.main.status = res.status||'';
+        s.main.broadcastStatus = Mal.titleStatus(res.status);
+        res.broadcast && (s.main.broadcastDate = true);
+        res.broadcast && (s.main.weekDay = res.broadcast?.day_of_the_week);
+        res.broadcast && (s.main.weekTime = res.broadcast?.start_time);
+        s.main.url = `https://myanimelist.net/${o.siteType}/${res.id}`;
+
+        s.me.status = res.my_list_status?.status;
+        s.me.rating = res.my_list_status?.score||0;
+        s.me.priority = res.my_list_status?.priority||0;
+        time && (s.me.updatedAt = time.date+' '+time.time);
+        if(o.siteType === 'anime'){
+          s.main.epsNum = res.num_episodes||'?';
+          s.me.eps = res.my_list_status?.num_episodes_watched||0;
+          s.me.rewatchNreread = res.my_list_status?.is_rewatching||false;
+        }else{
+          s.main.volumesNum = res.num_volumes||'?';
+          s.main.chaptersNum = res.num_chapters||'?';
+          s.me.volumes = res.my_list_status?.num_volumes_read||0;
+          s.me.chapters = res.my_list_status?.num_chapters_read||0;
+          s.me.rewatchNreread = res.my_list_status?.is_rereading||false;
+          // s.main.volumes = res.me.volumes;
         }
-      )
-    };
-    build(El, Mal, {...o, data:data, s:s});
-    buildCon();
+      },
+      err => {
+        El.log('[MAL Widget ERR] Connect', 'red', err);
+        window.location.reload();
+        // if(o.cfg.malRetry.try < o.cfg.malRetry.max){
+        //   o.cfg.malRetry.try++;
+        //   document.getElementById('mal-widget').remove();
+        //   run(o);
+        //   // connect(El, Mal, {s:s, title:i.title, type:i.type, url:o.url, token:o.token, retry:o.retry});
+        // }
+      }
+    )
   }
 
   const fc = {
