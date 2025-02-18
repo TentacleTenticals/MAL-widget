@@ -12,13 +12,13 @@ export const El = {
     }
     console.log('%c '+text, 'background: #222; color: '+'#'+color(), val||'');
   },
-  ProxyHandler: (upd, t) => {
+  ProxyHandler: (upd, e) => {
     return {
       set(target, key, value) {
         if (value !== target[key]) {
           // console.log(`Setting ${key} to ${value}`);
           target[key] = value;
-          upd(key, value, t);
+          upd(key, value, e);
           return true;
         }
         return false;
@@ -189,6 +189,7 @@ export const El = {
       path: o.path,
       class: o.lClass,
       text: o.label,
+      title: o.lTitle,
       attr: o.lAttr,
       rtn: true
     });
