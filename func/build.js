@@ -2,7 +2,7 @@ export function build(El, Mal, o) {
   if(!document.getElementById('mal-widget')) El.Div({
     path: o.path,
     insert: 'beforeBegin',
-    class: `-mal ${o.cfg.theme}`,
+    class: `-mal ${o.cfg.theme}-theme`,
     id: 'mal-widget',
     func: (m) => {
       const el = {
@@ -29,81 +29,123 @@ export function build(El, Mal, o) {
         path: m,
         class: '-header',
         func: (h) => {
-          function upd(key, v, t) {
+          function upd(key, v, e) {
             switch (key) {
               case 'title':
-                t.title.textContent = v;
+                e.el.title.textContent = v;
+                break;
+              case 'recommendations':
+                e.el.recommendations.children[0].children[1].textContent = e.o.s.main.recommendations.length;
+                e.o.s.main.recommendations.length > 0 && e.o.s.main.recommendations.forEach(r => {
+                  El.Div({
+                    path: e.el.recommendations.children[1],
+                    class: 'item',
+                    func: (i) => {
+                      El.Div({
+                        path: i,
+                        class: 'flx -header',
+                        onclick: () => {
+                          window.open(Mal.title+o.siteType+'/'+r.node.id, '__blank');
+                        },
+                        func: (h) => {
+                          El.Div({
+                            path: h,
+                            class: '-title',
+                            text: r.node.title
+                          });
+                          El.Div({
+                            path: h,
+                            class: 'num',
+                            text: r.num_recommendations
+                          });
+                        }
+                      });
+
+                      El.Div({
+                        path: i,
+                        class: '-mask',
+                        func: (m) => {
+                          El.Image({
+                            path: m,
+                            class: 'img',
+                            url: r.node.main_picture.medium
+                          });
+                        }
+                      });
+                    }
+                  })
+                })
                 break;
               case 'status':
-                t.header.broadcast.classList.add(v);
+                e.el.header.broadcast.classList.add(v);
                 break;
               case 'broadcastStatus':
-                t.header.broadcastStatus.textContent = v;
+                e.el.header.broadcastStatus.textContent = v;
                 break;
               case 'broadcastDate':
-                t.header.broadcastDate.classList.remove('hidden');
+                e.el.header.broadcastDate.classList.remove('hidden');
                 break;
               case 'weekDay':
-                t.header.weekDay.textContent = 'по ' + Mal.wD(v, true);
+                e.el.header.weekDay.textContent = 'по ' + Mal.wD(v, true);
                 break;
               case 'weekTime':
-                t.header.weekTime.textContent = 'в ' + v;
+                e.el.header.weekTime.textContent = 'в ' + v;
                 break;
               case 'rating':
-                t.header.rating.textContent = v;
+                e.el.header.rating.textContent = v;
                 break;
               case 'rank':
-                t.header.rank.textContent = '# ' + v;
+                e.el.header.rank.textContent = '# ' + v;
                 break;
               case 'id':
-                t.header.id.textContent = v;
+                e.el.header.id.textContent = v;
                 break;
               case 'url':
-                t.header.url.href = v;
+                e.el.header.url.href = v;
                 break;
               case 'epsNum':
-                t.footer.epsNum.textContent = v;
+                e.el.footer.epsNum.textContent = v;
                 break;
               case 'volumesNum':
-                t.footer.volumesNum.textContent = v;
+                e.el.footer.volumesNum.textContent = v;
                 break;
               case 'chaptersNum':
-                t.footer.chaptersNum.textContent = v;
+                e.el.footer.chaptersNum.textContent = v;
                 break;
             }
           }
 
-          function upd2(key, value, t) {
+          function upd2(key, value, e) {
             switch (key) {
               case 'status':
-                t.footer.status.value = value;
+                e.el.footer.status.value = value;
                 break;
               case 'eps':
-                t.footer.eps.value = value;
+                e.el.footer.eps.value = value;
                 break;
               case 'volumes':
-                t.footer.volumes.value = value;
+                e.el.footer.volumes.value = value;
                 break;
               case 'chapters':
-                t.footer.chapters.value = value;
+                e.el.footer.chapters.value = value;
                 break;
               case 'rating':
-                t.footer.rating.value = value;
+                e.el.footer.rating.value = value;
                 break;
               case 'priority':
-                t.footer.priority.value = value;
+                e.el.footer.priority.value = value;
                 break;
               case 'rewatchNreread':
-                t.footer.rewatchNreread.checked = value;
+                e.el.footer.rewatchNreread.checked = value;
                 break;
               case 'updatedAt':
-                t.footer.updatedAt.textContent = value;
+                e.el.footer.updatedAt.textContent = value;
                 break;
             }
           }
 
-          o.s.main = new Proxy(o.data.main, El.ProxyHandler(upd, el));
-          o.s.me = new Proxy(o.data.me, El.ProxyHandler(upd2, el));
+          o.s.main = new Proxy(o.data.main, El.ProxyHandler(upd, {el:el, o:o}));
+          o.s.me = new Proxy(o.data.me, El.ProxyHandler(upd2, {el:el, o:o}));
 
           El.Div({
             //h 0
@@ -209,6 +251,38 @@ export function build(El, Mal, o) {
         func: (e) => el.title = e
       });
 
+      if(o.cfg.recommendations) El.Div({
+        //m 1
+        path: m,
+        class: 'flx -recommendations',
+        func: (e) => {
+          el.recommendations = e;
+
+          El.Div({
+            path: e,
+            class: 'flx -header',
+            func: (h) => {
+              El.Div({
+                path: h,
+                class: '-title',
+                text: 'Recommendations'
+              });
+              El.Div({
+                path: h,
+                class: 'num'
+              });
+            },
+            onclick: () => {
+              e.classList.toggle('show');
+            }
+          });
+          El.Div({
+            path: e,
+            class: 'flx ver -list scrol mid'
+          });
+        }
+      });
+
       El.Div({
         //m 2
         path: m,
@@ -261,9 +335,8 @@ export function build(El, Mal, o) {
                       lClass: 'flx',
                       min: 0,
                       max: el.footer.epsNum,
-                      pattern: '[0-9]{2}',
                       onblur: (e) => {
-                        if (o.s.me.volumes === e.target.value) return;
+                        if (o.s.me.volumes === e.target.value||!e.target.value) return;
                         o.s.me.eps = e.target.value;
                         e.target.style.width = `${e.target.value.length * 8}px`;
                       },
@@ -312,9 +385,8 @@ export function build(El, Mal, o) {
                       lTitle: 'Volume',
                       min: 0,
                       max: el.footer.volumesNum,
-                      pattern: '[0-9]{2}',
                       onblur: (e) => {
-                        if (o.s.me.volumes === e.target.value) return;
+                        if (o.s.me.volumes === e.target.value||!e.target.value) return;
                         o.s.me.volumes = e.target.value;
                         e.target.style.width = `${e.target.value.length * 8}px`;
                       },
@@ -355,9 +427,8 @@ export function build(El, Mal, o) {
                       lTitle: 'Chapter',
                       min: 0,
                       max: el.footer.chaptersNum,
-                      pattern: '[0-9]{2}',
                       onblur: (e) => {
-                        if (o.s.me.volumes === e.target.value) return;
+                        if (o.s.me.volumes === e.target.value||!e.target.value) return;
                         o.s.me.chapters = e.target.value;
                         e.target.style.width = `${e.target.value.length * 8}px`;
                       },
@@ -412,9 +483,8 @@ export function build(El, Mal, o) {
                     lClass: 'flx',
                     min: 0,
                     max: 10,
-                    pattern: '[0-9]{2}',
                     onblur: (e) => {
-                      if (o.s.me.rating === e.target.value) return;
+                      if (o.s.me.rating === e.target.value||!e.target.value) return;
                       o.s.me.rating = e.target.value;
                       e.target.style.width = `${e.target.value.length * 8}px`;
                     },
