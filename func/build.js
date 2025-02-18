@@ -122,12 +122,15 @@ export function build(El, Mal, o) {
                 break;
               case 'eps':
                 e.el.footer.eps.value = value;
+                e.el.footer.eps.style.width = `${value.length * 8}px`;
                 break;
               case 'volumes':
                 e.el.footer.volumes.value = value;
+                e.el.footer.volumes.style.width = `${value.length * 8}px`;
                 break;
               case 'chapters':
                 e.el.footer.chapters.value = value;
+                e.el.footer.chapters.style.width = `${value.length * 8}px`;
                 break;
               case 'rating':
                 e.el.footer.rating.value = value;
