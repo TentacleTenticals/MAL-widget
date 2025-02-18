@@ -2,6 +2,7 @@ export const Mal = {
   url: 'https://api.myanimelist.net/v2',
   tokenUrl: 'https://myanimelist.net/v1/oauth2/token',
   authUrl: 'https://myanimelist.net/v1/oauth2/authorize',
+  title: 'https://myanimelist.net/',
   getType: (o) => o && o.constructor.toString().split(/[\(\) ]/)[1],
   dataConverter: (o) => {
     if(!o.data) return;
