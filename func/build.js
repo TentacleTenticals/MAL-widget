@@ -269,7 +269,7 @@ export function build(El, Mal, o) {
               });
               El.Div({
                 path: h,
-                class: 'num'
+                class: '-num'
               });
             },
             onclick: () => {
