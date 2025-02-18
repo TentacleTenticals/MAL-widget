@@ -7,7 +7,7 @@ export const css = () => `
 
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
 
-.theme-dark {
+.dark-theme {
   --col: rgb(255 255 255);
   --col-sec: rgb(253 53 53);
   --col-thi: rgb(0 0 0);
@@ -22,7 +22,7 @@ export const css = () => `
   --bor-c: rgb(145 145 145);
   --bor-c-sec: rgb(101 101 101);
 }
-.theme-light {
+.light-theme {
   --col: rgb(0 0 0);
   --col-sec: rgb(53 53 53);
   --col-thi: rgb(255 255 255);
