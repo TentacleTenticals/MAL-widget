@@ -187,6 +187,7 @@ export const css = () => `
       border-radius: 2px;
       background-color: var(--bck-c);
       color: var(--col);
+      z-index: 1000;
 
       &::-webkit-scrollbar-thumb {
         background-color: rgb(189 164 164);
