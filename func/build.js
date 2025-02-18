@@ -35,7 +35,7 @@ export function build(El, Mal, o) {
                 e.el.title.textContent = v;
                 break;
               case 'recommendations':
-                e.el.recommendations.children[0].children[1].textContent = e.o.s.main.recommendations.length;
+                e.el.recommendations.children[0].children[1].textContent = e.o.s.main.recommendations.length||0;
                 e.o.s.main.recommendations.length > 0 && e.o.s.main.recommendations.forEach(r => {
                   El.Div({
                     path: e.el.recommendations.children[1],
@@ -55,7 +55,7 @@ export function build(El, Mal, o) {
                           });
                           El.Div({
                             path: h,
-                            class: 'num',
+                            class: '-num',
                             text: r.num_recommendations
                           });
                         }
