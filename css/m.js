@@ -207,7 +207,7 @@ export const css = () => `
 
           .-title {
           }
-          .num {
+          .-num {
             margin: auto 0 auto auto;
           }
         }
