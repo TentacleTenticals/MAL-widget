@@ -134,6 +134,7 @@ export function build(El, Mal, o) {
                 break;
               case 'rating':
                 e.el.footer.rating.value = value;
+                e.el.footer.rating.style.width = `${value.length * 8}px`;
                 break;
               case 'priority':
                 e.el.footer.priority.value = value;
@@ -348,7 +349,7 @@ export function build(El, Mal, o) {
                         e.target.style.width = `${e.target.value.length * 8}px`;
                       },
                       func: (e) => {
-                        e.style.width = `${o.s.me.volumes.length * 8}px`;
+                        // e.style.width = `${o.s.me.volumes.length * 8}px`;
                         el.footer.eps = e;
 
                         El.Div({
@@ -398,7 +399,7 @@ export function build(El, Mal, o) {
                         e.target.style.width = `${e.target.value.length * 8}px`;
                       },
                       func: (e) => {
-                        e.style.width = `${o.s.me.volumes.length * 8}px`;
+                        // e.style.width = `${o.s.me.volumes.length * 8}px`;
                         el.footer.volumes = e;
 
                         El.Div({
@@ -440,7 +441,7 @@ export function build(El, Mal, o) {
                         e.target.style.width = `${e.target.value.length * 8}px`;
                       },
                       func: (e) => {
-                        e.style.width = `${o.s.me.chapters.length * 8}px`;
+                        // e.style.width = `${o.s.me.chapters.length * 8}px`;
                         el.footer.chapters = e;
 
                         El.Div({
@@ -496,7 +497,7 @@ export function build(El, Mal, o) {
                       e.target.style.width = `${e.target.value.length * 8}px`;
                     },
                     func: (e) => {
-                      e.style.width = `${o.s.me.rating.length * 8}px`;
+                      // e.style.width = `${o.s.me.rating.length * 8}px`;
                       el.footer.rating = e;
 
                       El.Div({
