@@ -273,6 +273,7 @@ export function build(El, Mal, o) {
               });
             },
             onclick: () => {
+              if(!o.s.main.recommendations.length > 0) return;
               e.classList.toggle('show');
             }
           });
