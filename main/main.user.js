@@ -7,7 +7,7 @@
 // @grant       GM.setValue
 // @grant       GM.getValue
 // @noframes
-// @version     1.0.3
+// @version     1.0.4
 // @author      TentacleTenticals
 // @description Скрипт для добавления виджета MAL на аниме/манга сайты
 // @homepage    https://github.com/TentacleTenticals/MAL-widget
@@ -20,14 +20,14 @@
 
 (async () => {
 
-  const {Mal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/api/m.js');
-  const {El} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/classes/m.js');
-  const {css} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/css/m.js');
-  const {baseCSS} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/css/base.js');
+  const {Mal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.64/api/m.js');
+  const {El} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.64/classes/m.js');
+  const {css} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.64/css/m.js');
+  const {baseCSS} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.64/css/base.js');
 
-  const {build} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/func/build.js');
-  const {search} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/func/search.js');
-  const {tokenModal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.60/interface/tokenModal.js');
+  const {build} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.64/func/build.js');
+  const {search} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.64/func/search.js');
+  const {tokenModal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.64/interface/tokenModal.js');
   const init = {};
 
   El.log('[MAL Widget] Loading...', 'green');
@@ -122,6 +122,7 @@
         s.main.rating = res.mean||'-';
         s.main.rank = res.rank||'-';
         s.main.status = res.status||'';
+        s.main.recommendations = res.recommendations;
         s.main.broadcastStatus = Mal.titleStatus(res.status);
         res.broadcast && (s.main.broadcastDate = true);
         res.broadcast && (s.main.weekDay = res.broadcast?.day_of_the_week);
@@ -390,7 +391,8 @@
       malRetry: {try:0, max:3}, // Количество повторных попыток запросов на MAL
       textMatch: {percents:95, summ:5},
       sitesImport: false,
-      theme: 'theme-dark'
+      recommendations: true,
+      theme: 'dark'
     },
     sites: [ // Список поддерживаемых сайтов
       {

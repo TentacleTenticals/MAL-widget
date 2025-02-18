@@ -5,7 +5,9 @@ export const css = () => `
 @import url('https://fonts.googleapis.com/css2?family=Amarante&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 
-.theme-dark {
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
+
+.dark-theme {
   --col: rgb(255 255 255);
   --col-sec: rgb(253 53 53);
   --col-thi: rgb(0 0 0);
@@ -15,11 +17,12 @@ export const css = () => `
   --bck-c-thi: rgb(255 255 255);
   --bck-c-for: rgb(65 65 65);
   --bck-c-six: rgb(93 195 154);
+  --bck-hover: rgb(34 66 91);
 
   --bor-c: rgb(145 145 145);
   --bor-c-sec: rgb(101 101 101);
 }
-.theme-light {
+.light-theme {
   --col: rgb(0 0 0);
   --col-sec: rgb(53 53 53);
   --col-thi: rgb(255 255 255);
@@ -132,6 +135,99 @@ export const css = () => `
     font-family: 'Faculty Glyphic', sans-serif;
     border: solid var(--bor-c);
     border-width: 0 0 2px 0;
+  }
+
+  .-recommendations {
+    gap: 0 4px;
+    position: relative;
+
+    &.show {
+      .-list {
+        display: flex;
+      }
+
+      >.-header {
+        &::after {
+          content: '⤴';
+        }
+      }
+    }
+
+    >.-header {
+      gap: 0 4px;
+      padding: 0 5px 0 5px;
+      font-size: 14px;
+      font-family: "Amarante", serif;
+      color: var(--col);
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--bck-hover);
+      }
+      &::after {
+        content: '⤵';
+      }
+
+      .-title {
+        color: var(--col);
+      }
+    }
+
+    .-list {
+      display: none;
+      gap: 15px 0;
+      padding: 10px 20px 10px 10px;
+      margin: auto;
+      width: 50%;
+      max-height: 200px;
+      overflow: auto;
+      position: absolute;
+      top: 100%;
+      border: 1px solid var(--bor-c-sec);
+      border-radius: 2px;
+      background-color: var(--bck-c);
+      color: var(--col);
+
+      &::-webkit-scrollbar-thumb {
+        background-color: rgb(189 164 164);
+      }
+
+      .item {
+        display: flex;
+        gap: 4px 0;
+        color: var(--col);
+        flex-direction: column;
+
+        >.-header {
+          gap: 0 5px;
+          font-family: "Dosis", serif;
+          font-weight: 600;
+          font-size: 15px;
+          cursor: alias;
+
+          .-title {
+          }
+          .-num {
+            margin: auto 0 auto auto;
+          }
+        }
+
+        .-mask {
+          display: flex;
+          margin: auto;
+          width: 100%;
+          height: 140px;
+          padding: 3px;
+
+          img {
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            object-fit: none;
+          }
+        }
+      }
+    }
   }
 
   .-footer {
