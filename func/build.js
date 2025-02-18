@@ -589,6 +589,7 @@ export function build(El, Mal, o) {
                     console.log('[MAL Widget] UPD', l);
                     const time = El.getTime(l?.updated_at, 'full');
                     s.target.textContent = 'Saved ✅';
+                    o.s.me.status = l.status;
                     time && (o.s.me.updatedAt = time.date+' '+time.time);
                     setTimeout(() => {
                       s.target.textContent = 'Save';
