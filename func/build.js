@@ -336,7 +336,7 @@ export function build(El, Mal, o) {
                       path: num,
                       class: '-num',
                       type: 'number',
-                      label: 'eps',
+                      label: 'Eps',
                       lClass: 'flx',
                       min: 0,
                       max: el.footer.epsNum,
