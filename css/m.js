@@ -17,6 +17,7 @@ export const css = () => `
   --bck-c-thi: rgb(255 255 255);
   --bck-c-for: rgb(65 65 65);
   --bck-c-six: rgb(93 195 154);
+  --bck-c-sev: rgb(231 125 163);
   --bck-hover: rgb(34 66 91);
 
   --bor-c: rgb(145 145 145);
@@ -36,6 +37,7 @@ export const css = () => `
   --bck-c-thi: rgb(0 0 0);
   --bck-c-for: rgb(255 255 255);
   --bck-c-six: rgb(243 206 233);
+  --bck-c-sev: rgb(231 125 163);
 
   --bor-c: rgb(123 122 122);
   --bor-c-sec: rgb(101 101 101);
@@ -115,7 +117,20 @@ export const css = () => `
               background-color: var(--bck-c-six);
             }
             &.finished_airing {
-              display: none;
+              color: var(--col-thi);
+              background-color: var(--bck-c-sev);
+
+              .-s-item {
+                display: none;
+              }
+            }
+            &.finished_publishing {
+              color: var(--col-thi);
+              background-color: var(--bck-c-sev);
+
+              .-s-item {
+                display: none;
+              }
             }
             &.currently_publishing {
               color: var(--col-thi);
