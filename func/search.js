@@ -2,7 +2,7 @@ export function search(El, Mal, o){
   const getType = (o) => o && o.constructor.toString().split(/[\(\) ]/)[1];
   function textMatcher(text, text2, perc, sum){
     function removeSym(text){
-      const filter = /([\W]*)/gm;
+      const filter = /([\W]+)/gm;
       const norm = /[\u0300-\u036F]/g;
       const fixer = (text) => text.normalize('NFKD').replace(norm, '').replace(filter, '').toLowerCase();
       
@@ -50,11 +50,14 @@ export function search(El, Mal, o){
         notM += o.main[i]||'';
         match && o.resArray.push({match: match, n:i-1||''});
         match = '';
-        // console.log('QQ', text2.slice(0, i) + text2.slice(i+1, text2.length));
-        o.main = o.main.slice(0, i) + o.main.slice(i+1, o.main.length);
+        o.main = o.main.slice(0, i) + o.main.slice(i+1);
+        o.sec = o.sec.slice(0, i) + o.sec.slice(i+1);
+        // console.log('QQ', o.main.slice(0, i));
+        // o.main = o.main.slice(0, i) + o.main.slice(i+1);
       }else o.resArray.push(match)
     }
     match && o.resArray.push({match: match, n:o.main.length});
+    notM && o.resArray.push({notM: notM, n:o.main.length});
     
     // let len = 0;
     o.resArray.forEach(e => {
@@ -71,7 +74,7 @@ export function search(El, Mal, o){
     if(o.status.notMatchLen < sum){
       o.result.summCheck = 'match';
       // console.log('[Text Matcher] Sum MATCH!', o.status.notMatchLen);
-    }
+    }else o.result.summCheck = 'not match';
     
     console.log('[Text Matcher]', o);
     
