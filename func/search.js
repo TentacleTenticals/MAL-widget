@@ -93,7 +93,7 @@ export function search(El, Mal, o){
       console.log('[MAL Widget] Search', res);
       if(!res) return;
       if(res.data && getType(res.data) === 'Array'){
-        for(let e of res.data){
+        for(let [len, e] of res.data.entries()){
           const match = textMatcher(e.node.title, o.title, o.cfg.textMatch.percents, o.cfg.textMatch.summ);
           if(match.result.percCheck === 'match'){
             console.log('GOT one!!!', {id: e.node.id, title:e.node.title});
@@ -110,6 +110,7 @@ export function search(El, Mal, o){
               }
             });
           }else{
+            if(res.data.length === len+1)
             return {status:'not found', msg:o.siteType+ ' not found', fail:true};
           }
         }

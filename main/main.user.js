@@ -7,7 +7,7 @@
 // @grant       GM.setValue
 // @grant       GM.getValue
 // @noframes
-// @version     1.0.6
+// @version     1.0.7
 // @author      TentacleTenticals
 // @description Скрипт для добавления виджета MAL на аниме/манга сайты
 // @homepage    https://github.com/TentacleTenticals/MAL-widget
@@ -23,14 +23,14 @@
   const {Alerter} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/dtf-libs-2.0@1.0.4/interface/alerter/js/m.js');
   const {alerterCss} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/dtf-libs-2.0@1.0.5/interface/alerter/css/m.js');
 
-  const {Mal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.69/api/m.js');
-  const {El} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.69/classes/m.js');
-  const {css} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.69/css/m.js');
-  const {baseCSS} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.69/css/base.js');
+  const {Mal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.73/api/m.js');
+  const {El} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.73/classes/m.js');
+  const {css} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.73/css/m.js');
+  const {baseCSS} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.73/css/base.js');
 
-  const {build} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.69/func/build.js');
-  const {search} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.70/func/search.js');
-  const {tokenModal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.69/interface/tokenModal.js');
+  const {build} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.73/func/build.js');
+  const {search} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.73/func/search.js');
+  const {tokenModal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.73/interface/tokenModal.js');
   const init = {};
 
   El.log('[MAL Widget] Loading...', 'green');

@@ -47,6 +47,10 @@ export function build(El, Mal, o) {
                         onclick: () => {
                           window.open(Mal.title+o.siteType+'/'+r.node.id, '__blank');
                         },
+                        onRclick: (e) => {
+                          e.preventDefault();
+                          navigator.clipboard.writeText(r.node.title);
+                        },
                         func: (h) => {
                           El.Div({
                             path: h,
@@ -336,7 +340,7 @@ export function build(El, Mal, o) {
                       path: num,
                       class: '-num',
                       type: 'number',
-                      label: 'eps',
+                      label: 'Eps',
                       lClass: 'flx',
                       min: 0,
                       max: el.footer.epsNum,
