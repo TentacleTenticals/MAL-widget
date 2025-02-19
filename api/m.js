@@ -42,14 +42,13 @@ export const Mal = {
     else return days[day][0]+days[day][1][1];
   },
   titleStatus: function(status){
-    // console.log('SS', status);
+    console.log('SS', status);
     if(!status) return;
     const s = {
       currently_airing: 'Выходит',
       currently_publishing: 'Публикуется',
       finished_airing: 'Вышло',
-      finished_publishing: 'Закончено',
-      finished: 'Закончена'
+      finished_publishing: 'Закончено'
     }
     return s[status]||status;
   },
