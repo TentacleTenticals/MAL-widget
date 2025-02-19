@@ -72,7 +72,7 @@ export function search(El, Mal, o){
     if(o.status.notMatchLen < sum){
       o.result.summCheck = 'match';
       // console.log('[Text Matcher] Sum MATCH!', o.status.notMatchLen);
-    }
+    }else o.result.summCheck = 'not match';
     
     console.log('[Text Matcher]', o);
     
