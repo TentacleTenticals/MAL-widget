@@ -50,6 +50,8 @@ export function search(El, Mal, o){
         notM += o.main[i]||'';
         match && o.resArray.push({match: match, n:i-1||''});
         match = '';
+        o.main = o.main.slice(0, i) + o.main.slice(i+1);
+        o.sec = o.sec.slice(0, i) + o.sec.slice(i+1);
         // console.log('QQ', o.main.slice(0, i));
         // o.main = o.main.slice(0, i) + o.main.slice(i+1);
       }else o.resArray.push(match)
