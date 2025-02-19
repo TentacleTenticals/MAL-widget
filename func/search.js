@@ -109,6 +109,8 @@ export function search(El, Mal, o){
                 fields: ['id', 'title', 'media_type', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes', 'num_volumes', 'num_chapters', 'recommendations', 'related_manga', 'related_anime', 'priority']
               }
             });
+          }else{
+            return {status:'not found', msg:o.siteType+ ' not found', fail:true};
           }
         }
       }else throw (Object.assign(new Error('[MAL Widget Error] Hibernated tab was loaded, need retry'), {
