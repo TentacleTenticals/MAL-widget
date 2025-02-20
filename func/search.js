@@ -122,12 +122,14 @@ export function search(El, Mal, o){
     };
   
     const res = levenshtein(text, text2);
-    return {
+    const r = {
       result: {
         type: 'levenshtein',
         perc: {result: res, match: res >= perc, check: perc}
       }
     };
+    console.log('[TextMatcherLev]', r);
+    return r;
   }
 
   return Mal.search({
