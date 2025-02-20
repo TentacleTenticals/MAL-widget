@@ -7,7 +7,7 @@
 // @grant       GM.setValue
 // @grant       GM.getValue
 // @noframes
-// @version     1.0.8
+// @version     1.0.9
 // @author      TentacleTenticals
 // @description Скрипт для добавления виджета MAL на аниме/манга сайты
 // @homepage    https://github.com/TentacleTenticals/MAL-widget
@@ -29,7 +29,7 @@
   const {baseCSS} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.73/css/base.js');
 
   const {build} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.73/func/build.js');
-  const {search} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.74/func/search.js');
+  const {search} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.76/func/search.js');
   const {tokenModal} = await import('https://cdn.jsdelivr.net/gh/TentacleTenticals/MAL-widget@1.0.73/interface/tokenModal.js');
   const init = {};
 
@@ -402,7 +402,7 @@
     cfg: {
       timer: 1, // Таймер проверки токенов. Одна единица = 1 день
       malRetry: {try:0, max:3}, // Количество повторных попыток запросов на MAL
-      textMatch: {percents:89, summ:5},
+      textMatch: {percents:60, summ:5, type:'levenshtein'},
       sitesImport: false,
       recommendations: true,
       theme: 'dark'
