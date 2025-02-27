@@ -147,32 +147,39 @@ export function search(El, Mal, o){
       console.log('[MAL Widget] Search', res);
       if(!res) return;
       if(res.data && getType(res.data) === 'Array'){
-        let check;
-        for(let [len, e] of res.data.entries()){
+        const check = {};
+        res.data.forEach((e, ind) => {
           const match = o.cfg.textMatch.type === 'textMatch' ?
             textMatcher(e.node.title, o.title, o.cfg.textMatch.percents, o.cfg.textMatch.summ)
             : textMatcherLev(e.node.title, o.title, o.cfg.textMatch.percents, o.cfg.textMatch.summ);
-          if(!check) check = match;
-          else if(check.result.perc.result < match.result.perc.result) check = match;
-          // const match = textMatcher(e.node.title, o.title, o.cfg.textMatch.percents, o.cfg.textMatch.summ);
-          if(check.result.perc.match||check.result.summ && check.result.summ.match){
-            console.log('GOT one!!!', {id: e.node.id, title:e.node.title});
-            // o.s.main.id = e.node.id;
-            // o.s.main.title = e.node.title;
-            // return getList(El, Mal, o, e.node);
-            return Mal.getList({
-              value: e.node.id,
-              type: o.siteType,
-              url: o.catcherUrl,
-              accToken: o.accToken,
-              query: {
-                fields: ['id', 'title', 'media_type', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes', 'num_volumes', 'num_chapters', 'recommendations', 'related_manga', 'related_anime', 'priority']
-              }
-            });
-          }else{
-            if(res.data.length === len+1)
-            return {status:'not found', msg:o.siteType+ ' not found', fail:true};
+          if(!check.m){
+            check.m = match;
+            check.ind = ind;
           }
+          else if(+check.m.result.perc.result < +match.result.perc.result){
+            check.m = match;
+            check.ind = ind;
+          }
+        });
+
+        // const match = o.cfg.textMatch.type === 'textMatch' ?
+        //   textMatcher(e.node.title, o.title, o.cfg.textMatch.percents, o.cfg.textMatch.summ)
+        //   : textMatcherLev(e.node.title, o.title, o.cfg.textMatch.percents, o.cfg.textMatch.summ);
+        if(check.m.result.perc.match||check.m.result.summ && check.m.result.summ.match){
+          console.log('GOT one!!!', {id: res.data[check.ind].node.id, title: res.data[check.ind].node.title});
+
+          return Mal.getList({
+            value: res.data[check.ind].node.id,
+            type: o.siteType,
+            url: o.catcherUrl,
+            accToken: o.accToken,
+            query: {
+              fields: ['id', 'title', 'media_type', 'rank', 'rating', 'popularity', 'score', 'mean', 'status', 'broadcast', 'statistics', 'start_date', 'my_list_status', 'num_episodes', 'num_volumes', 'num_chapters', 'recommendations', 'related_manga', 'related_anime', 'priority']
+            }
+          });
+        }else{
+          // if(res.data.length === len+1);
+          return {status:'not found', msg:o.siteType+ ' not found', fail:true};
         }
       }else throw (Object.assign(new Error('[MAL Widget Error] Hibernated tab was loaded, need retry'), {
         error: {
