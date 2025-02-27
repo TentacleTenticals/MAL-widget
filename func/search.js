@@ -147,12 +147,15 @@ export function search(El, Mal, o){
       console.log('[MAL Widget] Search', res);
       if(!res) return;
       if(res.data && getType(res.data) === 'Array'){
+        let check;
         for(let [len, e] of res.data.entries()){
           const match = o.cfg.textMatch.type === 'textMatch' ?
             textMatcher(e.node.title, o.title, o.cfg.textMatch.percents, o.cfg.textMatch.summ)
             : textMatcherLev(e.node.title, o.title, o.cfg.textMatch.percents, o.cfg.textMatch.summ);
+          if(!check) check = match;
+          else if(check.result.perc.result < match.result.perc.result) check = match;
           // const match = textMatcher(e.node.title, o.title, o.cfg.textMatch.percents, o.cfg.textMatch.summ);
-          if(match.result.perc.match||match.result.summ && match.result.summ.match){
+          if(check.result.perc.match||check.result.summ && check.result.summ.match){
             console.log('GOT one!!!', {id: e.node.id, title:e.node.title});
             // o.s.main.id = e.node.id;
             // o.s.main.title = e.node.title;
